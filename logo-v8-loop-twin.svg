@@ -1,0 +1,45 @@
+<svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog — V5 Loop-Twin (Infinity Loop)</title>
+  <desc>单笔连续线条形成双L+∞闭环，一笔画到底象征无限循环与复利</desc>
+
+  <!-- Main continuous path: L1 → 回环 → L2 → 汇合 = ∞ infinity loop -->
+  <path d="M26,18
+           L26,85
+           Q26,97 40,97
+           L114,97
+           Q128,97 128,85
+           L128,53
+           Q128,41 116,41
+           L56,41
+           Q44,41 44,53
+           L44,85
+           Q44,93 52,93
+           L84,93"
+        fill="none"
+        stroke="#E8915A"
+        stroke-width="4.5"
+        stroke-linecap="round"/>
+
+  <!-- Second L (nested inside the loop) -->
+  <path d="M38,30
+           L38,73
+           Q38,81 46,81
+           L100,81
+           Q108,81 108,73
+           L108,55"
+        fill="none"
+        stroke="#7C6AE8"
+        stroke-width="2.8"
+        stroke-linecap="round"
+        opacity="0.65"/>
+
+  <!-- Knot at convergence point -->
+  <circle cx="84" cy="93" r="4.5" fill="#FFFFFF" stroke="#7C6AE8" stroke-width="2"/>
+  <circle cx="84" cy="93" r="2" fill="#5B8ED0"/>
+
+  <!-- End dot suggesting continuity / compound growth -->
+  <circle cx="128" cy="53" r="3" fill="#E8915A" opacity="0.3"/>
+
+  <!-- Small dot at the "turn" of infinity = compounding point -->
+  <circle cx="44" cy="53" r="2.5" fill="#7C6AE8" opacity="0.2"/>
+</svg>

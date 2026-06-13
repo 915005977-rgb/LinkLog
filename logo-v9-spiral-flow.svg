@@ -1,0 +1,37 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog — Spiral-Flow</title>
+  <desc>螺旋坠落双L，复利旋转，尾部继续螺旋暗示无限</desc>
+
+  <!-- L1 (Link) — 螺旋坠落+回环 -->
+  <path d="M22,8
+           C22,32 18,52 20,68
+           C22,80 28,86 38,86
+           L72,86
+           C80,86 84,80 84,72
+           C84,62 82,48 80,38
+           C78,30 74,26 68,30
+           C62,34 60,46 62,58
+           C64,68 68,78 72,84
+           C76,88 82,86 84,80"
+        fill="none" stroke="#E8915A" stroke-width="4.5"
+        stroke-linecap="round"/>
+
+  <!-- L2 (Log) — 内层螺旋 -->
+  <path d="M34,18
+           C34,38 32,52 32,64
+           C32,72 36,76 42,76
+           L66,76
+           C72,76 74,72 74,66
+           C74,58 72,48 70,42"
+        fill="none" stroke="#7C6AE8" stroke-width="2.8"
+        stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Intersection knot -->
+  <circle cx="56" cy="81" r="4.5" fill="#FFFFFF" stroke="#E8915A" stroke-width="1.8"/>
+  <circle cx="56" cy="81" r="2" fill="#5B8ED0"/>
+
+  <!-- Spiral continues hint -->
+  <path d="M84,80 C88,72 90,62 86,56"
+        fill="none" stroke="#E8915A" stroke-width="1.5"
+        opacity="0.2" stroke-linecap="round"/>
+</svg>

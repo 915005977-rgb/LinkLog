@@ -1,0 +1,38 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog — V4 Arc-Bridge</title>
+  <desc>双L竖线=桥墩，拱顶弧线连接=Bridge，交汇点=关系节点</desc>
+
+  <!-- L1 (Link) = 左桥墩 + 桥面 -->
+  <path d="M30,20 L30,95"
+        fill="none" stroke="#E8915A" stroke-width="5"
+        stroke-linecap="round"/>
+  <path d="M30,95 L108,95"
+        fill="none" stroke="#E8915A" stroke-width="5"
+        stroke-linecap="round"/>
+
+  <!-- L2 (Log) = 右桥墩(短) + 内桥面 -->
+  <path d="M62,26 L62,83"
+        fill="none" stroke="#7C6AE8" stroke-width="3.5"
+        stroke-linecap="round" opacity="0.75"/>
+  <path d="M62,83 L108,83"
+        fill="none" stroke="#7C6AE8" stroke-width="3.5"
+        stroke-linecap="round" opacity="0.75"/>
+
+  <!-- Bridge: 拱弧连接两根竖线顶部 -->
+  <path d="M30,20 Q46,4 62,20"
+        fill="none" stroke="#E8915A" stroke-width="3"
+        stroke-linecap="round" opacity="0.55"/>
+  <circle cx="46" cy="10" r="3.5" fill="#E8915A" opacity="0.3"/>
+
+  <!-- Intersection knot = 关系锚点 -->
+  <circle cx="67" cy="89" r="5.5" fill="#FFFFFF" stroke="#E8915A" stroke-width="2"/>
+  <circle cx="67" cy="89" r="2.2" fill="#7C6AE8"/>
+
+  <!-- 延伸暗示持续记录 -->
+  <line x1="114" y1="95" x2="128" y2="95"
+        stroke="#E8915A" stroke-width="2"
+        stroke-linecap="round" opacity="0.25"/>
+  <line x1="114" y1="83" x2="124" y2="83"
+        stroke="#7C6AE8" stroke-width="1.5"
+        stroke-linecap="round" opacity="0.2"/>
+</svg>

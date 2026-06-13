@@ -1,0 +1,36 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog — Ribbon-Flow</title>
+  <desc>丝带飘落双L，尾端∞回卷，有机贝塞尔曲线</desc>
+
+  <!-- L1 (Link) — 丝带飘落，尾端回卷 -->
+  <path d="M22,8
+           C22,30 18,50 20,68
+           C22,82 28,88 38,88
+           C48,88 68,88 80,88
+           C88,88 92,82 92,74
+           C92,64 92,52 90,42
+           C88,34 84,30 78,34
+           C72,38 70,50 70,62
+           C70,72 70,82 72,88"
+        fill="none" stroke="#E8915A" stroke-width="4.5"
+        stroke-linecap="round"/>
+
+  <!-- L2 (Log) — 内层丝带 -->
+  <path d="M34,18
+           C34,34 32,48 32,60
+           C32,70 36,76 44,76
+           C52,76 66,76 72,76
+           C78,76 80,72 80,64
+           C80,56 80,46 78,40"
+        fill="none" stroke="#7C6AE8" stroke-width="2.8"
+        stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Intersection knot -->
+  <circle cx="56" cy="82" r="4.5" fill="#FFFFFF" stroke="#E8915A" stroke-width="1.8"/>
+  <circle cx="56" cy="82" r="2" fill="#5B8ED0"/>
+
+  <!-- Infinity tail hint -->
+  <path d="M72,88 C72,96 78,102 86,98"
+        fill="none" stroke="#E8915A" stroke-width="2"
+        opacity="0.3" stroke-linecap="round"/>
+</svg>

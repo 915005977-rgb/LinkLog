@@ -1,0 +1,27 @@
+<svg viewBox="0 0 200 110" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog — Full Logo Arc-Bridge</title>
+
+  <!-- Logo Mark: Arc-Bridge -->
+  <g transform="translate(5, 5)">
+    <path d="M22,12 L22,75" fill="none" stroke="#E8915A" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M22,75 L80,75" fill="none" stroke="#E8915A" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M46,22 L46,65" fill="none" stroke="#7C6AE8" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+    <path d="M46,65 L80,65" fill="none" stroke="#7C6AE8" stroke-width="3" stroke-linecap="round" opacity="0.75"/>
+    <path d="M22,12 Q36,0 46,12" fill="none" stroke="#E8915A" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="50" cy="69" r="4.5" fill="#fff" stroke="#E8915A" stroke-width="2"/>
+    <circle cx="50" cy="69" r="2" fill="#7C6AE8"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="96" y="48" font-family="'Inter', -apple-system, 'Noto Sans SC', sans-serif"
+        font-size="28" font-weight="700" fill="#2C2825">
+    <tspan fill="#E8915A">Link</tspan><tspan fill="#7C6AE8">Log</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="98" y="68"
+        font-family="'Noto Sans SC', 'PingFang SC', Inter, -apple-system, sans-serif"
+        font-size="10.5" font-weight="400" fill="#9E9893">
+    连接日志 · 关系复利
+  </text>
+</svg>
