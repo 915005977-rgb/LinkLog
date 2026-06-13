@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!--
-  LinkLog — 连接日志 · 关系复利
-  原型类型: mobile-app
-  设计系统: Modern Minimal × Soft Warm
-  生成时间: 2026-06-13
-  修订: P1/P2 修正 + 首页/详情页新增
-  页面: 首页(Dashboard) / 联系人详情 / Step1 / Step2a / Step2b / Step3
--->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>LinkLog — 连接日志 · 关系复利</title>
 <style>
 /* ============================================
    设计令牌 · Design Tokens
+   来源: MOBILE_TOKENS.md by design-system-expert
    ============================================ */
 :root {
-  /* === 色彩 === */
+  /* 1. 色彩系统 */
   --color-bg-primary: #F8F6F3;
   --color-bg-secondary: #F1EDE8;
   --color-bg-tertiary: #EAE5DF;
@@ -28,6 +21,7 @@
   --color-text-secondary: #6B6560;
   --color-text-tertiary: #9E9893;
   --color-text-disabled: #C5C0BA;
+  --color-text-on-accent: #FFFFFF;
   --color-accent-default: #E8915A;
   --color-accent-hover: #D47E48;
   --color-accent-active: #C06E3A;
@@ -52,15 +46,28 @@
   --color-tag-contextual: #7C6AE8;
   --color-tag-custom: #5B8ED0;
   --color-tag-bg-base: #F1EDE8;
-  --color-text-on-accent: #FFFFFF;
-  --color-text-on-ai: #FFFFFF;
+  --color-line-origin: #B8834A;
+  --color-line-origin-light: #F5EDE3;
+  --color-line-origin-subtle: rgba(184,131,74,0.12);
+  --color-line-value: #C47A2E;
+  --color-line-value-light: #FBF0E2;
+  --color-line-value-subtle: rgba(196,122,46,0.12);
+  --color-line-connection: #4A9B7F;
+  --color-line-connection-light: #E8F5EF;
+  --color-line-connection-subtle: rgba(74,155,127,0.12);
+  --color-line-action: #C45B5B;
+  --color-line-action-light: #FBEBEB;
+  --color-line-action-subtle: rgba(196,91,91,0.12);
+  --color-bg-frosted: rgba(248,246,243,0.92);
+  --color-bg-glass: rgba(255,255,255,0.6);
+  --color-bg-overlay: rgba(44,40,37,0.4);
+  --color-bg-overlay-heavy: rgba(44,40,37,0.6);
+  --color-ai-border-subtle: rgba(124,106,232,0.2);
+  --color-ai-bg-item: rgba(255,255,255,0.8);
 
-  /* === 派生色（Alpha） === */
-  --color-bg-primary-alpha80: rgba(248,246,243,0.8);
-
-  /* === 排版 === */
-  --font-sans: "Inter", "SF Pro Display", -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-mono: "JetBrains Mono", "SF Mono", "Menlo", monospace;
+  /* 2. 字体系统 */
+  --font-sans: -apple-system, "SF Pro Display", "Noto Sans SC", "PingFang SC", "Helvetica Neue", sans-serif;
+  --font-mono: "SF Mono", "Menlo", monospace;
   --text-display: 28px;
   --text-h1: 22px;
   --text-h2: 18px;
@@ -69,12 +76,16 @@
   --text-body-sm: 13px;
   --text-caption: 12px;
   --text-micro: 11px;
+  --text-overline: 10px;
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
 
-  /* === 间距 === */
+  /* 3. 间距 */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -84,23 +95,60 @@
   --space-8: 32px;
   --space-10: 40px;
   --space-12: 48px;
+  --space-screen-x: 20px;
+  --space-screen-x-compact: 16px;
+  --space-section-y: 32px;
+  --space-card-stack: 12px;
+  --space-inline-chip: 6px;
+  --space-inline-chip-row: 8px;
 
-  /* === 圆角 === */
+  /* 4. 圆角 */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-xl: 20px;
   --radius-full: 9999px;
+  --radius-sheet: 20px;
+  --radius-toast: 12px;
 
-  /* === 阴影 === */
+  /* 5. 阴影 */
   --shadow-xs: 0 1px 2px rgba(44,40,37,0.04);
   --shadow-sm: 0 2px 8px rgba(44,40,37,0.06);
   --shadow-md: 0 4px 16px rgba(44,40,37,0.08);
   --shadow-lg: 0 8px 32px rgba(44,40,37,0.10);
   --shadow-focus: 0 0 0 3px rgba(232,145,90,0.3);
   --shadow-focus-ai: 0 0 0 3px rgba(124,106,232,0.3);
+  --shadow-focus-ring: 0 0 0 1.5px var(--color-accent-default);
+  --shadow-sheet: 0 -4px 24px rgba(44,40,37,0.10);
+  --shadow-nav: 0 1px 12px rgba(44,40,37,0.06);
+  --shadow-tab-bar: 0 -1px 8px rgba(44,40,37,0.05);
+  --shadow-fab: 0 4px 16px rgba(232,145,90,0.3);
+  --shadow-cta: 0 2px 8px rgba(232,145,90,0.25);
 
-  /* === 动效 === */
+  /* 6. 触摸目标 */
+  --touch-min: 44px;
+  --touch-comfort: 48px;
+  --touch-cta: 52px;
+
+  /* 7. 安全区域 */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* 8. 导航栏 */
+  --nav-height: 44px;
+  --tab-bar-height: 49px;
+  --tab-bar-height-total: calc(49px + env(safe-area-inset-bottom, 0px));
+
+  /* 9. 卡片 */
+  --card-bg: #FFFFFF;
+  --card-radius: 14px;
+  --card-border: 1px solid #E8E3DD;
+  --card-shadow: 0 1px 2px rgba(44,40,37,0.04);
+  --card-padding: 16px;
+  --person-avatar-size: 48px;
+  --person-avatar-size-lg: 72px;
+
+  /* 10. 动效 */
   --duration-instant: 100ms;
   --duration-fast: 200ms;
   --duration-normal: 300ms;
@@ -110,10 +158,18 @@
   --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+
+  /* 11. 补充 token */
+  --color-sheet-handle: rgba(44,40,37,0.15);
+  --gradient-fade-top: linear-gradient(to top, var(--color-bg-primary) 70%, transparent); /* 70% = content fade zone, prevents CTA overlap */
+  --radius-xs: 2px;
+  --toast-padding-y: 10px;
+  --toast-padding-x: 20px;
 }
 
 /* ============================================
-   全局重置 · Global Reset
+   全局重置
    ============================================ */
 *, *::before, *::after {
   margin: 0;
@@ -125,128 +181,206 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-bg-secondary);
-  color: var(--color-text-primary);
-  line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: var(--space-5) 0;
-}
-
-/* ============================================
-   设备框架 · Device Frame
-   ============================================ */
-.device-frame {
-  width: 393px;
-  min-height: 852px;
   background: var(--color-bg-primary);
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  border-radius: var(--radius-xl);
+  color: var(--color-text-primary);
+  line-height: var(--leading-normal);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
 }
 
-/* 状态栏 */
-.status-bar {
+/* 隐藏滚动条 */
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+
+button, input, select, textarea {
+  font-family: var(--font-sans);
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ============================================
+   App Shell
+   ============================================ */
+.app-shell {
+  width: 100%;
+  max-width: 428px;
+  min-width: 320px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+/* ============================================
+   顶部导航栏 · Frosted Nav
+   ============================================ */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 428px;
+  z-index: 100;
+  padding-top: var(--safe-top);
+  background: var(--color-bg-frosted);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid var(--color-border-subtle);
+}
+
+.top-nav-inner {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--space-2) var(--space-6);
-  height: 48px;
-  font-size: var(--text-caption);
+  justify-content: space-between;
+  height: var(--nav-height);
+  padding: 0 var(--space-screen-x);
+}
+
+.top-nav-brand {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent-default);
+  letter-spacing: -0.5px;
+}
+
+.top-nav-icon-btn {
+  width: var(--touch-min);
+  height: var(--touch-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.top-nav-icon-btn:active {
+  background: var(--color-bg-secondary);
+}
+
+/* 详情页导航栏 */
+.detail-top-nav {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 428px;
+  z-index: 100;
+  padding-top: var(--safe-top);
+  background: var(--color-bg-frosted);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 0.5px solid var(--color-border-subtle);
+}
+
+.detail-top-nav .top-nav-inner {
+  position: relative;
+}
+
+.detail-nav-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 17px;
   font-weight: var(--weight-semibold);
   color: var(--color-text-primary);
-  position: relative;
-  z-index: 100;
 }
 
-.status-bar .time {
-  font-weight: var(--weight-semibold);
-}
-
-.status-bar .icons {
+.detail-nav-back {
   display: flex;
-  gap: var(--space-1);
   align-items: center;
+  margin-left: calc(-1 * var(--space-3));
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-accent-default);
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  min-height: var(--touch-min);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.detail-nav-back svg {
+  margin-right: var(--space-1);
 }
 
 /* ============================================
-   导航栏框架 · Nav Frame
-   ============================================ */
-.app-nav-frame {
-  position: relative;
-  height: calc(852px - 48px);
-  overflow: hidden;
-}
-
-/* ============================================
-   底部 Tab Bar
+   底部 Tab 栏
    ============================================ */
 .tab-bar {
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
-  height: 72px;
-  background: var(--color-bg-elevated);
-  border-top: 1px solid var(--color-border-subtle);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 428px;
+  z-index: 100;
+  padding-bottom: var(--safe-bottom);
+  background: var(--color-bg-frosted);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 0.5px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-tab-bar);
+}
+
+.tab-bar-inner {
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
-  padding-top: var(--space-2);
-  z-index: 50;
+  height: 49px;
+  padding-top: var(--space-1);
 }
 
 .tab-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: var(--space-2) var(--space-4);
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: var(--font-sans);
-  transition: color var(--duration-fast) var(--ease-out);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.tab-item .tab-icon {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  line-height: 1;
-}
-
-.tab-item .tab-label {
-  font-size: var(--text-micro);
-  font-weight: var(--weight-medium);
+  min-width: 64px;
+  padding: var(--space-1) 0;
+  color: var(--color-text-tertiary);
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
 .tab-item.active {
   color: var(--color-accent-default);
 }
 
-.tab-item:not(.active) {
-  color: var(--color-text-tertiary);
+.tab-item-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
 }
 
-.tab-item:active {
-  transform: scale(0.95);
+.tab-item-label {
+  font-size: 10px;
+  font-weight: var(--weight-medium);
+  line-height: 1;
 }
 
 /* ============================================
-   全局页面容器 · Page System
+   视图容器 · View System
    ============================================ */
-.page {
+.view {
   position: absolute;
   top: 0;
   left: 0;
@@ -254,236 +388,188 @@ body {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  transition: transform var(--duration-normal) var(--ease-out),
+  transition: transform var(--duration-normal) var(--ease-decelerate),
               opacity var(--duration-normal) var(--ease-out);
+  will-change: transform, opacity;
 }
 
-.page::-webkit-scrollbar {
-  display: none;
-}
-
-.page.active {
+.view.active {
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto;
-  z-index: 5;
+  z-index: 2;
 }
 
-.page.slide-left {
-  transform: translateX(-30%);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.page.slide-right {
+.view.hidden-right {
   transform: translateX(100%);
-  opacity: 0;
+  opacity: 0.3;
   pointer-events: none;
   z-index: 1;
+  transition: transform var(--duration-normal) var(--ease-decelerate),
+              opacity var(--duration-fast) var(--ease-out);
 }
 
-.page.slide-far-left {
-  transform: translateX(-100%);
-  opacity: 0;
+.view.hidden-left {
+  transform: translateX(-30%);
+  opacity: 0.3;
   pointer-events: none;
   z-index: 1;
+  transition: transform var(--duration-normal) var(--ease-accelerate),
+              opacity var(--duration-fast) var(--ease-out);
 }
 
 /* ============================================
-   首页 · Dashboard
+   视图1: 首页 Dashboard
    ============================================ */
 
 /* 问候区 */
-.greeting-section {
-  padding: var(--space-3) var(--space-6) 0;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: opacity var(--duration-normal) var(--ease-out),
-              transform var(--duration-normal) var(--ease-out);
-}
-
-.greeting-section.faded {
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
+.greeting-area {
+  padding: calc(var(--nav-height) + var(--safe-top) + var(--space-5)) var(--space-screen-x) 0;
+  margin-bottom: var(--space-1);
 }
 
 .greeting-text {
-  font-size: var(--text-h1);
-  font-weight: var(--weight-semibold);
+  font-size: var(--text-display);
+  font-weight: var(--weight-bold);
   color: var(--color-text-primary);
-  line-height: 1.3;
+  line-height: var(--leading-tight);
 }
 
-.greeting-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-full);
-  background: var(--color-accent-light);
-  color: var(--color-accent-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-caption);
-  font-weight: var(--weight-semibold);
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-spring);
-}
-
-.greeting-avatar:active {
-  transform: scale(0.92);
-}
-
-/* 统计感知条 */
-.stats-bar {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-2) var(--space-6);
-  height: 48px;
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
+.greeting-sub {
   font-size: var(--text-body-sm);
   color: var(--color-text-secondary);
+  margin-top: var(--space-1);
 }
 
-.stat-item .stat-num {
-  font-family: var(--font-mono);
-  font-size: var(--text-body);
+.greeting-sub .stat-num {
   font-weight: var(--weight-semibold);
-  color: var(--color-text-primary);
-}
-
-.stat-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-medium);
-}
-
-.stat-pill.accent {
-  background: var(--color-accent-light);
   color: var(--color-accent-text);
-}
-
-.stat-pill.warning {
-  background: var(--color-warning-light);
-  color: var(--color-warning-default);
 }
 
 /* 搜索栏 */
-.search-section {
-  padding: var(--space-1) var(--space-6) var(--space-3);
+.search-area {
+  padding: var(--space-3) var(--space-screen-x);
   position: sticky;
-  top: 0;
-  z-index: 20;
+  top: calc(var(--nav-height) + var(--safe-top));
+  z-index: 50;
   background: var(--color-bg-primary);
-  transition: box-shadow var(--duration-fast) var(--ease-out);
-}
-
-.search-section.elevated {
-  box-shadow: var(--shadow-sm);
 }
 
 .search-bar {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  background: var(--color-bg-tertiary);
+  height: 40px;
+  background: var(--color-bg-secondary);
   border-radius: var(--radius-full);
   padding: 0 var(--space-4);
-  height: 44px;
+  transition: background var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
 }
 
-.search-bar .search-icon {
+.search-bar.focused {
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-sm), var(--shadow-focus-ring);
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
   color: var(--color-text-tertiary);
+  margin-right: var(--space-2);
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
 }
 
-.search-bar input {
+.search-input {
   flex: 1;
-  border: none;
-  background: transparent;
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
+  height: 100%;
+  font-size: var(--text-body-sm);
   color: var(--color-text-primary);
-  outline: none;
+  background: transparent;
   min-width: 0;
 }
 
-.search-bar input::placeholder {
+.search-input::placeholder {
   color: var(--color-text-disabled);
 }
 
-.search-bar .filter-btn {
-  display: flex;
+/* 标签筛选行 */
+.filter-row {
+  padding: var(--space-2) 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  /* 隐藏滚动条 */
+  scrollbar-width: none;
+}
+
+.filter-row::-webkit-scrollbar { display: none; }
+
+.filter-row-inner {
+  display: inline-flex;
+  padding: 0 var(--space-screen-x);
+}
+
+.filter-chip {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  height: 28px;
+  padding: 0 12px;
+  margin-right: var(--space-inline-chip);
   border-radius: var(--radius-full);
-  background: transparent;
-  border: none;
-  color: var(--color-text-tertiary);
-  cursor: pointer;
-  transition: background var(--duration-fast) var(--ease-out),
-              color var(--duration-fast) var(--ease-out);
-}
-
-.search-bar .filter-btn:hover {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
   background: var(--color-bg-secondary);
   color: var(--color-text-secondary);
+  border: 1px solid transparent;
+  -webkit-tap-highlight-color: transparent;
+  transition: all var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+  min-width: var(--touch-min);
+  cursor: pointer;
 }
 
-/* 联系人列表 */
+.filter-chip:active {
+  transform: scale(0.95);
+}
+
+.filter-chip.active {
+  background: var(--color-accent-light);
+  color: var(--color-accent-text);
+  border: 1px solid var(--color-accent-default);
+}
+
+/* 联系人卡片列表 */
 .contact-list {
-  padding: 0 var(--space-6) var(--space-4);
-  padding-bottom: 100px; /* tab bar + FAB space */
+  padding: var(--space-2) var(--space-screen-x) calc(var(--tab-bar-height-total) + 80px);
 }
 
 .contact-card {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
   background: var(--color-bg-elevated);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xs);
+  border-radius: var(--card-radius);
   border: 1px solid var(--color-border-subtle);
-  margin-bottom: var(--space-2);
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-out),
-              background var(--duration-fast) var(--ease-out),
-              box-shadow var(--duration-fast) var(--ease-out);
+  box-shadow: var(--shadow-xs);
+  margin-bottom: var(--space-card-stack);
   -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+  cursor: pointer;
 }
 
 .contact-card:active {
   transform: scale(0.98);
-  background: var(--color-bg-secondary);
-}
-
-.contact-card:hover {
-  background: var(--color-bg-secondary);
+  box-shadow: var(--shadow-sm);
 }
 
 .contact-avatar {
-  width: 44px;
-  height: 44px;
+  width: var(--person-avatar-size);
+  height: var(--person-avatar-size);
   border-radius: var(--radius-full);
+  background: var(--color-bg-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -491,25 +577,15 @@ body {
   font-weight: var(--weight-bold);
   color: var(--color-text-on-accent);
   flex-shrink: 0;
-  transition: transform var(--duration-normal) var(--ease-spring);
+  margin-right: var(--space-3);
 }
 
-/* P0-2: 关系维度色由 CSS data-relation 属性驱动，不硬编码 JS */
-.contact-avatar[data-relation="导师"] { background: var(--color-accent-default); }
-.contact-avatar[data-relation="合作伙伴"] { background: var(--color-info-default); }
-.contact-avatar[data-relation="同行"] { background: var(--color-success-default); }
-.contact-avatar[data-relation="朋友"] { background: var(--color-warning-default); }
-.contact-avatar[data-relation="投资人"] { background: var(--color-ai-default); }
-.contact-avatar[data-relation="潜在客户"] { background: var(--color-error-default); }
-.contact-avatar[data-relation="default"] { background: var(--color-info-default); }
-
-.detail-avatar[data-relation="导师"] { background: var(--color-accent-default); }
-.detail-avatar[data-relation="合作伙伴"] { background: var(--color-info-default); }
-.detail-avatar[data-relation="同行"] { background: var(--color-success-default); }
-.detail-avatar[data-relation="朋友"] { background: var(--color-warning-default); }
-.detail-avatar[data-relation="投资人"] { background: var(--color-ai-default); }
-.detail-avatar[data-relation="潜在客户"] { background: var(--color-error-default); }
-.detail-avatar[data-relation="default"] { background: var(--color-info-default); }
+.contact-avatar[data-color="amber"] { background: var(--color-accent-default); }
+.contact-avatar[data-color="blue"] { background: var(--color-ai-default); }
+.contact-avatar[data-color="green"] { background: var(--color-success-default); }
+.contact-avatar[data-color="teal"] { background: var(--color-line-connection); }
+.contact-avatar[data-color="red"] { background: var(--color-line-action); }
+.contact-avatar[data-color="gold"] { background: var(--color-line-origin); }
 
 .contact-info {
   flex: 1;
@@ -520,7 +596,7 @@ body {
   font-size: var(--text-h3);
   font-weight: var(--weight-semibold);
   color: var(--color-text-primary);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 .contact-role {
@@ -530,170 +606,92 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 2px;
 }
 
 .contact-tags {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
   margin-top: var(--space-1);
   flex-wrap: nowrap;
-  overflow: hidden;
 }
 
-.contact-tag {
-  display: inline-block;
-  padding: 1px var(--space-2);
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
   border-radius: var(--radius-full);
-  font-size: var(--text-caption);
+  font-size: var(--text-micro);
   font-weight: var(--weight-medium);
+  margin-right: var(--space-1);
   white-space: nowrap;
-  line-height: 1.5;
+  animation: bubbleIn var(--duration-spring) var(--ease-spring) both;
 }
 
-.contact-tag.relational {
+.chip.relational {
   background: var(--color-accent-light);
   color: var(--color-accent-text);
 }
 
-.contact-tag.contextual {
+.chip.contextual {
   background: var(--color-ai-light);
   color: var(--color-ai-text);
 }
 
-.contact-tag.custom {
-  background: var(--color-info-light);
-  color: var(--color-info-default);
+/* 关系强度指示条 */
+.strength-bar {
+  width: var(--person-avatar-size);
+  height: var(--space-1);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-left: var(--space-3);
 }
 
-.contact-tag-more {
-  display: inline-block;
-  padding: 1px var(--space-2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-medium);
-  background: var(--color-bg-tertiary);
-  color: var(--color-text-tertiary);
-  white-space: nowrap;
-  line-height: 1.5;
+.strength-fill {
+  height: 100%;
+  border-radius: var(--radius-xs);
+  background: var(--color-accent-default);
+  transition: width var(--duration-normal) var(--ease-out);
 }
 
 /* FAB */
 .fab {
-  position: absolute;
-  bottom: 92px; /* tab bar 72 + 20px gap */
-  right: var(--space-5);
+  position: fixed;
+  bottom: calc(var(--tab-bar-height-total) + var(--space-4));
+  right: var(--space-screen-x);
   width: 56px;
   height: 56px;
   border-radius: var(--radius-full);
   background: var(--color-accent-default);
   color: var(--color-text-on-accent);
-  border: none;
   font-size: 28px;
   font-weight: 300;
-  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-md);
-  cursor: pointer;
-  z-index: 40;
+  box-shadow: var(--shadow-fab);
+  z-index: 90;
+  -webkit-tap-highlight-color: transparent;
   transition: transform var(--duration-fast) var(--ease-spring),
               background var(--duration-fast) var(--ease-out);
-  -webkit-tap-highlight-color: transparent;
 }
 
 .fab:active {
-  transform: scale(0.92);
+  transform: scale(0.9);
   background: var(--color-accent-active);
 }
 
-/* 空状态 */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-12) var(--space-6);
-  text-align: center;
-}
-
-.empty-state .empty-icon {
-  margin-bottom: var(--space-6);
-  opacity: 0.4;
-}
-
-.empty-state .empty-title {
-  font-size: var(--text-h2);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-2);
-}
-
-.empty-state .empty-subtitle {
-  font-size: var(--text-body);
-  color: var(--color-text-tertiary);
-  margin-bottom: var(--space-8);
-  line-height: 1.6;
-}
-
-.empty-state .btn-primary {
-  font-size: var(--text-body);
-}
-
 /* ============================================
-   联系人详情页 · Contact Detail
+   视图2: 联系人详情页
    ============================================ */
-
-/* 毛玻璃导航栏 */
-.detail-nav {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--space-3) var(--space-5);
-  height: 52px;
-  background: var(--color-bg-primary-alpha80);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border-subtle);
-}
-
-.detail-nav-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  font-weight: var(--weight-medium);
-  color: var(--color-accent-default);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--space-2);
-  border-radius: var(--radius-sm);
-  transition: opacity var(--duration-fast) var(--ease-out);
-  -webkit-tap-highlight-color: transparent;
-}
-
-.detail-nav-btn:active {
-  opacity: 0.6;
-}
-
-.detail-nav-btn.more-btn {
-  color: var(--color-text-secondary);
-  font-size: var(--text-h2);
-  padding: var(--space-2) var(--space-3);
-  letter-spacing: 2px;
-}
-
 .detail-content {
-  padding: var(--space-5) var(--space-6) 120px;
+  padding: calc(var(--nav-height) + var(--safe-top) + var(--space-5)) var(--space-screen-x) calc(var(--tab-bar-height-total) + var(--space-8));
 }
 
-/* 人物身份区 */
+/* 人物身份卡 */
 .detail-hero {
   display: flex;
   flex-direction: column;
@@ -703,8 +701,8 @@ body {
 }
 
 .detail-avatar {
-  width: 72px;
-  height: 72px;
+  width: var(--person-avatar-size-lg);
+  height: var(--person-avatar-size-lg);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
@@ -712,145 +710,189 @@ body {
   font-size: var(--text-h1);
   font-weight: var(--weight-bold);
   color: var(--color-text-on-accent);
-  margin-bottom: var(--space-4);
-  position: relative;
-}
-
-.detail-name {
-  font-size: var(--text-display);
-  font-weight: var(--weight-bold);
-  color: var(--color-text-primary);
-  line-height: 1.3;
-  margin-bottom: var(--space-1);
-}
-
-.detail-role {
-  font-size: var(--text-body);
-  color: var(--color-text-secondary);
   margin-bottom: var(--space-3);
 }
 
-.detail-traits {
+.detail-avatar[data-color="amber"] { background: var(--color-accent-default); }
+.detail-avatar[data-color="blue"] { background: var(--color-ai-default); }
+.detail-avatar[data-color="green"] { background: var(--color-success-default); }
+.detail-avatar[data-color="teal"] { background: var(--color-line-connection); }
+.detail-avatar[data-color="red"] { background: var(--color-line-action); }
+.detail-avatar[data-color="gold"] { background: var(--color-line-origin); }
+
+.detail-name {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-1);
+}
+
+.detail-role-text {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.detail-traits-row {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-5);
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
 }
 
 .detail-trait {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  background: var(--color-bg-secondary);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-medium);
-  color: var(--color-text-tertiary);
-}
-
-/* 标签区域 */
-.detail-tags-section {
-  margin-bottom: var(--space-6);
-}
-
-.detail-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  justify-content: center;
-}
-
-.detail-tag {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-medium);
-}
-
-.detail-tag.relational {
-  background: var(--color-accent-light);
-  color: var(--color-accent-text);
-}
-
-.detail-tag.contextual {
-  background: var(--color-ai-light);
-  color: var(--color-ai-text);
-}
-
-.detail-tag.custom {
-  background: var(--color-info-light);
-  color: var(--color-info-default);
-}
-
-.hidden-tags-wrapper {
-  display: inline;
-}
-
-.expand-tags-btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-medium);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-secondary);
+  font-size: var(--text-micro);
   color: var(--color-text-tertiary);
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color var(--duration-fast) var(--ease-out);
+  margin: 0 var(--space-1);
+  font-weight: var(--weight-medium);
 }
 
-.expand-tags-btn:hover {
-  color: var(--color-text-secondary);
-}
-
-/* 核心四问回顾区 */
-.questions-review {
-  background: var(--color-bg-elevated);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5);
-  box-shadow: var(--shadow-xs);
-  border: 1px solid var(--color-border-subtle);
-  margin-bottom: var(--space-5);
-}
-
-.questions-review-header {
+.detail-tags-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.questions-review-title {
-  font-size: var(--text-h3);
+.detail-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-medium);
+  margin: 2px var(--space-1);
+  animation: bubbleIn var(--duration-spring) var(--ease-spring) both;
+}
+
+/* 四线档案区块 */
+.four-line-section {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-xs);
+  margin-bottom: var(--space-3);
+  overflow: hidden;
+  transition: max-height var(--duration-normal) var(--ease-out);
+}
+
+.four-line-header {
+  display: flex;
+  align-items: center;
+  height: var(--touch-min);
+  padding: 0 var(--space-4);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.four-line-indicator {
+  width: 3px;
+  height: 20px;
+  border-radius: 2px;
+  margin-right: var(--space-3);
+  flex-shrink: 0;
+}
+
+.four-line-indicator.origin { background: var(--color-line-origin); }
+.four-line-indicator.value { background: var(--color-line-value); }
+.four-line-indicator.connection { background: var(--color-line-connection); }
+.four-line-indicator.action { background: var(--color-line-action); }
+
+.four-line-title {
+  flex: 1;
+  font-size: var(--text-body-sm);
   font-weight: var(--weight-semibold);
   color: var(--color-text-primary);
 }
 
-.question-item {
-  margin-bottom: var(--space-4);
+.four-line-arrow {
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-tertiary);
+  transition: transform var(--duration-normal) var(--ease-out);
 }
 
-.question-item:last-of-type {
+.four-line-header.expanded .four-line-arrow {
+  transform: rotate(180deg);
+}
+
+.four-line-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-normal) var(--ease-out),
+              padding var(--duration-normal) var(--ease-out);
+  padding: 0 var(--space-4);
+}
+
+.four-line-body.expanded {
+  max-height: 300px;
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.four-line-field {
+  margin-bottom: var(--space-2);
+}
+
+.four-line-field:last-child {
   margin-bottom: 0;
 }
 
-.question-item.collapsed {
-  display: none;
+.four-line-label {
+  font-size: var(--text-micro);
+  color: var(--color-text-tertiary);
+  font-weight: var(--weight-medium);
+  margin-bottom: 2px;
+}
+
+.four-line-value {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-primary);
+  line-height: var(--leading-relaxed);
+}
+
+/* 核心四问 */
+.questions-card {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-xs);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.questions-title {
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.question-item {
+  margin-bottom: var(--space-3);
+}
+
+.question-item:last-child {
+  margin-bottom: 0;
 }
 
 .question-label {
-  font-size: var(--text-body-sm);
+  font-size: var(--text-caption);
   color: var(--color-text-tertiary);
   font-weight: var(--weight-medium);
-  margin-bottom: var(--space-1);
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  margin-bottom: var(--space-1);
 }
 
-.question-label .q-num {
+.q-num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -861,475 +903,455 @@ body {
   color: var(--color-accent-text);
   font-size: var(--text-micro);
   font-weight: var(--weight-semibold);
+  margin-right: var(--space-2);
   flex-shrink: 0;
 }
 
 .question-answer {
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
   color: var(--color-text-primary);
-  line-height: 1.6;
+  line-height: var(--leading-relaxed);
   padding-left: 26px;
 }
 
-.question-divider {
-  height: 1px;
-  background: var(--color-border-subtle);
-  margin: var(--space-4) 0;
+.question-collapsed {
+  display: none;
 }
 
 .expand-questions-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-1);
   width: 100%;
-  padding: var(--space-3) 0;
-  font-family: var(--font-sans);
+  padding: var(--space-2) 0;
+  margin-top: var(--space-2);
   font-size: var(--text-body-sm);
   font-weight: var(--weight-medium);
   color: var(--color-text-tertiary);
-  background: none;
-  border: none;
-  cursor: pointer;
   border-top: 1px solid var(--color-border-subtle);
-  margin-top: var(--space-3);
-  transition: color var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.expand-questions-btn:hover {
-  color: var(--color-text-secondary);
+.expand-questions-btn svg {
+  margin-left: var(--space-1);
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 
-/* AI 破冰建议区 */
-.ai-suggest-card {
-  border: 1.5px dashed var(--color-ai-default);
-  border-radius: var(--radius-lg);
+/* AI 破冰卡片 */
+.ai-icebreak-card {
   background: var(--color-ai-lighter);
-  padding: var(--space-5);
-  margin-bottom: var(--space-5);
+  border: 1px solid var(--color-ai-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
   position: relative;
+  overflow: hidden;
 }
 
-.ai-suggest-badge {
+.ai-icebreak-card::before {
+  content: '';
   position: absolute;
-  top: -10px;
-  left: var(--space-5);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-3);
+  top: -40px;
+  right: -40px;
+  width: 80px;
+  height: 80px;
+  background: var(--color-ai-glow);
   border-radius: var(--radius-full);
+  filter: blur(20px);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.ai-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.ai-badge-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
   background: var(--color-ai-light);
-  font-size: var(--text-micro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-2);
+}
+
+.ai-badge-label {
+  font-size: var(--text-caption);
   font-weight: var(--weight-semibold);
   color: var(--color-ai-text);
 }
 
-.ai-suggest-section {
-  margin-bottom: var(--space-4);
-}
-
-.ai-suggest-section:last-of-type {
-  margin-bottom: 0;
-}
-
-.ai-suggest-label {
-  font-size: var(--text-caption);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-tertiary);
-  margin-bottom: var(--space-2);
-}
-
-.ai-suggest-text {
+.ai-icebreak-text {
   font-size: var(--text-body);
   color: var(--color-text-primary);
-  line-height: 1.7;
-}
-
-.ai-suggest-text.quote {
+  line-height: var(--leading-relaxed);
   font-style: italic;
-  position: relative;
   padding-left: var(--space-4);
+  position: relative;
+  margin-bottom: var(--space-3);
 }
 
-.ai-suggest-text.quote::before {
-  content: '"';
+.ai-icebreak-text::before {
+  content: '\201C';
   position: absolute;
   left: 0;
-  top: -2px;
-  font-size: 24px;
+  top: -4px;
+  font-size: 20px;
   color: var(--color-ai-default);
   font-style: normal;
   font-weight: var(--weight-bold);
   opacity: 0.5;
 }
 
-.ai-suggest-topics {
+.ai-icebreak-actions {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.ai-suggest-topic {
-  font-size: var(--text-body-sm);
-  color: var(--color-text-secondary);
-  padding-left: var(--space-4);
-  position: relative;
-}
-
-.ai-suggest-topic::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--color-ai-default);
-}
-
-.ai-suggest-actions {
-  display: flex;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
-  padding-top: var(--space-4);
-  border-top: 1px dashed var(--color-border-default);
-}
-
-.btn-ai {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-on-ai);
-  background: var(--color-ai-default);
-  border: none;
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-full);
-  padding: var(--space-2) var(--space-5);
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-spring),
-              background var(--duration-fast) var(--ease-out);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-ai-text);
+  background: var(--color-ai-light);
+  margin-right: var(--space-2);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-spring);
 }
 
-.btn-ai:hover {
-  background: var(--color-ai-hover);
+.btn-copy:active {
+  transform: scale(0.95);
 }
 
-.btn-ai:active {
-  transform: scale(0.97);
+.btn-copy.copied {
+  color: var(--color-success-default);
+  background: var(--color-success-light);
 }
 
-/* ============================================
-   步骤指示器 · Step Indicator
-   ============================================ */
-.step-indicator {
+.btn-regen {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-ai-text);
+  background: var(--color-ai-light);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.btn-regen:active {
+  transform: scale(0.95);
+}
+
+/* 底部操作栏 */
+.detail-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 428px;
+  z-index: 90;
+  padding: var(--space-3) var(--space-screen-x) var(--space-4);
+  padding-bottom: calc(var(--space-4) + var(--safe-bottom));
+  background: var(--color-bg-frosted);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 0.5px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-edit {
+  flex: 1;
+  height: var(--touch-comfort);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-accent-text);
+  background: var(--color-accent-light);
+  margin-right: var(--space-3);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-spring);
 }
 
-.step-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background: var(--color-border-default);
-  transition: all var(--duration-normal) var(--ease-spring);
+.btn-edit:active { transform: scale(0.97); }
+
+.btn-delete {
+  height: var(--touch-comfort);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-error-default);
+  background: var(--color-error-light);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-spring);
 }
 
-.step-dot.active {
-  width: 24px;
-  background: var(--color-accent-default);
-}
-
-.step-dot.completed {
-  background: var(--color-success-default);
-}
-
-.step-line {
-  width: 20px;
-  height: 2px;
-  background: var(--color-border-default);
-  border-radius: 1px;
-  transition: background var(--duration-normal) var(--ease-out);
-}
-
-.step-line.completed {
-  background: var(--color-success-default);
-}
+.btn-delete:active { transform: scale(0.97); }
 
 /* ============================================
-   流程页面容器（Step 1/2a/2b/3）
+   视图3-5: 添加联系人 Step Flow
    ============================================ */
-.flow-pages-wrapper {
-  position: relative;
-  height: calc(852px - 48px - 44px);
-  overflow: hidden;
-}
-
-.flow-page {
+.step-view {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background: var(--color-bg-primary);
   overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0 var(--space-6);
-  padding-bottom: var(--space-12);
-  transition: transform var(--duration-slow) var(--ease-out),
-              opacity var(--duration-slow) var(--ease-out);
-  -webkit-overflow-scrolling: touch;
+  transition: transform var(--duration-normal) var(--ease-decelerate),
+              opacity var(--duration-normal) var(--ease-out);
+  will-change: transform, opacity;
 }
 
-.flow-page::-webkit-scrollbar {
-  display: none;
-}
-
-.flow-page.active {
+.step-view.active {
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto;
+  z-index: 2;
 }
 
-.flow-page.slide-left {
-  transform: translateX(-100%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.flow-page.slide-right {
+.step-view.hidden-right {
   transform: translateX(100%);
   opacity: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
-/* ============================================
-   Page Header
-   ============================================ */
-.page-header {
-  padding: var(--space-4) 0 var(--space-2);
+.step-view.hidden-left {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.page-title {
+/* 步骤头部 */
+.step-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-bg-primary);
+  padding: var(--space-3) var(--space-screen-x);
+  padding-top: calc(var(--safe-top) + var(--space-3));
+}
+
+.step-progress-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.step-segment {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-bg-tertiary);
+  margin-right: var(--space-1);
+  overflow: hidden;
+}
+
+.step-segment:last-child { margin-right: 0; }
+
+.step-segment-fill {
+  height: 100%;
+  border-radius: 2px;
+  width: 0;
+  background: var(--color-accent-default);
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.step-segment-fill.done {
+  width: 100%;
+  background: var(--color-success-default);
+}
+
+.step-segment-fill.active {
+  width: 100%;
+  background: var(--color-accent-default);
+}
+
+.step-back-btn {
+  display: flex;
+  align-items: center;
+  color: var(--color-accent-default);
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  padding: var(--space-2) 0;
+  min-height: var(--touch-min);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.step-back-btn svg {
+  margin-right: var(--space-1);
+}
+
+/* 步骤内容 */
+.step-content {
+  padding: var(--space-2) var(--space-screen-x) calc(var(--safe-bottom) + 100px);
+}
+
+.step-title {
   font-size: var(--text-h1);
   font-weight: var(--weight-bold);
   color: var(--color-text-primary);
-  line-height: 1.3;
+  line-height: var(--leading-tight);
   margin-bottom: var(--space-1);
 }
 
-.page-subtitle {
+.step-subtitle {
   font-size: var(--text-body-sm);
   color: var(--color-text-tertiary);
-  line-height: 1.5;
+  margin-bottom: var(--space-5);
+  line-height: var(--leading-normal);
 }
 
-/* ============================================
-   Section 标题
-   ============================================ */
-.section-label {
-  font-size: var(--text-caption);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: var(--space-3);
-  margin-top: var(--space-6);
-}
-
-/* ============================================
-   输入框 · Input
-   ============================================ */
-.input-group {
+/* AI 标签推荐区 */
+.ai-recommend-area {
+  background: var(--color-ai-lighter);
+  border: 1px solid var(--color-ai-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
   margin-bottom: var(--space-5);
 }
 
-.input-label {
-  display: block;
-  font-size: var(--text-body-sm);
+.ai-recommend-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.ai-recommend-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ai-text);
+}
+
+.ai-recommend-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ai-recommend-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-caption);
   font-weight: var(--weight-medium);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2);
+  background: var(--color-ai-light);
+  color: var(--color-ai-text);
+  margin: 0 var(--space-inline-chip) var(--space-inline-chip-row) 0;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  animation: bubbleIn var(--duration-spring) var(--ease-spring) both;
 }
 
-.input-label .required {
-  color: var(--color-accent-default);
-  margin-left: var(--space-1);
+.ai-recommend-chip:active {
+  transform: scale(0.95);
 }
 
-.text-input,
-.text-area {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  color: var(--color-text-primary);
+.ai-recommend-chip.selected {
+  background: var(--color-ai-default);
+  color: var(--color-text-on-accent);
+}
+
+/* 自定义标签输入 */
+.custom-tag-input-area {
+  display: flex;
+  align-items: center;
+  height: var(--touch-comfort);
   background: var(--color-bg-elevated);
-  border: 1.5px solid var(--color-border-default);
-  border-radius: var(--radius-md);
-  outline: none;
-  transition: border-color var(--duration-fast) var(--ease-out),
-              box-shadow var(--duration-fast) var(--ease-out),
-              transform var(--duration-fast) var(--ease-out);
+  border: 1.5px dashed var(--color-border-default);
+  border-radius: var(--radius-full);
+  padding: 0 var(--space-4);
+  margin-top: var(--space-3);
+  transition: border-color var(--duration-fast) var(--ease-out);
 }
 
-.text-input:focus,
-.text-area:focus {
-  border-color: var(--color-accent-default);
-  box-shadow: var(--shadow-focus);
-  transform: scale(1.005);
+.custom-tag-input-area:focus-within {
+  border-color: var(--color-ai-default);
 }
 
-.text-input::placeholder,
-.text-area::placeholder {
+.custom-tag-input-area input {
+  flex: 1;
+  height: 100%;
+  font-size: var(--text-body-sm);
+  color: var(--color-text-primary);
+  min-width: 0;
+}
+
+.custom-tag-input-area input::placeholder {
   color: var(--color-text-disabled);
 }
 
-.text-area {
-  min-height: 120px;
-  resize: none;
-  line-height: 1.6;
-}
-
-.input-ai .text-area {
-  border: 1.5px dashed var(--color-ai-default);
-  background: var(--color-ai-lighter);
-}
-
-.input-ai .text-area:focus {
-  box-shadow: var(--shadow-focus-ai);
-}
-
-/* Select */
-.select-wrapper {
-  position: relative;
-}
-
-.select-input {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  padding-right: var(--space-10);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  color: var(--color-text-primary);
-  background: var(--color-bg-elevated);
-  border: 1.5px solid var(--color-border-default);
-  border-radius: var(--radius-md);
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  transition: border-color var(--duration-fast) var(--ease-out),
-              box-shadow var(--duration-fast) var(--ease-out);
-}
-
-.select-input:focus {
-  border-color: var(--color-accent-default);
-  box-shadow: var(--shadow-focus);
-}
-
-.select-arrow {
-  position: absolute;
-  right: var(--space-4);
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--color-text-tertiary);
-}
-
-/* ============================================
-   标签 · Tags
-   ============================================ */
-.tag-group {
-  margin-bottom: var(--space-5);
-}
-
-.tag-group-label {
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-medium);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2);
+.custom-tag-add-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--color-ai-light);
+  color: var(--color-ai-default);
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  justify-content: center;
+  font-size: 16px;
+  font-weight: var(--weight-semibold);
+  margin-left: var(--space-2);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.tag-group-label .ai-badge {
-  font-size: var(--text-micro);
-  color: var(--color-ai-text);
-  background: var(--color-ai-light);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
-  font-weight: var(--weight-medium);
-}
-
-.tags-container {
+/* 已选标签 */
+.selected-tags-area {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  margin-top: var(--space-3);
+  min-height: 0;
 }
 
-.tag {
+.selected-tag-chip {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-2) var(--space-3);
-  min-height: 32px;
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-medium);
+  height: 28px;
+  padding: 0 10px;
   border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-  user-select: none;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateY(8px);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  margin: 0 var(--space-inline-chip) var(--space-inline-chip-row) 0;
+  animation: bubbleIn var(--duration-spring) var(--ease-spring) both;
 }
 
-.tag.visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity var(--duration-normal) var(--ease-out),
-              transform var(--duration-normal) var(--ease-spring),
-              background var(--duration-fast) var(--ease-out),
-              box-shadow var(--duration-fast) var(--ease-out);
-}
-
-.tag--relational {
+.selected-tag-chip.relational {
   background: var(--color-accent-light);
   color: var(--color-accent-text);
 }
 
-.tag--relational:hover {
-  background: var(--color-accent-lighter);
-}
-
-.tag--relational.selected {
-  outline: 2px solid var(--color-accent-default);
-  background: var(--color-accent-light);
-}
-
-.tag--contextual {
+.selected-tag-chip.contextual {
   background: var(--color-ai-light);
   color: var(--color-ai-text);
 }
 
-.tag--contextual:hover {
-  background: var(--color-ai-lighter);
-}
-
-.tag--contextual.selected {
-  outline: 2px solid var(--color-ai-default);
-  background: var(--color-ai-light);
-}
-
-.tag--custom {
-  background: var(--color-info-light);
-  color: var(--color-info-default);
-}
-
-.tag--custom:hover {
-  opacity: 0.85;
-}
-
-.tag .tag-remove {
+.selected-tag-remove {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1337,490 +1359,186 @@ body {
   height: 14px;
   border-radius: var(--radius-full);
   font-size: 10px;
-  line-height: 1;
+  margin-left: 4px;
   opacity: 0.6;
-  transition: opacity var(--duration-fast);
-  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.tag .tag-remove:hover {
-  opacity: 1;
+/* 表单 */
+.form-group {
+  margin-bottom: var(--space-5);
 }
 
-.tag .auto-mark {
-  font-size: var(--text-micro);
-  opacity: 0.7;
-  font-weight: var(--weight-regular);
+.form-label {
+  display: block;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-1);
 }
 
-.custom-tag-input-wrapper {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  min-height: 32px;
-  border: 1.5px dashed var(--color-border-default);
-  border-radius: var(--radius-full);
-  background: transparent;
-  cursor: text;
-  transition: border-color var(--duration-fast) var(--ease-out);
+.form-label .required {
+  color: var(--color-accent-default);
 }
 
-.custom-tag-input-wrapper:focus-within {
-  border-color: var(--color-info-default);
-}
-
-.custom-tag-input-wrapper input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: var(--font-sans);
-  font-size: var(--text-body-sm);
+.form-input {
+  width: 100%;
+  height: var(--touch-comfort);
+  padding: 0 var(--space-4);
+  font-size: var(--text-body);
   color: var(--color-text-primary);
-  width: 80px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
 }
 
-.custom-tag-input-wrapper input::placeholder {
+.form-input:focus {
+  border-color: var(--color-accent-default);
+  box-shadow: var(--shadow-focus);
+}
+
+.form-input::placeholder {
   color: var(--color-text-disabled);
 }
 
-.custom-tag-add-btn {
+.form-row {
+  display: flex;
+  margin-right: calc(-1 * var(--space-3));
+}
+
+.form-row .form-group {
+  flex: 1;
+  margin-right: var(--space-3);
+}
+
+.form-select {
+  width: 100%;
+  height: var(--touch-comfort);
+  padding: 0 var(--space-4);
+  padding-right: var(--space-8);
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.form-select:focus {
+  border-color: var(--color-accent-default);
+  box-shadow: var(--shadow-focus);
+}
+
+/* 四问输入 */
+.q-input-card {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.q-input-label {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+}
+
+.q-input-num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 20px;
   height: 20px;
   border-radius: var(--radius-full);
-  background: var(--color-info-light);
-  color: var(--color-info-default);
-  border: none;
-  cursor: pointer;
-  font-size: 12px;
+  background: var(--color-accent-light);
+  color: var(--color-accent-text);
+  font-size: var(--text-micro);
   font-weight: var(--weight-semibold);
-  transition: background var(--duration-fast);
+  margin-right: var(--space-2);
+  flex-shrink: 0;
 }
 
-.custom-tag-add-btn:hover {
-  background: var(--color-info-default);
-  color: var(--color-text-on-accent);
-}
-
-/* ============================================
-   核心四问 · Core Questions Card Slider
-   ============================================ */
-.question-slider {
-  position: relative;
-  height: 280px;
-  margin: var(--space-4) 0;
-  overflow: hidden;
-}
-
-.question-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: var(--color-bg-elevated);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--duration-slow) var(--ease-out),
-              opacity var(--duration-slow) var(--ease-out);
-}
-
-.question-card.current {
-  transform: translateY(0);
-  opacity: 1;
-  z-index: 2;
-}
-
-.question-card.fly-out {
-  transform: translateY(-120%) scale(0.9);
-  opacity: 0;
-  z-index: 1;
-}
-
-.question-card.fly-in {
-  transform: translateY(100%);
-  opacity: 0;
-  z-index: 1;
-}
-
-.question-card.hidden-card {
-  transform: translateY(100%);
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.question-number {
-  font-size: var(--text-caption);
-  font-weight: var(--weight-semibold);
-  color: var(--color-accent-default);
-  margin-bottom: var(--space-2);
-}
-
-.question-text {
-  font-size: var(--text-h2);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-primary);
-  line-height: 1.5;
-  margin-bottom: var(--space-4);
-}
-
-.question-textarea {
+.q-textarea {
   width: 100%;
   min-height: 80px;
   padding: var(--space-3);
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
+  font-size: var(--text-body-sm);
   color: var(--color-text-primary);
   background: var(--color-bg-primary);
-  border: 1.5px solid var(--color-border-subtle);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-md);
-  outline: none;
   resize: none;
+  line-height: var(--leading-relaxed);
   transition: border-color var(--duration-fast) var(--ease-out),
               box-shadow var(--duration-fast) var(--ease-out);
 }
 
-.question-textarea:focus {
+.q-textarea:focus {
   border-color: var(--color-accent-default);
   box-shadow: var(--shadow-focus);
 }
 
-.question-textarea::placeholder {
+.q-textarea::placeholder {
   color: var(--color-text-disabled);
 }
 
-.question-progress {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: var(--space-4);
+/* CTA 按钮 */
+.step-cta-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 428px;
+  z-index: 90;
+  padding: var(--space-3) var(--space-screen-x) var(--space-4);
+  padding-bottom: calc(var(--space-4) + var(--safe-bottom));
+  background: var(--gradient-fade-top);
 }
 
-.question-progress-text {
-  font-size: var(--text-caption);
-  color: var(--color-text-tertiary);
-  font-weight: var(--weight-medium);
-}
-
-.question-nav-btn {
-  padding: var(--space-2) var(--space-5);
-  font-family: var(--font-sans);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-on-accent);
-  background: var(--color-accent-default);
-  border: none;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-spring),
-              background var(--duration-fast) var(--ease-out);
-}
-
-.question-nav-btn:hover {
-  background: var(--color-accent-hover);
-}
-
-.question-nav-btn:active {
-  transform: scale(0.97);
-  background: var(--color-accent-active);
-}
-
-.question-nav-btn:disabled {
-  background: var(--color-text-disabled);
-  cursor: not-allowed;
-  transform: none;
-}
-
-.question-nav-btn:focus-visible {
-  box-shadow: var(--shadow-focus);
-}
-
-/* ============================================
-   AI 破冰提示卡片 (Step 2b)
-   ============================================ */
-.ai-card {
-  border: 1.5px dashed var(--color-ai-default);
-  border-radius: var(--radius-lg);
-  background: var(--color-ai-lighter);
-  padding: var(--space-5);
-  margin: var(--space-5) 0;
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-  border-width: 0;
-  transition: opacity var(--duration-normal) var(--ease-out),
-              max-height var(--duration-spring) var(--ease-out),
-              padding var(--duration-normal) var(--ease-out),
-              margin var(--duration-normal) var(--ease-out),
-              border-width var(--duration-instant) var(--ease-out);
-}
-
-.ai-card.revealed {
-  opacity: 1;
-  max-height: 400px;
-  overflow: visible;
-  padding: var(--space-5);
-  margin: var(--space-5) 0;
-  border-width: 1.5px;
-}
-
-.ai-card-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-3);
-}
-
-.ai-card-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--radius-sm);
-  background: var(--color-ai-light);
+.btn-cta {
+  width: 100%;
+  height: var(--touch-cta);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.ai-card-icon svg {
-  width: 14px;
-  height: 14px;
-}
-
-.ai-card-label {
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-semibold);
-  color: var(--color-ai-text);
-}
-
-.ai-card-content {
-  font-size: var(--text-body);
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-}
-
-.ai-card-content .highlight {
-  color: var(--color-ai-text);
-  font-weight: var(--weight-medium);
-}
-
-/* ============================================
-   底部操作栏 · Bottom Actions (Flow pages)
-   ============================================ */
-.bottom-actions {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: var(--space-4) var(--space-6);
-  padding-bottom: var(--space-8);
-  background: linear-gradient(to top, var(--color-bg-primary) 60%, transparent);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 10;
-}
-
-.btn-text {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-medium);
-  color: var(--color-accent-default);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  transition: background var(--duration-fast) var(--ease-out);
-}
-
-.btn-text:hover {
-  background: var(--color-accent-lighter);
-}
-
-.btn-text:focus-visible {
-  box-shadow: var(--shadow-focus);
-}
-
-.btn-primary {
-  font-family: var(--font-sans);
+  border-radius: var(--radius-full);
   font-size: var(--text-body);
   font-weight: var(--weight-semibold);
   color: var(--color-text-on-accent);
   background: var(--color-accent-default);
-  border: none;
-  border-radius: var(--radius-full);
-  padding: var(--space-3) var(--space-8);
-  cursor: pointer;
+  box-shadow: var(--shadow-cta);
+  -webkit-tap-highlight-color: transparent;
   transition: transform var(--duration-fast) var(--ease-spring),
               background var(--duration-fast) var(--ease-out);
 }
 
-.btn-primary:hover {
-  background: var(--color-accent-hover);
-}
-
-.btn-primary:active {
+.btn-cta:active {
   transform: scale(0.97);
   background: var(--color-accent-active);
 }
 
-.btn-primary:focus-visible {
-  box-shadow: var(--shadow-focus);
-}
-
 /* ============================================
-   Step 1 特有样式
+   视图5: 保存成功
    ============================================ */
-.intro-section {
-  margin-bottom: var(--space-5);
-}
-
-.ai-generate-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  font-family: var(--font-sans);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-medium);
-  color: var(--color-ai-text);
-  background: var(--color-ai-light);
-  border: 1px solid var(--color-ai-default);
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
-  margin-top: var(--space-3);
-}
-
-.ai-generate-btn:hover {
-  background: var(--color-ai-lighter);
-  box-shadow: var(--shadow-focus-ai);
-}
-
-.ai-generate-btn:active {
-  transform: scale(0.97);
-}
-
-.ai-generate-btn svg {
-  width: 14px;
-  height: 14px;
-}
-
-.ai-hint {
-  margin-top: var(--space-8);
-  padding: var(--space-6) var(--space-5);
-  border: 1.5px dashed var(--color-border-subtle);
-  border-radius: var(--radius-lg);
-  text-align: center;
-  opacity: 0.6;
-  transition: opacity var(--duration-normal) var(--ease-out),
-              max-height var(--duration-spring) var(--ease-out),
-              margin var(--duration-normal) var(--ease-out),
-              padding var(--duration-normal) var(--ease-out);
-}
-
-.ai-hint.hidden {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  margin-top: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  border-width: 0;
-}
-
-.ai-hint-text {
-  font-size: var(--text-body-sm);
-  color: var(--color-text-tertiary);
-  line-height: 1.6;
-}
-
-.ai-hint-icon {
-  display: inline-block;
-  margin-bottom: var(--space-2);
-}
-
-.tag-system {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height var(--duration-spring) var(--ease-out),
-              opacity var(--duration-normal) var(--ease-out);
-}
-
-.tag-system.expanded {
-  max-height: 2000px;
-  opacity: 1;
-}
-
-/* ============================================
-   Step 2a 特有样式
-   ============================================ */
-.form-section {
-  margin-bottom: var(--space-6);
-}
-
-.form-row {
-  display: flex;
-  gap: var(--space-3);
-}
-
-.form-row .input-group {
-  flex: 1;
-}
-
-.tag-select-area {
-  margin: var(--space-5) 0;
-}
-
-.tag-select-area .tag {
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out),
-              opacity var(--duration-normal) var(--ease-spring),
-              transform var(--duration-normal) var(--ease-spring);
-}
-
-/* ============================================
-   Step 2b 特有样式
-   ============================================ */
-.step2b-header {
-  padding: var(--space-4) 0 var(--space-2);
-}
-
-.step2b-title {
-  font-size: var(--text-h2);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-primary);
-  line-height: 1.4;
-  margin-bottom: var(--space-1);
-}
-
-.step2b-subtitle {
-  font-size: var(--text-body-sm);
-  color: var(--color-text-tertiary);
-}
-
-/* ============================================
-   Step 3: 保存成功确认页
-   ============================================ */
-.success-page {
+.success-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 60vh;
   text-align: center;
-  padding-top: var(--space-12);
+  padding: 0 var(--space-screen-x);
 }
 
-.success-icon {
+.success-check {
   width: 64px;
   height: 64px;
   border-radius: var(--radius-full);
@@ -1828,14 +1546,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-5);
   animation: successPop var(--duration-spring) var(--ease-spring);
-}
-
-@keyframes successPop {
-  0% { transform: scale(0.5); opacity: 0; }
-  60% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
 }
 
 .success-title {
@@ -1848,118 +1560,77 @@ body {
 .success-subtitle {
   font-size: var(--text-body);
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-8);
-  line-height: 1.6;
+  margin-bottom: var(--space-6);
+  line-height: var(--leading-normal);
 }
 
-.success-contact-name {
-  font-weight: var(--weight-semibold);
+.success-subtitle strong {
   color: var(--color-accent-text);
+  font-weight: var(--weight-semibold);
+}
+
+.success-ai-preview {
+  width: 100%;
+  background: var(--color-ai-lighter);
+  border: 1px solid var(--color-ai-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  text-align: left;
+}
+
+.success-ai-preview-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.success-ai-preview-text {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
 }
 
 .success-actions {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  width: 100%;
-  max-width: 280px;
+  margin-top: var(--space-4);
 }
 
-.btn-secondary {
-  font-family: var(--font-sans);
+.btn-cta-outline {
+  width: 100%;
+  height: var(--touch-cta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
   font-size: var(--text-body);
   font-weight: var(--weight-semibold);
   color: var(--color-accent-text);
   background: var(--color-accent-light);
-  border: none;
-  border-radius: var(--radius-full);
-  padding: var(--space-3) var(--space-8);
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-spring),
-              background var(--duration-fast) var(--ease-out);
+  margin-top: var(--space-3);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-spring);
 }
 
-.btn-secondary:hover {
-  background: var(--color-accent-lighter);
-}
+.btn-cta-outline:active { transform: scale(0.97); }
 
-.btn-secondary:active {
-  transform: scale(0.97);
-}
-
-.btn-secondary:focus-visible {
-  box-shadow: var(--shadow-focus);
-}
-
-.btn-ghost {
-  font-family: var(--font-sans);
+.btn-ghost-text {
+  width: 100%;
+  height: var(--touch-comfort);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--text-body-sm);
   font-weight: var(--weight-medium);
   color: var(--color-text-tertiary);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-sm);
-  transition: color var(--duration-fast) var(--ease-out);
-}
-
-.btn-ghost:hover {
-  color: var(--color-text-secondary);
-}
-
-.btn-ghost:focus-visible {
-  box-shadow: var(--shadow-focus);
+  margin-top: var(--space-2);
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ============================================
-   动画 · Animations
-   ============================================ */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.ai-loading .ai-card-content {
-  animation: pulse 1.5s infinite;
-}
-
-/* ============================================
-   Toast 提示
-   ============================================ */
-.toast {
-  position: fixed;
-  top: var(--space-10);
-  left: 50%;
-  transform: translateX(-50%) translateY(-100%);
-  background: var(--color-text-primary);
-  color: var(--color-bg-primary);
-  padding: var(--space-3) var(--space-6);
-  border-radius: var(--radius-full);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-medium);
-  z-index: 1000;
-  transition: transform var(--duration-normal) var(--ease-spring);
-  white-space: nowrap;
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ============================================
-   Bottom Sheet (筛选/更多操作)
+   Bottom Sheet
    ============================================ */
 .sheet-overlay {
   position: fixed;
@@ -1967,7 +1638,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(44,40,37,0.4);
+  background: var(--color-bg-overlay);
   z-index: 200;
   opacity: 0;
   pointer-events: none;
@@ -1985,11 +1656,13 @@ body {
   left: 0;
   right: 0;
   background: var(--color-bg-elevated);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  padding: var(--space-3) var(--space-6) var(--space-8);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  padding: var(--space-2) var(--space-screen-x) var(--space-6);
+  padding-bottom: calc(var(--space-6) + var(--safe-bottom));
   transform: translateY(100%);
-  transition: transform var(--duration-normal) var(--ease-out);
-  max-height: 70vh;
+  transition: transform var(--duration-slow) var(--ease-decelerate);
+  box-shadow: var(--shadow-sheet);
+  max-height: 90vh;
   overflow-y: auto;
 }
 
@@ -1999,10 +1672,10 @@ body {
 
 .sheet-handle {
   width: 36px;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--color-border-default);
-  margin: 0 auto var(--space-4);
+  height: 5px;
+  border-radius: 2.5px;
+  background: var(--color-sheet-handle);
+  margin: var(--space-2) auto var(--space-4);
 }
 
 .sheet-title {
@@ -2015,1066 +1688,916 @@ body {
 .sheet-item {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
   padding: var(--space-4) 0;
   font-size: var(--text-body);
   color: var(--color-text-primary);
-  border-bottom: 1px solid var(--color-border-subtle);
-  cursor: pointer;
-  transition: opacity var(--duration-fast) var(--ease-out);
+  border-bottom: 0.5px solid var(--color-border-subtle);
   -webkit-tap-highlight-color: transparent;
 }
 
-.sheet-item:active {
-  opacity: 0.6;
-}
+.sheet-item:last-child { border-bottom: none; }
+.sheet-item:active { opacity: 0.6; }
+.sheet-item.danger { color: var(--color-error-default); }
 
-.sheet-item:last-child {
-  border-bottom: none;
-}
-
-.sheet-item.danger {
-  color: var(--color-error-default);
-}
-
-.sheet-item .sheet-icon {
+.sheet-icon {
   width: 20px;
   height: 20px;
+  margin-right: var(--space-3);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-/* 筛选 sheet */
-.filter-sheet .filter-group {
-  margin-bottom: var(--space-4);
+/* Toast */
+.toast-container {
+  position: fixed;
+  top: calc(var(--safe-top) + var(--space-10));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
 }
 
-.filter-sheet .filter-label {
+.toast {
+  background: var(--color-text-primary);
+  color: var(--color-text-on-accent);
+  padding: var(--toast-padding-y) var(--toast-padding-x);
+  border-radius: var(--radius-toast);
   font-size: var(--text-body-sm);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2);
-}
-
-.filter-sheet .filter-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.filter-tag {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  font-size: var(--text-caption);
   font-weight: var(--weight-medium);
-  cursor: pointer;
-  border: 1.5px solid var(--color-border-subtle);
-  background: var(--color-bg-primary);
-  color: var(--color-text-secondary);
-  transition: all var(--duration-fast) var(--ease-out);
-  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-spring);
 }
 
-.filter-tag.selected {
-  border-color: var(--color-accent-default);
-  background: var(--color-accent-light);
-  color: var(--color-accent-text);
-}
-
-.filter-sheet .filter-actions {
-  display: flex;
-  gap: var(--space-3);
-  margin-top: var(--space-4);
-}
-
-.filter-sheet .filter-actions .btn-primary {
-  flex: 1;
-  text-align: center;
-  font-size: var(--text-body-sm);
-  padding: var(--space-3);
-}
-
-.filter-sheet .filter-actions .btn-text {
-  flex: 1;
-  text-align: center;
-}
-
-/* 确认弹窗 */
-.confirm-dialog {
-  text-align: center;
-  padding: var(--space-4) 0;
-}
-
-.confirm-title {
-  font-size: var(--text-h3);
-  font-weight: var(--weight-semibold);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-2);
-}
-
-.confirm-msg {
-  font-size: var(--text-body);
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-6);
-  line-height: 1.6;
-}
-
-.confirm-actions {
-  display: flex;
-  gap: var(--space-3);
-}
-
-.confirm-actions .btn-primary {
-  flex: 1;
-  font-size: var(--text-body-sm);
-  padding: var(--space-3);
-  text-align: center;
-}
-
-.confirm-actions .btn-text {
-  flex: 1;
-  text-align: center;
-  color: var(--color-text-tertiary);
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ============================================
-   页面底部留白
+   动画 · Animations
    ============================================ */
-.page-content-bottom-spacer {
-  height: 100px;
+@keyframes bubbleIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.08); }
+  70% { transform: scale(0.96); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* ============================================
-   可访问性
-   ============================================ */
+@keyframes successPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 滚动渐入 */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 减弱动画 */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================
+   补充 · 内联样式提取
+   ============================================ */
+.sheet-delete-confirm {
+  text-align: center;
+  padding-top: var(--space-6);
+}
+
+.sheet-delete-title {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.sheet-delete-desc {
+  font-size: var(--text-body);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+
+.sheet-delete-actions {
+  display: flex;
+  margin: 0 calc(-1 * var(--space-screen-x));
+}
+
+.sheet-delete-btn {
+  flex: 1;
+  height: var(--touch-cta);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sheet-delete-btn.cancel {
+  color: var(--color-text-tertiary);
+}
+
+.sheet-delete-btn.danger {
+  color: var(--color-error-default);
+}
+
+.step-tags-label-wrap {
+  margin-bottom: var(--space-5);
+}
+
+.questions-section-label {
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.questions-section-wrap {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-2);
+}
+
+.ai-preview-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-ai-text);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-10) 0;
+  color: var(--color-text-tertiary);
+  font-size: var(--text-body-sm);
+}
+
+.detail-questions-card {
+  margin-top: var(--space-4);
+}
+
+.detail-icebreak-card {
+  margin-top: var(--space-4);
+}
 </style>
 </head>
 <body>
 
-<div class="device-frame">
-  <!-- 状态栏 -->
-  <div class="status-bar">
-    <span class="time">9:41</span>
-    <span class="icons">
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 8h2v4H1zM5 5h2v7H5zM9 3h2v9H9zM13 0h2v12h-2z" fill="currentColor" opacity="0.4"/></svg>
-      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 3C6 3 4.2 3.8 2.8 5.2l1.4 1.4C5.3 5.5 6.6 5 8 5s2.7.5 3.8 1.6l1.4-1.4C11.8 3.8 10 3 8 3zm0 4c-1.1 0-2 .4-2.8 1.2L8 11l2.8-2.8C10 7.4 9.1 7 8 7z" fill="currentColor"/></svg>
-      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0" y="1" width="20" height="10" rx="2" stroke="currentColor" stroke-width="1.2" fill="none"/><rect x="21" y="4" width="2" height="4" rx="0.5" fill="currentColor" opacity="0.4"/><rect x="2" y="3" width="14" height="6" rx="1" fill="currentColor"/></svg>
-    </span>
+<div class="app-shell" id="app">
+
+  <!-- ========== 顶部导航栏（首页用） ========== -->
+  <div class="top-nav" id="home-nav">
+    <div class="top-nav-inner">
+      <span class="top-nav-brand">LinkLog</span>
+      <button class="top-nav-icon-btn" onclick="showToast('搜索功能开发中')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+    </div>
   </div>
 
-  <!-- ==========================================
-       导航框架：首页 + 详情页（有 Tab Bar）
-       ========================================== -->
-  <div class="app-nav-frame" id="app-nav-frame">
+  <!-- ========== 详情页导航栏 ========== -->
+  <div class="detail-top-nav" id="detail-nav" style="display:none;">
+    <div class="top-nav-inner">
+      <button class="detail-nav-back" onclick="goBackToHome()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+        返回
+      </button>
+      <span class="detail-nav-title" id="detail-nav-title"></span>
+      <button class="top-nav-icon-btn" onclick="openDetailMore()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+      </button>
+    </div>
+  </div>
 
-    <!-- ========== 首页（联系人列表） ========== -->
-    <div class="page active" id="page-home">
-      <!-- 问候区 -->
-      <div class="greeting-section" id="greeting-section">
-        <span class="greeting-text" id="greeting-text">早上好，YSY</span>
-        <div class="greeting-avatar" onclick="showToast('设置页面（待开发）')">Y</div>
-      </div>
+  <!-- ========== 视图1: 首页 Dashboard ========== -->
+  <div class="view active" id="view-home">
 
-      <!-- 统计感知条 -->
-      <div class="stats-bar">
-        <div class="stat-item">
-          已记录 <span class="stat-num">6</span> 人
-        </div>
-        <span class="stat-pill accent">本周新增 3 人</span>
-        <span class="stat-pill warning">待跟进 2 人</span>
-      </div>
-
-      <!-- 搜索栏（吸顶） -->
-      <div class="search-section" id="search-section">
-        <div class="search-bar">
-          <span class="search-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          </span>
-          <input type="text" id="search-input" placeholder="搜索姓名、公司、标签…" oninput="filterContacts()">
-          <button class="filter-btn" aria-label="筛选联系人" onclick="openFilterSheet()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- 联系人列表 -->
-      <div class="contact-list" id="contact-list">
-        <!-- 由 JS 动态生成 -->
-      </div>
-
-      <!-- 空状态 -->
-      <div class="empty-state" id="empty-state" style="display:none;">
-        <div class="empty-icon">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <circle cx="40" cy="28" r="12" stroke="var(--color-border-default)" stroke-width="2" fill="none"/>
-            <path d="M20 62c0-11 8.9-20 20-20s20 9 20 20" stroke="var(--color-border-default)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <circle cx="56" cy="24" r="8" stroke="var(--color-border-default)" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
-          </svg>
-        </div>
-        <div class="empty-title">开始记录你的第一个人脉</div>
-        <div class="empty-subtitle">每一次连接都值得被记住</div>
-        <button class="btn-primary" onclick="startAddContact()">添加第一个联系人</button>
-      </div>
-
-      <!-- FAB -->
-      <button class="fab" id="fab-btn" onclick="startAddContact()">+</button>
-
-      <!-- 底部 Tab Bar -->
-      <div class="tab-bar" id="tab-bar">
-        <button class="tab-item active" data-tab="home" onclick="switchTab('home')">
-          <span class="tab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-          <span class="tab-label">首页</span>
-        </button>
-        <button class="tab-item" data-tab="add" onclick="startAddContact()">
-          <span class="tab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-          <span class="tab-label">添加</span>
-        </button>
-        <button class="tab-item" data-tab="settings" onclick="showToast('设置页面（待开发）')">
-          <span class="tab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>
-          <span class="tab-label">设置</span>
-        </button>
+    <!-- 问候区 -->
+    <div class="greeting-area">
+      <div class="greeting-text" id="greeting-text">早上好，YSY</div>
+      <div class="greeting-sub">
+        <span class="stat-num">6</span>位联系人 · <span class="stat-num">4</span>条纪要
       </div>
     </div>
 
-    <!-- ========== 联系人详情页 ========== -->
-    <div class="page slide-right" id="page-detail">
-      <!-- 毛玻璃导航栏 -->
-      <div class="detail-nav">
-        <button class="detail-nav-btn" onclick="goBackToHome()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
-          返回
-        </button>
-        <button class="detail-nav-btn more-btn" onclick="openDetailMore()">•••</button>
-      </div>
-
-      <!-- 详情内容 -->
-      <div class="detail-content" id="detail-content">
-        <!-- 由 JS 动态填充 -->
-      </div>
-
-      <!-- 底部 Tab Bar (详情页也显示) -->
-      <div class="tab-bar">
-        <button class="tab-item active" data-tab="home" onclick="goBackToHome()">
-          <span class="tab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-          <span class="tab-label">首页</span>
-        </button>
-        <button class="tab-item" data-tab="add" onclick="startAddContact()">
-          <span class="tab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-          <span class="tab-label">添加</span>
-        </button>
-        <button class="tab-item" data-tab="settings" onclick="showToast('设置页面（待开发）')">
-          <span class="tab-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>
-          <span class="tab-label">设置</span>
-        </button>
+    <!-- 搜索栏 -->
+    <div class="search-area">
+      <div class="search-bar" id="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="search-input" type="text" id="search-input" placeholder="搜索联系人" oninput="filterContacts()" onfocus="onSearchFocus()" onblur="onSearchBlur()">
       </div>
     </div>
 
-  </div><!-- /app-nav-frame -->
-
-  <!-- ==========================================
-       流程页面框架：Step 1/2a/2b/3（无 Tab Bar，有步骤指示器）
-       ========================================== -->
-  <div class="flow-pages-wrapper" id="flow-pages-wrapper" style="display:none;">
-
-    <!-- 步骤指示器 -->
-    <div class="step-indicator">
-      <div class="step-dot active" id="dot-1"></div>
-      <div class="step-line" id="line-1-2"></div>
-      <div class="step-dot" id="dot-2"></div>
-      <div class="step-line" id="line-2-3"></div>
-      <div class="step-dot" id="dot-3"></div>
-    </div>
-
-    <!-- ========== Step 1: 标签体系设置 ========== -->
-    <div class="flow-page active" id="page-step1">
-      <div class="page-header">
-        <h1 class="page-title">设置你的标签体系</h1>
-        <p class="page-subtitle">先做个自我介绍，AI 会为你推荐合适的标签</p>
-      </div>
-
-      <div class="intro-section">
-        <div class="input-group">
-          <label class="input-label">自我介绍</label>
-          <textarea class="text-area" id="self-intro" placeholder="比如：我是一名产品经理，在互联网行业做了5年，最近在关注 AI 和社交产品方向，喜欢和有创业精神的人交流..."></textarea>
-        </div>
-        <button class="ai-generate-btn" id="generate-tags-btn" onclick="generateTags()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
-          AI 推荐标签体系
-        </button>
-      </div>
-
-      <div class="ai-hint" id="ai-hint">
-        <div class="ai-hint-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="var(--color-border-default)" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M16 10v4m0 4v1" stroke="var(--color-text-tertiary)" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-        <div class="ai-hint-text">点击上方按钮，AI 将为你生成专属标签体系</div>
-      </div>
-
-      <div class="tag-system" id="tag-system">
-        <div class="tag-group">
-          <div class="tag-group-label">行业方向 <span class="ai-badge">AI 推荐</span></div>
-          <div class="tags-container" id="industry-tags">
-            <span class="tag tag--contextual" data-tag="互联网">互联网</span>
-            <span class="tag tag--contextual" data-tag="AI/ML">AI/ML</span>
-            <span class="tag tag--contextual" data-tag="SaaS">SaaS</span>
-            <span class="tag tag--contextual" data-tag="社交产品">社交产品</span>
-            <span class="tag tag--contextual" data-tag="内容创业">内容创业</span>
-            <span class="tag tag--contextual" data-tag="投资">投资</span>
-          </div>
-        </div>
-        <div class="tag-group">
-          <div class="tag-group-label">关系类型 <span class="ai-badge">AI 推荐</span></div>
-          <div class="tags-container" id="relation-tags">
-            <span class="tag tag--relational" data-tag="导师">导师</span>
-            <span class="tag tag--relational" data-tag="合作伙伴">合作伙伴</span>
-            <span class="tag tag--relational" data-tag="潜在客户">潜在客户</span>
-            <span class="tag tag--relational" data-tag="同行">同行</span>
-            <span class="tag tag--relational" data-tag="投资人">投资人</span>
-          </div>
-        </div>
-        <div class="tag-group">
-          <div class="tag-group-label">行为标签 <span class="ai-badge">AI 推荐</span></div>
-          <div class="tags-container" id="behavior-tags">
-            <span class="tag tag--contextual" data-tag="主动连接" data-auto="true">主动连接 <span class="auto-mark">(自动)</span></span>
-            <span class="tag tag--contextual" data-tag="活动认识" data-auto="true">活动认识 <span class="auto-mark">(自动)</span></span>
-            <span class="tag tag--contextual" data-tag="朋友介绍" data-auto="true">朋友介绍 <span class="auto-mark">(自动)</span></span>
-            <span class="tag tag--contextual" data-tag="线上社群" data-auto="true">线上社群 <span class="auto-mark">(自动)</span></span>
-          </div>
-        </div>
-        <div class="tag-group">
-          <div class="tag-group-label">自定义标签</div>
-          <div class="tags-container" id="custom-tags-step1"></div>
-          <div class="custom-tag-input-wrapper" style="margin-top: var(--space-2);">
-            <input type="text" id="custom-tag-input-step1" placeholder="添加自定义标签" maxlength="10" onkeydown="if(event.key==='Enter')addCustomTagStep1()">
-            <button class="custom-tag-add-btn" onclick="addCustomTagStep1()">+</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="page-content-bottom-spacer"></div>
-
-      <div class="bottom-actions">
-        <button class="btn-text" onclick="cancelFlow()">取消</button>
-        <button class="btn-primary" id="step1-next-btn" onclick="goToStep2a()">下一步</button>
+    <!-- 标签筛选行 -->
+    <div class="filter-row">
+      <div class="filter-row-inner" id="filter-row-inner">
+        <span class="filter-chip active" data-filter="全部" onclick="selectFilter(this)">全部</span>
+        <span class="filter-chip" data-filter="刚认识" onclick="selectFilter(this)">刚认识</span>
+        <span class="filter-chip" data-filter="想深入" onclick="selectFilter(this)">想深入</span>
+        <span class="filter-chip" data-filter="老朋友" onclick="selectFilter(this)">老朋友</span>
+        <span class="filter-chip" data-filter="同行" onclick="selectFilter(this)">同行</span>
+        <span class="filter-chip" data-filter="贵人" onclick="selectFilter(this)">贵人</span>
       </div>
     </div>
 
-    <!-- ========== Step 2a: 基本信息 + 标签选择 ========== -->
-    <div class="flow-page slide-right" id="page-step2a">
-      <div class="page-header">
-        <h1 class="page-title">添加联系人</h1>
-        <p class="page-subtitle">记录这次连接，让关系自然生长</p>
-      </div>
+    <!-- 联系人卡片列表 -->
+    <div class="contact-list" id="contact-list"></div>
 
-      <div class="form-section">
-        <div class="section-label">基本信息</div>
-        <div class="input-group">
-          <label class="input-label">姓名<span class="required">*</span></label>
-          <input type="text" class="text-input" id="contact-name" placeholder="输入联系人姓名">
+  </div><!-- /view-home -->
+
+  <!-- ========== 视图2: 联系人详情 ========== -->
+  <div class="view hidden-right" id="view-detail">
+    <div class="detail-content" id="detail-content"></div>
+    <!-- 底部操作栏 -->
+    <div class="detail-bottom-bar" id="detail-bottom-bar">
+      <button class="btn-edit" onclick="showToast('编辑功能开发中')">编辑</button>
+      <button class="btn-delete" onclick="confirmDelete()">删除</button>
+    </div>
+  </div><!-- /view-detail -->
+
+  <!-- ========== 视图3: 添加联系人 Step 1 ========== -->
+  <div class="step-view hidden-right" id="view-step1" style="display:none">
+    <div class="step-header">
+      <div class="step-progress-bar">
+        <div class="step-segment"><div class="step-segment-fill active" id="seg1"></div></div>
+        <div class="step-segment"><div class="step-segment-fill" id="seg2"></div></div>
+        <div class="step-segment"><div class="step-segment-fill" id="seg3"></div></div>
+      </div>
+      <button class="step-back-btn" onclick="cancelAddFlow()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+        取消
+      </button>
+    </div>
+    <div class="step-content">
+      <h1 class="step-title">设置标签</h1>
+      <p class="step-subtitle">为你的联系人选择合适的标签，AI 也能帮你推荐</p>
+
+      <!-- AI 推荐标签 -->
+      <div class="ai-recommend-area">
+        <div class="ai-recommend-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-ai-default)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
+          <span class="ai-recommend-label">AI 推荐标签</span>
         </div>
-        <div class="form-row">
-          <div class="input-group">
-            <label class="input-label">角色</label>
-            <input type="text" class="text-input" id="contact-role" placeholder="如：产品总监">
-          </div>
-          <div class="input-group">
-            <label class="input-label">公司</label>
-            <input type="text" class="text-input" id="contact-company" placeholder="公司名称">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="input-group">
-            <label class="input-label">星座</label>
-            <div class="select-wrapper">
-              <select class="select-input" id="contact-constellation">
-                <option value="">选择星座</option>
-                <option>白羊座</option><option>金牛座</option><option>双子座</option>
-                <option>巨蟹座</option><option>狮子座</option><option>处女座</option>
-                <option>天秤座</option><option>天蝎座</option><option>射手座</option>
-                <option>摩羯座</option><option>水瓶座</option><option>双鱼座</option>
-              </select>
-              <span class="select-arrow">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </div>
-          </div>
-          <div class="input-group">
-            <label class="input-label">MBTI</label>
-            <div class="select-wrapper">
-              <select class="select-input" id="contact-mbti">
-                <option value="">选择 MBTI</option>
-                <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
-                <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
-                <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
-                <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
-              </select>
-              <span class="select-arrow">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 5l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-            </div>
-          </div>
+        <div class="ai-recommend-tags" id="ai-recommend-tags">
+          <span class="ai-recommend-chip" style="animation-delay:0ms" onclick="toggleAiChip(this)">想深入</span>
+          <span class="ai-recommend-chip" style="animation-delay:50ms" onclick="toggleAiChip(this)">产品</span>
+          <span class="ai-recommend-chip" style="animation-delay:100ms" onclick="toggleAiChip(this)">投资</span>
+          <span class="ai-recommend-chip" style="animation-delay:150ms" onclick="toggleAiChip(this)">技术</span>
+          <span class="ai-recommend-chip" style="animation-delay:200ms" onclick="toggleAiChip(this)">老朋友</span>
+          <span class="ai-recommend-chip" style="animation-delay:250ms" onclick="toggleAiChip(this)">刚认识</span>
         </div>
       </div>
 
-      <div class="tag-select-area" id="tag-select-area">
-        <div class="section-label">选择标签</div>
-        <div class="tag-group">
-          <div class="tag-group-label">行业方向</div>
-          <div class="tags-container" id="industry-tags-step2">
-            <span class="tag tag--contextual visible" data-tag="互联网" onclick="toggleTagSelect(this)">互联网</span>
-            <span class="tag tag--contextual visible" data-tag="AI/ML" onclick="toggleTagSelect(this)">AI/ML</span>
-            <span class="tag tag--contextual visible" data-tag="SaaS" onclick="toggleTagSelect(this)">SaaS</span>
-            <span class="tag tag--contextual visible" data-tag="金融" onclick="toggleTagSelect(this)">金融</span>
-            <span class="tag tag--contextual visible" data-tag="教育" onclick="toggleTagSelect(this)">教育</span>
-            <span class="tag tag--contextual visible" data-tag="设计" onclick="toggleTagSelect(this)">设计</span>
-          </div>
+      <!-- 已选标签 -->
+      <div class="step-tags-label-wrap">
+        <div class="form-label">已选标签</div>
+        <div class="selected-tags-area" id="selected-tags-area"></div>
+        <div class="custom-tag-input-area">
+          <input type="text" id="custom-tag-input" placeholder="输入自定义标签" maxlength="10" onkeydown="if(event.key==='Enter')addCustomTag()">
+          <button class="custom-tag-add-btn" onclick="addCustomTag()">+</button>
         </div>
-        <div class="tag-group">
-          <div class="tag-group-label">关系类型</div>
-          <div class="tags-container" id="relation-tags-step2">
-            <span class="tag tag--relational visible" data-tag="导师" onclick="toggleTagSelect(this)">导师</span>
-            <span class="tag tag--relational visible" data-tag="合作伙伴" onclick="toggleTagSelect(this)">合作伙伴</span>
-            <span class="tag tag--relational visible" data-tag="潜在客户" onclick="toggleTagSelect(this)">潜在客户</span>
-            <span class="tag tag--relational visible" data-tag="同行" onclick="toggleTagSelect(this)">同行</span>
-            <span class="tag tag--relational visible" data-tag="朋友" onclick="toggleTagSelect(this)">朋友</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="page-content-bottom-spacer"></div>
-
-      <div class="bottom-actions">
-        <button class="btn-text" onclick="goBackToStep1()">返回</button>
-        <button class="btn-primary" onclick="goToStep2b()">开始四问</button>
       </div>
     </div>
+    <div class="step-cta-fixed">
+      <button class="btn-cta" onclick="goToStep2()">下一步</button>
+    </div>
+  </div><!-- /view-step1 -->
 
-    <!-- ========== Step 2b: 核心四问 + AI 破冰 ========== -->
-    <div class="flow-page slide-right" id="page-step2b">
-      <div class="step2b-header">
-        <h2 class="step2b-title">核心四问</h2>
-        <p class="step2b-subtitle">深入思考这段连接的意义</p>
+  <!-- ========== 视图4: 添加联系人 Step 2 ========== -->
+  <div class="step-view hidden-right" id="view-step2" style="display:none">
+    <div class="step-header">
+      <div class="step-progress-bar">
+        <div class="step-segment"><div class="step-segment-fill done" id="seg1b"></div></div>
+        <div class="step-segment"><div class="step-segment-fill active" id="seg2b"></div></div>
+        <div class="step-segment"><div class="step-segment-fill" id="seg3b"></div></div>
       </div>
+      <button class="step-back-btn" onclick="goBackToStep1()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+        返回
+      </button>
+    </div>
+    <div class="step-content">
+      <h1 class="step-title">基本信息 & 四问</h1>
+      <p class="step-subtitle">记录关键信息，让每次连接更有意义</p>
 
-      <div class="question-slider" id="question-slider">
-        <div class="question-card current" data-question="0">
-          <div class="question-number">问题 1/4</div>
-          <div class="question-text">为什么连接？</div>
-          <textarea class="question-textarea" placeholder="是什么契机让你想认识这个人..." data-q="0"></textarea>
-          <div class="question-progress">
-            <span class="question-progress-text">1 / 4</span>
-            <button class="question-nav-btn" onclick="nextQuestion(0)">下一题</button>
-          </div>
+      <!-- 基本信息 -->
+      <div class="form-group">
+        <label class="form-label">姓名<span class="required">*</span></label>
+        <input class="form-input" type="text" id="add-name" placeholder="输入联系人姓名">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">角色</label>
+          <input class="form-input" type="text" id="add-role" placeholder="如：产品总监">
         </div>
-        <div class="question-card fly-in" data-question="1">
-          <div class="question-number">问题 2/4</div>
-          <div class="question-text">想从TA身上学什么？</div>
-          <textarea class="question-textarea" placeholder="TA的哪些经验或视角让你感兴趣..." data-q="1"></textarea>
-          <div class="question-progress">
-            <span class="question-progress-text">2 / 4</span>
-            <button class="question-nav-btn" onclick="nextQuestion(1)">下一题</button>
-          </div>
-        </div>
-        <div class="question-card hidden-card" data-question="2">
-          <div class="question-number">问题 3/4</div>
-          <div class="question-text">你能为TA提供什么？</div>
-          <textarea class="question-textarea" placeholder="你的哪些资源或能力能帮到TA..." data-q="2"></textarea>
-          <div class="question-progress">
-            <span class="question-progress-text">3 / 4</span>
-            <button class="question-nav-btn" onclick="nextQuestion(2)">下一题</button>
-          </div>
-        </div>
-        <div class="question-card hidden-card" data-question="3">
-          <div class="question-number">问题 4/4</div>
-          <div class="question-text">破冰开场白</div>
-          <textarea class="question-textarea" placeholder="你会怎么开启和TA的第一次对话..." data-q="3"></textarea>
-          <div class="question-progress">
-            <span class="question-progress-text">4 / 4</span>
-            <button class="question-nav-btn" onclick="finishQuestions()">完成</button>
-          </div>
+        <div class="form-group">
+          <label class="form-label">公司</label>
+          <input class="form-input" type="text" id="add-company" placeholder="公司名称">
         </div>
       </div>
-
-      <div class="ai-card" id="ai-icebreaker">
-        <div class="ai-card-header">
-          <div class="ai-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-ai-default)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
-          </div>
-          <span class="ai-card-label">AI 破冰提示</span>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">MBTI</label>
+          <select class="form-select" id="add-mbti">
+            <option value="">选择 MBTI</option>
+            <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+            <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+            <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+            <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+          </select>
         </div>
-        <div class="ai-card-content" id="ai-icebreaker-content"></div>
+        <div class="form-group">
+          <label class="form-label">星座</label>
+          <select class="form-select" id="add-constellation">
+            <option value="">选择星座</option>
+            <option>白羊座</option><option>金牛座</option><option>双子座</option>
+            <option>巨蟹座</option><option>狮子座</option><option>处女座</option>
+            <option>天秤座</option><option>天蝎座</option><option>射手座</option>
+            <option>摩羯座</option><option>水瓶座</option><option>双鱼座</option>
+          </select>
+        </div>
       </div>
 
-      <div class="page-content-bottom-spacer"></div>
+      <!-- 核心四问 -->
+      <div class="questions-section-wrap">
+        <div class="form-label questions-section-label">核心四问</div>
+      </div>
 
-      <div class="bottom-actions">
-        <button class="btn-text" onclick="goBackToStep2a()">返回</button>
-        <button class="btn-primary" onclick="saveContact()">保存联系人</button>
+      <div class="q-input-card">
+        <div class="q-input-label"><span class="q-input-num">1</span> 为什么连接？</div>
+        <textarea class="q-textarea" id="q1" placeholder="是什么契机让你想认识这个人..."></textarea>
+      </div>
+      <div class="q-input-card">
+        <div class="q-input-label"><span class="q-input-num">2</span> 想从TA身上学什么？</div>
+        <textarea class="q-textarea" id="q2" placeholder="TA的哪些经验或视角让你感兴趣..."></textarea>
+      </div>
+      <div class="q-input-card">
+        <div class="q-input-label"><span class="q-input-num">3</span> 你能为TA提供什么？</div>
+        <textarea class="q-textarea" id="q3" placeholder="你的哪些资源或能力能帮到TA..."></textarea>
+      </div>
+      <div class="q-input-card">
+        <div class="q-input-label"><span class="q-input-num">4</span> 破冰开场白</div>
+        <textarea class="q-textarea" id="q4" placeholder="你会怎么开启和TA的第一次对话..."></textarea>
       </div>
     </div>
+    <div class="step-cta-fixed">
+      <button class="btn-cta" onclick="goToStep3()">下一步</button>
+    </div>
+  </div><!-- /view-step2 -->
 
-    <!-- ========== Step 3: 保存成功确认页 ========== -->
-    <div class="flow-page slide-right" id="page-step3">
-      <div class="success-page">
-        <div class="success-icon">
+  <!-- ========== 视图5: 添加联系人 Step 3（成功） ========== -->
+  <div class="step-view hidden-right" id="view-step3" style="display:none">
+    <div class="step-header">
+      <div class="step-progress-bar">
+        <div class="step-segment"><div class="step-segment-fill done" id="seg1c"></div></div>
+        <div class="step-segment"><div class="step-segment-fill done" id="seg2c"></div></div>
+        <div class="step-segment"><div class="step-segment-fill active" id="seg3c"></div></div>
+      </div>
+    </div>
+    <div class="step-content">
+      <div class="success-content">
+        <div class="success-check">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M8 14l4 4 8-8" stroke="var(--color-success-default)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h2 class="success-title">保存成功</h2>
-        <p class="success-subtitle"><span class="success-contact-name" id="saved-contact-name"></span> 已加入你的关系网络</p>
+        <p class="success-subtitle"><strong id="saved-name">联系人</strong> 已加入你的关系网络</p>
+        <div class="success-ai-preview">
+          <div class="success-ai-preview-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-ai-default)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
+            <span class="ai-preview-label">AI 破冰建议</span>
+          </div>
+          <div class="success-ai-preview-text" id="ai-icebreak-preview">基于你们的共同点和性格特质，建议从一个具体话题开始对话...</div>
+        </div>
         <div class="success-actions">
-          <button class="btn-primary" onclick="addAnother()">继续添加</button>
-          <button class="btn-secondary" onclick="viewContact()">查看联系人</button>
-          <button class="btn-ghost" onclick="backToHome()">返回首页</button>
+          <button class="btn-cta" onclick="viewSavedContact()">查看详情</button>
+          <button class="btn-cta-outline" onclick="addAnother()">继续添加</button>
+          <button class="btn-ghost-text" onclick="backToHomeFromStep()">返回首页</button>
         </div>
       </div>
     </div>
+  </div><!-- /view-step3 -->
 
-  </div><!-- /flow-pages-wrapper -->
-
-</div><!-- /device-frame -->
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<!-- 筛选 Bottom Sheet -->
-<div class="sheet-overlay" id="filter-sheet">
-  <div class="bottom-sheet filter-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">筛选联系人</div>
-    <div class="filter-group">
-      <div class="filter-label">关系维度</div>
-      <div class="filter-tags" id="filter-relational-tags">
-        <span class="filter-tag" data-filter="导师" onclick="toggleFilterTag(this)">导师</span>
-        <span class="filter-tag" data-filter="合作伙伴" onclick="toggleFilterTag(this)">合作伙伴</span>
-        <span class="filter-tag" data-filter="同行" onclick="toggleFilterTag(this)">同行</span>
-        <span class="filter-tag" data-filter="朋友" onclick="toggleFilterTag(this)">朋友</span>
-        <span class="filter-tag" data-filter="潜在客户" onclick="toggleFilterTag(this)">潜在客户</span>
-        <span class="filter-tag" data-filter="投资人" onclick="toggleFilterTag(this)">投资人</span>
-      </div>
-    </div>
-    <div class="filter-group">
-      <div class="filter-label">场景维度</div>
-      <div class="filter-tags" id="filter-contextual-tags">
-        <span class="filter-tag" data-filter="AI工具" onclick="toggleFilterTag(this)">AI工具</span>
-        <span class="filter-tag" data-filter="出海" onclick="toggleFilterTag(this)">出海</span>
-        <span class="filter-tag" data-filter="独立开发" onclick="toggleFilterTag(this)">独立开发</span>
-        <span class="filter-tag" data-filter="内容策略" onclick="toggleFilterTag(this)">内容策略</span>
-        <span class="filter-tag" data-filter="教育" onclick="toggleFilterTag(this)">教育</span>
-        <span class="filter-tag" data-filter="设计" onclick="toggleFilterTag(this)">设计</span>
-        <span class="filter-tag" data-filter="投资" onclick="toggleFilterTag(this)">投资</span>
-        <span class="filter-tag" data-filter="身心灵" onclick="toggleFilterTag(this)">身心灵</span>
-        <span class="filter-tag" data-filter="大厂" onclick="toggleFilterTag(this)">大厂</span>
-        <span class="filter-tag" data-filter="创业" onclick="toggleFilterTag(this)">创业</span>
-        <span class="filter-tag" data-filter="品牌" onclick="toggleFilterTag(this)">品牌</span>
-        <span class="filter-tag" data-filter="健康" onclick="toggleFilterTag(this)">健康</span>
-        <span class="filter-tag" data-filter="产品" onclick="toggleFilterTag(this)">产品</span>
-        <span class="filter-tag" data-filter="硬科技" onclick="toggleFilterTag(this)">硬科技</span>
-        <span class="filter-tag" data-filter="IP" onclick="toggleFilterTag(this)">IP</span>
-        <span class="filter-tag" data-filter="生活" onclick="toggleFilterTag(this)">生活</span>
-        <span class="filter-tag" data-filter="FA" onclick="toggleFilterTag(this)">FA</span>
-      </div>
-    </div>
-    <div class="filter-actions">
-      <button class="btn-text" onclick="clearFilters()">重置</button>
-      <button class="btn-primary" onclick="applyFilters()">应用筛选</button>
+  <!-- ========== 底部 Tab 栏 ========== -->
+  <div class="tab-bar" id="tab-bar">
+    <div class="tab-bar-inner">
+      <button class="tab-item active" id="tab-contacts" onclick="switchTab('contacts')">
+        <span class="tab-item-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </span>
+        <span class="tab-item-label">联系人</span>
+      </button>
+      <button class="tab-item" id="tab-notes" onclick="switchTab('notes')">
+        <span class="tab-item-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </span>
+        <span class="tab-item-label">纪要</span>
+      </button>
+      <button class="tab-item" id="tab-me" onclick="switchTab('me')">
+        <span class="tab-item-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <span class="tab-item-label">我的</span>
+      </button>
     </div>
   </div>
-</div>
+
+  <!-- FAB -->
+  <button class="fab" id="fab" onclick="startAddContact()">+</button>
+
+</div><!-- /app-shell -->
+
+<!-- Toast -->
+<div class="toast-container"><div class="toast" id="toast"></div></div>
 
 <!-- 详情页更多操作 Sheet -->
 <div class="sheet-overlay" id="detail-more-sheet">
   <div class="bottom-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">更多操作</div>
-    <div class="sheet-item" onclick="editContact()">
-      <span class="sheet-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span> 编辑联系人
+    <div class="sheet-item" onclick="showToast('编辑功能开发中');closeSheet('detail-more-sheet')">
+      <span class="sheet-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+      编辑联系人
     </div>
-    <div class="sheet-item" onclick="shareContact()">
-      <span class="sheet-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span> 分享联系人
+    <div class="sheet-item" onclick="showToast('分享链接已复制');closeSheet('detail-more-sheet')">
+      <span class="sheet-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
+      分享联系人
     </div>
-    <div class="sheet-item danger" onclick="confirmDeleteContact()">
-      <span class="sheet-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></span> 删除联系人
+    <div class="sheet-item danger" onclick="confirmDelete();closeSheet('detail-more-sheet')">
+      <span class="sheet-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></span>
+      删除联系人
     </div>
   </div>
 </div>
 
-<!-- 删除确认弹窗 -->
+<!-- 删除确认 Sheet -->
 <div class="sheet-overlay" id="delete-confirm-sheet">
-  <div class="bottom-sheet">
+  <div class="bottom-sheet sheet-delete-confirm">
     <div class="sheet-handle"></div>
-    <div class="confirm-dialog">
-      <div class="confirm-title">确认删除</div>
-      <div class="confirm-msg">删除后无法恢复，确定要删除这位联系人吗？</div>
-      <div class="confirm-actions">
-        <button class="btn-text" onclick="closeSheet('delete-confirm-sheet')">取消</button>
-        <button class="btn-primary" style="background:var(--color-error-default);" onclick="doDeleteContact()">删除</button>
-      </div>
+    <div class="sheet-delete-title">确认删除</div>
+    <div class="sheet-delete-desc">删除后无法恢复，确定要删除这位联系人吗？</div>
+    <div class="sheet-delete-actions">
+      <button class="sheet-delete-btn cancel" onclick="closeSheet('delete-confirm-sheet')">取消</button>
+      <button class="sheet-delete-btn danger" onclick="doDelete()">删除</button>
     </div>
   </div>
 </div>
 
 <script>
 /* ============================================
-   数据层 · Data
+   数据层
    ============================================ */
-
-// P0-2: 关系维度色由 CSS data-relation 规则驱动，此映射仅用于新联系人时设置 data-relation 值
-const RELATION_TYPES = ['导师', '合作伙伴', '同行', '朋友', '投资人', '潜在客户'];
-
-// 示例联系人数据
 const contacts = [
   {
-    id: 1,
-    name: '张明远',
-    role: '独立开发者',
-    company: '出海工坊',
-    constellation: '水瓶座',
-    mbti: 'INTP',
-    relationType: '同行',
-    tags: [
-      { text: 'AI工具', type: 'contextual' },
-      { text: '出海', type: 'contextual' },
-      { text: '独立开发', type: 'contextual' }
-    ],
+    id: 1, name: '张明远', role: '产品总监', company: '字节跳动',
+    mbti: 'INTJ', constellation: '水瓶座', colorKey: 'amber', strength: 4,
+    tags: [{text:'想深入',type:'relational'},{text:'产品',type:'contextual'}],
+    fourLines: {
+      origin: {hometown:'杭州',education:'浙大计算机',experience:'字节3年·阿里2年'},
+      value: {expertise:'产品策略·用户增长',resources:'字节内推·产品圈子'},
+      connection: {mutualFriend:'李思琪',keyEvent:'AI产品峰会',relationLabel:'想深入'},
+      action: {nextAction:'约咖啡聊AI产品',iceBreakTopic:'推荐算法变革',remindDate:'下周三'}
+    },
     questions: [
-      { q: '为什么连接？', a: 'AI活动认识，对独立开发感兴趣' },
-      { q: '想从TA身上学什么？', a: '产品设计和出海经验' },
-      { q: '你能为TA提供什么？', a: '小红书运营和内容策略' },
-      { q: '破冰开场白？', a: '聊聊独立开发出海的定价策略' }
+      {q:'为什么连接？',a:'AI产品峰会认识，对TA的增长方法论印象深刻'},
+      {q:'想从TA身上学什么？',a:'大厂产品决策流程和增长实验方法'},
+      {q:'你能为TA提供什么？',a:'独立产品视角和出海经验'},
+      {q:'破冰开场白？',a:'聊聊字节推荐算法最近的调整，对产品侧有什么影响'}
     ],
-    icebreaker: '聊聊独立开发出海的定价策略，最近海外市场变化挺大的',
-    topics: ['出海定价模型', '独立开发者社区运营', '海外用户获取']
+    icebreaker: '聊聊字节推荐算法最近的调整，对产品侧有什么影响？',
   },
   {
-    id: 2,
-    name: '李思琪',
-    role: '产品经理',
-    company: '字节跳动',
-    constellation: '天秤座',
-    mbti: 'ENFJ',
-    relationType: '合作伙伴',
-    tags: [
-      { text: '内容策略', type: 'contextual' },
-      { text: '产品', type: 'contextual' },
-      { text: '大厂', type: 'contextual' }
-    ],
+    id: 2, name: '李思琪', role: '创始人', company: '小满科技',
+    mbti: 'ENFJ', constellation: '天秤座', colorKey: 'green', strength: 5,
+    tags: [{text:'老朋友',type:'relational'},{text:'创业',type:'contextual'}],
+    fourLines: {
+      origin: {hometown:'成都',education:'北大光华',experience:'麦肯锡2年·创业3年'},
+      value: {expertise:'商业模式·融资',resources:'投资人圈子·FA资源'},
+      connection: {mutualFriend:'大学同学',keyEvent:'共同创业项目',relationLabel:'老朋友'},
+      action: {nextAction:'一起参加创业营',iceBreakTopic:'A轮融资策略',remindDate:'本周五'}
+    },
     questions: [
-      { q: '为什么连接？', a: '行业分享会认识' },
-      { q: '想从TA身上学什么？', a: '大厂产品方法论' },
-      { q: '你能为TA提供什么？', a: '教育行业洞察' },
-      { q: '破冰开场白？', a: '请教字节内容推荐算法的最新变化' }
+      {q:'为什么连接？',a:'大学同学，一起做过创业项目'},
+      {q:'想从TA身上学什么？',a:'融资节奏把控和商业模式设计'},
+      {q:'你能为TA提供什么？',a:'产品设计能力和技术合伙人资源'},
+      {q:'破冰开场白？',a:'好久没聊了，A轮进展怎么样？'}
     ],
-    icebreaker: '请教字节内容推荐算法的最新变化，听说最近又有大调整？',
-    topics: ['内容推荐算法演进', '大厂产品决策流程', '创作者生态运营']
+    icebreaker: '好久没聊了，A轮进展怎么样？有什么需要帮忙的吗？',
   },
   {
-    id: 3,
-    name: '王子豪',
-    role: '创业者',
-    company: '智慧教育',
-    constellation: '狮子座',
-    mbti: 'ENTJ',
-    relationType: '导师',
-    tags: [
-      { text: '教育', type: 'contextual' },
-      { text: 'AI+教育', type: 'contextual' },
-      { text: '创业', type: 'contextual' }
-    ],
+    id: 3, name: '王子豪', role: '投资经理', company: '红杉中国',
+    mbti: 'ENTJ', constellation: '狮子座', colorKey: 'blue', strength: 2,
+    tags: [{text:'刚认识',type:'relational'},{text:'投资',type:'contextual'}],
+    fourLines: {
+      origin: {hometown:'上海',education:'清华经管',experience:'高盛1年·红杉2年'},
+      value: {expertise:'早期项目评估',resources:'红杉被投企业网络'},
+      connection: {mutualFriend:'赵晓峰',keyEvent:'创业路演',relationLabel:'刚认识'},
+      action: {nextAction:'发BP过去',iceBreakTopic:'AI工具赛道看法',remindDate:'下周一'}
+    },
     questions: [
-      { q: '为什么连接？', a: '教育峰会同台' },
-      { q: '想从TA身上学什么？', a: '教育行业变现路径' },
-      { q: '你能为TA提供什么？', a: '教育广告投放经验' },
-      { q: '破冰开场白？', a: '讨论AI在教育场景的落地案例' }
+      {q:'为什么连接？',a:'创业路演上认识，对AI工具方向感兴趣'},
+      {q:'想从TA身上学什么？',a:'投资视角的项目判断逻辑'},
+      {q:'你能为TA提供什么？',a:'AI工具赛道一手洞察和产品体验'},
+      {q:'破冰开场白？',a:'请教对AI工具赛道的看法，从投资角度怎么筛选项目'}
     ],
-    icebreaker: '讨论AI在教育场景的落地案例，特别是个性化学习这块',
-    topics: ['AI+教育产品化', '教育To B变现模式', '学习者行为数据分析']
+    icebreaker: '请教对AI工具赛道的看法，从投资角度怎么筛选项目？',
   },
   {
-    id: 4,
-    name: '陈雨桐',
-    role: '设计师',
-    company: '自由职业',
-    constellation: '双鱼座',
-    mbti: 'INFP',
-    relationType: '朋友',
-    tags: [
-      { text: '设计', type: 'contextual' },
-      { text: '品牌', type: 'contextual' },
-      { text: 'IP', type: 'contextual' }
-    ],
+    id: 4, name: '陈雨桐', role: '设计主管', company: '蚂蚁集团',
+    mbti: 'INFP', constellation: '双鱼座', colorKey: 'teal', strength: 3,
+    tags: [{text:'想深入',type:'relational'},{text:'设计',type:'contextual'}],
+    fourLines: {
+      origin: {hometown:'南京',education:'国美视觉传达',experience:'蚂蚁4年·体验设计'},
+      value: {expertise:'设计系统·品牌视觉',resources:'蚂蚁设计团队·设计师社区'},
+      connection: {mutualFriend:'张明远',keyEvent:'设计分享会',relationLabel:'想深入'},
+      action: {nextAction:'约设计Review',iceBreakTopic:'设计系统搭建',remindDate:'下周四'}
+    },
     questions: [
-      { q: '为什么连接？', a: '设计社区关注很久' },
-      { q: '想从TA身上学什么？', a: '品牌设计思维' },
-      { q: '你能为TA提供什么？', a: '产品策略建议' },
-      { q: '破冰开场白？', a: '分享最近在做的一个品牌升级项目' }
+      {q:'为什么连接？',a:'设计分享会认识，对TA的设计系统经验感兴趣'},
+      {q:'想从TA身上学什么？',a:'大厂设计系统从0到1的搭建方法'},
+      {q:'你能为TA提供什么？',a:'产品思维和用户体验反馈'},
+      {q:'破冰开场白？',a:'聊聊蚂蚁设计系统的演进，有哪些踩过的坑'}
     ],
-    icebreaker: '分享最近在做的一个品牌升级项目，从0到1的那种',
-    topics: ['品牌视觉体系搭建', '设计师个人IP打造', '从设计到产品的路径']
+    icebreaker: '聊聊蚂蚁设计系统的演进，有哪些踩过的坑？',
   },
   {
-    id: 5,
-    name: '赵晓峰',
-    role: '投资人',
-    company: '某VC',
-    constellation: '摩羯座',
-    mbti: 'ISTJ',
-    relationType: '投资人',
-    tags: [
-      { text: '投资', type: 'contextual' },
-      { text: 'FA', type: 'contextual' },
-      { text: '硬科技', type: 'contextual' }
-    ],
+    id: 5, name: '赵晓峰', role: '技术VP', company: '美团',
+    mbti: 'ISTJ', constellation: '摩羯座', colorKey: 'gold', strength: 4,
+    tags: [{text:'同行',type:'relational'},{text:'技术',type:'contextual'}],
+    fourLines: {
+      origin: {hometown:'北京',education:'北航计算机',experience:'百度5年·美团3年'},
+      value: {expertise:'技术架构·团队管理',resources:'美团技术团队·技术圈'},
+      connection: {mutualFriend:'前百度同事',keyEvent:'技术沙龙',relationLabel:'同行'},
+      action: {nextAction:'技术交流',iceBreakTopic:'大模型落地实践',remindDate:'下周末'}
+    },
     questions: [
-      { q: '为什么连接？', a: '朋友介绍' },
-      { q: '想从TA身上学什么？', a: '早期项目判断逻辑' },
-      { q: '你能为TA提供什么？', a: 'AI工具体验反馈' },
-      { q: '破冰开场白？', a: '请教对AI工具赛道的看法' }
+      {q:'为什么连接？',a:'前百度同事，技术沙龙上重聚'},
+      {q:'想从TA身上学什么？',a:'大厂技术团队管理和架构演进'},
+      {q:'你能为TA提供什么？',a:'独立开发技术栈和敏捷实践'},
+      {q:'破冰开场白？',a:'美团在大模型落地方面有哪些实践？'}
     ],
-    icebreaker: '请教对AI工具赛道的看法，特别是从投资角度怎么筛选项目',
-    topics: ['AI工具投资逻辑', '早期项目评估框架', '硬科技赛道趋势']
+    icebreaker: '美团在大模型落地方面有哪些实践？我这边也有些独立开发的心得可以分享',
   },
   {
-    id: 6,
-    name: '林小暖',
-    role: '瑜伽教练',
-    company: '独立工作室',
-    constellation: '巨蟹座',
-    mbti: 'ISFJ',
-    relationType: '朋友',
-    tags: [
-      { text: '身心灵', type: 'contextual' },
-      { text: '健康', type: 'contextual' },
-      { text: '生活', type: 'contextual' }
-    ],
+    id: 6, name: '林小暖', role: '自由职业', company: '瑜伽导师',
+    mbti: 'ISFJ', constellation: '巨蟹座', colorKey: 'red', strength: 5,
+    tags: [{text:'老朋友',type:'relational'},{text:'生活',type:'contextual'}],
+    fourLines: {
+      origin: {hometown:'厦门',education:'厦大心理系',experience:'互联网3年·瑜伽5年'},
+      value: {expertise:'正念冥想·身心平衡',resources:'身心疗愈社群'},
+      connection: {mutualFriend:'瑜伽课同学',keyEvent:'冥想营',relationLabel:'老朋友'},
+      action: {nextAction:'约冥想',iceBreakTopic:'最近的新体验',remindDate:'这周末'}
+    },
     questions: [
-      { q: '为什么连接？', a: '瑜伽课认识' },
-      { q: '想从TA身上学什么？', a: '身心平衡方法' },
-      { q: '你能为TA提供什么？', a: '效率工具推荐' },
-      { q: '破冰开场白？', a: '问问最近有什么好的冥想App推荐' }
+      {q:'为什么连接？',a:'瑜伽课认识，一起参加过冥想营'},
+      {q:'想从TA身上学什么？',a:'身心平衡的方法和正念练习'},
+      {q:'你能为TA提供什么？',a:'效率工具推荐和产品视角'},
+      {q:'破冰开场白？',a:'最近有什么好的冥想App推荐吗？'}
     ],
-    icebreaker: '问问最近有什么好的冥想App推荐，感觉最近焦虑感上来了',
-    topics: ['冥想App体验对比', '身心平衡的日常实践', '正念与效率工具的结合']
+    icebreaker: '最近有什么好的冥想App推荐吗？感觉最近焦虑感上来了，需要平衡一下',
   }
 ];
 
 /* ============================================
    全局状态
    ============================================ */
-let currentStep = 1;
-let currentQuestion = 0;
-const totalQuestions = 4;
-let currentView = 'home'; // 'home' | 'detail' | 'flow'
+let currentView = 'home';
 let currentDetailId = null;
-let activeFilters = [];
-let lastSavedContactId = null;
+let currentFilter = '全部';
+let selectedTags = [];
+let lastSavedId = null;
 
 /* ============================================
-   Toast 提示
+   Toast
    ============================================ */
 function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2000);
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
 }
 
 /* ============================================
-   问候语 · 时间感知
+   时间感知问候
    ============================================ */
 function updateGreeting() {
-  const hour = new Date().getHours();
-  const greetEl = document.getElementById('greeting-text');
-  if (hour < 6) greetEl.textContent = '夜深了，YSY';
-  else if (hour < 12) greetEl.textContent = '早上好，YSY';
-  else if (hour < 14) greetEl.textContent = '中午好，YSY';
-  else if (hour < 18) greetEl.textContent = '下午好，YSY';
-  else greetEl.textContent = '晚上好，YSY';
+  const h = new Date().getHours();
+  let g = '晚上好';
+  if (h < 6) g = '夜深了';
+  else if (h < 12) g = '早上好';
+  else if (h < 14) g = '中午好';
+  else if (h < 18) g = '下午好';
+  document.getElementById('greeting-text').textContent = g + '，YSY';
+}
+
+/* ============================================
+   搜索栏聚焦/失焦
+   ============================================ */
+function onSearchFocus() {
+  document.getElementById('search-bar').classList.add('focused');
+}
+function onSearchBlur() {
+  document.getElementById('search-bar').classList.remove('focused');
+}
+
+/* ============================================
+   标签筛选
+   ============================================ */
+function selectFilter(el) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = el.dataset.filter;
+  renderContactList();
 }
 
 /* ============================================
    联系人列表渲染
    ============================================ */
-function renderContactList(filteredContacts) {
+function renderContactList() {
   const list = document.getElementById('contact-list');
-  const empty = document.getElementById('empty-state');
-  const fab = document.getElementById('fab-btn');
-  const data = filteredContacts || contacts;
+  const query = document.getElementById('search-input').value.trim().toLowerCase();
 
-  if (data.length === 0) {
-    list.style.display = 'none';
-    empty.style.display = 'flex';
-    fab.style.display = 'none';
-    return;
+  let filtered = contacts;
+
+  // 搜索过滤
+  if (query) {
+    filtered = filtered.filter(c =>
+      c.name.toLowerCase().includes(query) ||
+      c.role.toLowerCase().includes(query) ||
+      c.company.toLowerCase().includes(query) ||
+      c.tags.some(t => t.text.toLowerCase().includes(query))
+    );
   }
 
-  list.style.display = 'block';
-  empty.style.display = 'none';
-  fab.style.display = 'flex';
+  // 标签筛选
+  if (currentFilter !== '全部') {
+    filtered = filtered.filter(c => c.tags.some(t => t.text === currentFilter));
+  }
 
-  list.innerHTML = data.map(c => {
+  list.innerHTML = filtered.map((c, idx) => {
     const initials = c.name.slice(-2);
-    const displayTags = c.tags.slice(0, 2);
-    const moreCount = c.tags.length - 2;
-    const tagsHtml = displayTags.map(t =>
-      `<span class="contact-tag ${t.type}">${t.text}</span>`
-    ).join('') + (moreCount > 0 ? `<span class="contact-tag-more">+${moreCount}</span>` : '');
+    const tagsHtml = c.tags.map((t, i) =>
+      `<span class="chip ${t.type}" style="animation-delay:${(idx*2+i)*50}ms">${t.text}</span>`
+    ).join('');
+    const strengthPct = (c.strength / 5) * 100;
 
     return `
-      <div class="contact-card" onclick="openDetail(${c.id})" data-id="${c.id}">
-        <div class="contact-avatar" data-relation="${c.relationType || 'default'}">${initials}</div>
+      <div class="contact-card reveal" onclick="openDetail(${c.id})" style="animation-delay:${idx*60}ms">
+        <div class="contact-avatar" data-color="${c.colorKey}">${initials}</div>
         <div class="contact-info">
           <div class="contact-name">${c.name}</div>
           <div class="contact-role">${c.role} · ${c.company}</div>
           <div class="contact-tags">${tagsHtml}</div>
         </div>
+        <div class="strength-bar"><div class="strength-fill" style="width:${strengthPct}%"></div></div>
       </div>
     `;
   }).join('');
-}
 
-/* ============================================
-   搜索过滤
-   ============================================ */
-function filterContacts() {
-  const query = document.getElementById('search-input').value.trim().toLowerCase();
-  if (!query && activeFilters.length === 0) {
-    renderContactList();
-    return;
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state">没有找到匹配的联系人</div>';
   }
 
-  const filtered = contacts.filter(c => {
-    // 搜索文本匹配
-    const textMatch = !query || c.name.toLowerCase().includes(query) ||
-      c.company.toLowerCase().includes(query) ||
-      c.tags.some(t => t.text.toLowerCase().includes(query));
-
-    // 标签筛选匹配
-    const filterMatch = activeFilters.length === 0 ||
-      activeFilters.some(f => c.tags.some(t => t.text === f));
-
-    return textMatch && filterMatch;
+  // 滚动渐入
+  requestAnimationFrame(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    list.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   });
+}
 
-  renderContactList(filtered);
+function filterContacts() {
+  renderContactList();
 }
 
 /* ============================================
-   筛选 Bottom Sheet
+   视图切换
    ============================================ */
-function openFilterSheet() {
-  document.getElementById('filter-sheet').classList.add('show');
-}
+function showView(viewId) {
+  const homeView = document.getElementById('view-home');
+  const detailView = document.getElementById('view-detail');
 
-function toggleFilterTag(el) {
-  el.classList.toggle('selected');
-}
-
-function clearFilters() {
-  document.querySelectorAll('#filter-sheet .filter-tag.selected').forEach(t => t.classList.remove('selected'));
-  activeFilters = [];
-  filterContacts();
-  closeSheet('filter-sheet');
-}
-
-function applyFilters() {
-  activeFilters = [];
-  document.querySelectorAll('#filter-sheet .filter-tag.selected').forEach(t => {
-    activeFilters.push(t.dataset.filter);
-  });
-  filterContacts();
-  closeSheet('filter-sheet');
+  if (viewId === 'home') {
+    detailView.className = 'view hidden-right';
+    homeView.style.display = '';
+    homeView.className = 'view active';
+    document.getElementById('home-nav').style.display = '';
+    document.getElementById('detail-nav').style.display = 'none';
+    document.getElementById('fab').style.display = '';
+    document.getElementById('tab-bar').style.display = '';
+  } else if (viewId === 'detail') {
+    homeView.className = 'view hidden-left';
+    detailView.style.display = '';
+    detailView.className = 'view active';
+    document.getElementById('home-nav').style.display = 'none';
+    document.getElementById('detail-nav').style.display = '';
+    document.getElementById('fab').style.display = 'none';
+  }
 }
 
 /* ============================================
-   详情页
+   联系人详情
    ============================================ */
 function openDetail(id) {
   const c = contacts.find(x => x.id === id);
   if (!c) return;
-
   currentDetailId = id;
-  currentView = 'detail';
 
-  // 渲染详情内容
-  const container = document.getElementById('detail-content');
+  // 更新导航标题
+  document.getElementById('detail-nav-title').textContent = c.name;
+
   const initials = c.name.slice(-2);
+  const fl = c.fourLines;
 
-  // 标签渲染（最多2行，6个完整，超出折叠）
-  const maxVisible = 6;
-  const visibleTags = c.tags.slice(0, maxVisible);
-  const hiddenTags = c.tags.slice(maxVisible);
-  const hasMore = hiddenTags.length > 0;
+  // 标签
+  const tagsHtml = c.tags.map((t, i) =>
+    `<span class="detail-tag-chip ${t.type}" style="animation-delay:${i*60}ms">${t.text}</span>`
+  ).join('');
 
-  const tagsHtml = visibleTags.map(t =>
-    `<span class="detail-tag ${t.type}">${t.text}</span>`
-  ).join('') + (hasMore ?
-    `<span class="hidden-tags-wrapper" style="display:none;">${hiddenTags.map(t => `<span class="detail-tag ${t.type}">${t.text}</span>`).join('')}</span>` +
-    `<button class="expand-tags-btn" onclick="expandDetailTags(this)">展开全部标签 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l3 3 3-3"/></svg></button>` : '');
-
-  // 核心四问渲染
-  const questionsHtml = c.questions.map((q, i) => {
-    const isCollapsed = i >= 2; // Q1+Q2 展开，Q3+Q4 折叠
+  // 四线档案
+  function renderLine(key, title, data) {
+    const colorMap = {origin:'origin',value:'value',connection:'connection',action:'action'};
     return `
-      <div class="question-item ${isCollapsed ? 'collapsed' : ''}" data-q-idx="${i}">
-        <div class="question-label">
-          <span class="q-num">${i + 1}</span>
-          ${q.q}
+      <div class="four-line-section">
+        <div class="four-line-header" onclick="toggleFourLine(this)">
+          <div class="four-line-indicator ${colorMap[key]}"></div>
+          <span class="four-line-title">${title}</span>
+          <svg class="four-line-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
         </div>
+        <div class="four-line-body">
+          ${Object.entries(data).map(([k,v]) => {
+            const labels = {
+              hometown:'家乡',education:'学历',experience:'经历',
+              expertise:'擅长领域',resources:'可提供资源',
+              mutualFriend:'共同朋友',keyEvent:'关键事件',relationLabel:'关系标签',
+              nextAction:'下次行动',iceBreakTopic:'破冰话题',remindDate:'提醒日期'
+            };
+            return `<div class="four-line-field"><div class="four-line-label">${labels[k]||k}</div><div class="four-line-value">${v}</div></div>`;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // 核心四问
+  const questionsHtml = c.questions.map((q, i) => {
+    const collapsed = i >= 2 ? ' question-collapsed' : '';
+    return `
+      <div class="question-item${collapsed}" data-q-idx="${i}">
+        <div class="question-label"><span class="q-num">${i+1}</span>${q.q}</div>
         <div class="question-answer">${q.a}</div>
-        ${i < c.questions.length - 1 ? '<div class="question-divider"></div>' : ''}
       </div>
     `;
   }).join('');
 
-  // AI 破冰建议
-  const topicsHtml = c.topics.map(t => `<div class="ai-suggest-topic">${t}</div>`).join('');
+  const hasCollapsed = c.questions.length > 2;
 
-  container.innerHTML = `
-    <!-- 人物身份区 -->
+  document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero">
-      <div class="detail-avatar" data-relation="${c.relationType || 'default'}">${initials}</div>
+      <div class="detail-avatar" data-color="${c.colorKey}">${initials}</div>
       <div class="detail-name">${c.name}</div>
-      <div class="detail-role">${c.role} · ${c.company}</div>
-      <div class="detail-traits">
-        <span class="detail-trait">${c.constellation}</span>
+      <div class="detail-role-text">${c.role} · ${c.company}</div>
+      <div class="detail-traits-row">
         <span class="detail-trait">${c.mbti}</span>
-        <span class="detail-trait">${c.company}</span>
+        <span class="detail-trait">${c.constellation}</span>
       </div>
-      <div class="detail-tags-section">
-        <div class="detail-tags">
-          ${tagsHtml}
-        </div>
-      </div>
+      <div class="detail-tags-row">${tagsHtml}</div>
     </div>
 
-    <!-- 核心四问回顾区 -->
-    <div class="questions-review" id="questions-review">
-      <div class="questions-review-header">
-        <div class="questions-review-title">核心四问</div>
-      </div>
+    ${renderLine('origin','身世线',fl.origin)}
+    ${renderLine('value','价值线',fl.value)}
+    ${renderLine('connection','连接线',fl.connection)}
+    ${renderLine('action','行动线',fl.action)}
+
+    <div class="questions-card detail-questions-card">
+      <div class="questions-title">核心四问</div>
       ${questionsHtml}
-      <button class="expand-questions-btn" id="expand-q-btn" onclick="expandQuestions()" style="display:none;">
-        展开全部 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l3 3 3-3"/></svg>
-      </button>
+      ${hasCollapsed ? `<button class="expand-questions-btn" onclick="toggleQuestions(this)">
+        展开全部 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>
+      </button>` : ''}
     </div>
 
-    <!-- AI 破冰建议区 -->
-    <div class="ai-suggest-card">
-      <span class="ai-suggest-badge">✦ AI 建议</span>
-      <div class="ai-suggest-section">
-        <div class="ai-suggest-label">💬 开场建议</div>
-        <div class="ai-suggest-text quote">${c.icebreaker}</div>
+    <div class="ai-icebreak-card detail-icebreak-card">
+      <div class="ai-card-header">
+        <div class="ai-badge-icon">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-ai-default)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
+        </div>
+        <span class="ai-badge-label">AI 破冰建议</span>
       </div>
-      <div class="ai-suggest-section">
-        <div class="ai-suggest-label">🎯 话题方向</div>
-        <div class="ai-suggest-topics">${topicsHtml}</div>
-      </div>
-      <div class="ai-suggest-actions">
-        <button class="btn-ai" onclick="showToast('正在重新生成…')">重新生成</button>
-        <button class="btn-ghost" onclick="copyIcebreaker()">复制</button>
+      <div class="ai-icebreak-text">${c.icebreaker}</div>
+      <div class="ai-icebreak-actions">
+        <button class="btn-copy" onclick="copyIcebreak(this)">复制</button>
+        <button class="btn-regen" onclick="showToast('正在重新生成…')">重新生成</button>
       </div>
     </div>
+
+    <div style="height:80px"></div>
   `;
 
-  // 检查是否需要展开按钮
-  const collapsedItems = container.querySelectorAll('.question-item.collapsed');
-  const expandBtn = container.querySelector('#expand-q-btn');
-  if (collapsedItems.length > 0 && expandBtn) {
-    expandBtn.style.display = 'flex';
-  }
-
-  // 页面转场：首页左滑，详情右入
-  const homePage = document.getElementById('page-home');
-  const detailPage = document.getElementById('page-detail');
-  homePage.classList.remove('active');
-  homePage.classList.add('slide-left');
-  detailPage.classList.remove('slide-right');
-  detailPage.classList.add('active');
+  showView('detail');
 }
 
-function expandDetailTags(btn) {
-  const hidden = btn.previousElementSibling;
-  if (hidden && hidden.classList.contains('hidden-tags-wrapper')) {
-    if (hidden.style.display === 'none') {
-      hidden.style.display = 'inline';
-      btn.innerHTML = '收起标签 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3-3 3 3"/></svg>';
-    } else {
-      hidden.style.display = 'none';
-      btn.innerHTML = '展开全部标签 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l3 3 3-3"/></svg>';
-    }
-  }
-}
-
-function expandQuestions() {
-  const review = document.getElementById('questions-review');
-  review.querySelectorAll('.question-item.collapsed').forEach(item => {
-    item.classList.remove('collapsed');
-  });
-  const btn = document.getElementById('expand-q-btn');
-  btn.innerHTML = '收起 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3-3 3 3"/></svg>';
-  btn.onclick = collapseQuestions;
-}
-
-function collapseQuestions() {
-  const review = document.getElementById('questions-review');
-  review.querySelectorAll('.question-item').forEach((item, i) => {
-    if (i >= 2) item.classList.add('collapsed');
-  });
-  const btn = document.getElementById('expand-q-btn');
-  btn.innerHTML = '展开全部 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l3 3 3-3"/></svg>';
-  btn.onclick = expandQuestions;
-}
-
-function copyIcebreaker() {
-  showToast('已复制到剪贴板');
+function goBackToHome() {
+  currentDetailId = null;
+  showView('home');
 }
 
 /* ============================================
-   详情页返回首页
+   四线折叠/展开
    ============================================ */
-function goBackToHome() {
-  currentView = 'home';
-  currentDetailId = null;
+function toggleFourLine(header) {
+  const body = header.nextElementSibling;
+  const isExpanded = header.classList.contains('expanded');
+  if (isExpanded) {
+    header.classList.remove('expanded');
+    body.classList.remove('expanded');
+  } else {
+    header.classList.add('expanded');
+    body.classList.add('expanded');
+  }
+}
 
-  const homePage = document.getElementById('page-home');
-  const detailPage = document.getElementById('page-detail');
-  detailPage.classList.remove('active');
-  detailPage.classList.add('slide-right');
-  homePage.classList.remove('slide-left');
-  homePage.classList.add('active');
+/* ============================================
+   核心四问展开/收起
+   ============================================ */
+function toggleQuestions(btn) {
+  const items = btn.parentElement.querySelectorAll('.question-collapsed');
+  const isExpanded = btn.dataset.expanded === 'true';
+  if (isExpanded) {
+    items.forEach(i => i.classList.add('question-collapsed'));
+    btn.innerHTML = '展开全部 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>';
+    btn.dataset.expanded = 'false';
+  } else {
+    items.forEach(i => i.classList.remove('question-collapsed'));
+    btn.innerHTML = '收起 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 8l3-3 3 3"/></svg>';
+    btn.dataset.expanded = 'true';
+  }
+}
+
+/* ============================================
+   复制破冰建议
+   ============================================ */
+function copyIcebreak(btn) {
+  const text = btn.closest('.ai-icebreak-card').querySelector('.ai-icebreak-text').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => onCopied(btn));
+  } else {
+    onCopied(btn);
+  }
+}
+
+function onCopied(btn) {
+  btn.classList.add('copied');
+  btn.textContent = '已复制';
+  showToast('已复制到剪贴板');
+  setTimeout(() => {
+    btn.classList.remove('copied');
+    btn.textContent = '复制';
+  }, 1500);
 }
 
 /* ============================================
    详情页更多操作
    ============================================ */
 function openDetailMore() {
-  document.getElementById('detail-more-sheet').classList.add('show');
+  openSheet('detail-more-sheet');
 }
 
-function editContact() {
-  closeSheet('detail-more-sheet');
-  showToast('进入编辑模式（待开发）');
+/* ============================================
+   删除
+   ============================================ */
+function confirmDelete() {
+  openSheet('delete-confirm-sheet');
 }
 
-function shareContact() {
-  closeSheet('detail-more-sheet');
-  showToast('分享链接已复制');
-}
-
-function confirmDeleteContact() {
-  closeSheet('detail-more-sheet');
-  document.getElementById('delete-confirm-sheet').classList.add('show');
-}
-
-function doDeleteContact() {
+function doDelete() {
   closeSheet('delete-confirm-sheet');
   const idx = contacts.findIndex(c => c.id === currentDetailId);
   if (idx > -1) contacts.splice(idx, 1);
@@ -3084,18 +2607,19 @@ function doDeleteContact() {
 }
 
 /* ============================================
-   Bottom Sheet 通用关闭
+   Bottom Sheet
    ============================================ */
+function openSheet(id) {
+  document.getElementById(id).classList.add('show');
+}
+
 function closeSheet(id) {
   document.getElementById(id).classList.remove('show');
 }
 
-// 点击遮罩关闭
 document.querySelectorAll('.sheet-overlay').forEach(overlay => {
   overlay.addEventListener('click', function(e) {
-    if (e.target === this) {
-      this.classList.remove('show');
-    }
+    if (e.target === this) this.classList.remove('show');
   });
 });
 
@@ -3103,503 +2627,212 @@ document.querySelectorAll('.sheet-overlay').forEach(overlay => {
    Tab 切换
    ============================================ */
 function switchTab(tab) {
-  document.querySelectorAll('#app-nav-frame .tab-item').forEach(t => {
-    t.classList.toggle('active', t.dataset.tab === tab);
-  });
-
-  if (tab === 'home') {
-    if (currentView === 'detail') {
-      goBackToHome();
-    }
-  } else if (tab === 'add') {
-    startAddContact();
-  } else if (tab === 'settings') {
-    showToast('设置页面（待开发）');
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  if (tab === 'contacts') {
+    document.getElementById('tab-contacts').classList.add('active');
+    if (currentView === 'detail') goBackToHome();
+    currentView = 'home';
+  } else if (tab === 'notes') {
+    document.getElementById('tab-notes').classList.add('active');
+    showToast('纪要页面开发中');
+  } else if (tab === 'me') {
+    document.getElementById('tab-me').classList.add('active');
+    showToast('个人中心开发中');
   }
 }
 
 /* ============================================
-   进入添加联系人流程
+   添加联系人流程
    ============================================ */
 function startAddContact() {
-  currentView = 'flow';
+  // 隐藏首页元素
+  document.getElementById('view-home').style.display = 'none';
+  document.getElementById('view-detail').style.display = 'none';
+  document.getElementById('home-nav').style.display = 'none';
+  document.getElementById('detail-nav').style.display = 'none';
+  document.getElementById('tab-bar').style.display = 'none';
+  document.getElementById('fab').style.display = 'none';
 
-  // 隐藏导航框架，显示流程框架
-  document.getElementById('app-nav-frame').style.display = 'none';
-  document.getElementById('flow-pages-wrapper').style.display = 'block';
+  // 显示 Step 1
+  document.getElementById('view-step1').style.display = '';
+  document.getElementById('view-step1').className = 'step-view active';
+  document.getElementById('view-step2').style.display = 'none';
+  document.getElementById('view-step3').style.display = 'none';
 
-  // 重置流程到 Step 1
-  resetFlow();
+  // 重置进度
+  document.getElementById('seg1').className = 'step-segment-fill active';
+  document.getElementById('seg2').className = 'step-segment-fill';
+  document.getElementById('seg3').className = 'step-segment-fill';
+
+  selectedTags = [];
+  renderSelectedTags();
+  currentView = 'add-step1';
 }
 
-/* ============================================
-   退出流程，回到首页
-   ============================================ */
-function cancelFlow() {
+function cancelAddFlow() {
+  document.getElementById('view-step1').style.display = 'none';
+  document.getElementById('view-step2').style.display = 'none';
+  document.getElementById('view-step3').style.display = 'none';
+  document.getElementById('view-home').style.display = '';
+  document.getElementById('home-nav').style.display = '';
+  document.getElementById('tab-bar').style.display = '';
+  document.getElementById('fab').style.display = '';
   currentView = 'home';
-  document.getElementById('app-nav-frame').style.display = 'block';
-  document.getElementById('flow-pages-wrapper').style.display = 'none';
 }
 
-function returnToHome() {
-  currentView = 'home';
-  document.getElementById('app-nav-frame').style.display = 'block';
-  document.getElementById('flow-pages-wrapper').style.display = 'none';
-  renderContactList();
-}
-
-/* ============================================
-   搜索栏吸顶 + 问候区淡出
-   ============================================ */
-function setupScrollEffects() {
-  const homePage = document.getElementById('page-home');
-  const searchSection = document.getElementById('search-section');
-  const greetingSection = document.getElementById('greeting-section');
-
-  homePage.addEventListener('scroll', function() {
-    const scrollTop = this.scrollTop;
-
-    // 搜索栏阴影
-    if (scrollTop > 10) {
-      searchSection.classList.add('elevated');
-    } else {
-      searchSection.classList.remove('elevated');
-    }
-
-    // 问候区淡出
-    if (scrollTop > 40) {
-      greetingSection.classList.add('faded');
-    } else {
-      greetingSection.classList.remove('faded');
-    }
-  });
-}
-
-/* ============================================
-   流程页面切换辅助
-   ============================================ */
-function switchFlowPage(fromId, toId, direction) {
-  const fromPage = document.getElementById(fromId);
-  const toPage = document.getElementById(toId);
-
-  if (direction === 'forward') {
-    fromPage.classList.remove('active');
-    fromPage.classList.add('slide-left');
-    toPage.classList.remove('slide-right');
-    toPage.classList.add('active');
-  } else {
-    fromPage.classList.remove('active');
-    fromPage.classList.add('slide-right');
-    toPage.classList.remove('slide-left');
-    toPage.classList.add('active');
+function goToStep2() {
+  if (selectedTags.length === 0) {
+    showToast('请至少选择一个标签');
+    return;
   }
-}
-
-/* ============================================
-   Step 1: AI 生成标签
-   ============================================ */
-function generateTags() {
-  const tagSystem = document.getElementById('tag-system');
-  const btn = document.getElementById('generate-tags-btn');
-  const hint = document.getElementById('ai-hint');
-
-  hint.classList.add('hidden');
-
-  btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;animation:pulse 1s infinite"><circle cx="12" cy="12" r="10"/></svg> 正在生成...`;
-  btn.disabled = true;
-
-  setTimeout(() => {
-    tagSystem.classList.add('expanded');
-    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg> 重新生成`;
-    btn.disabled = false;
-
-    animateTagsIn('industry-tags');
-    setTimeout(() => animateTagsIn('relation-tags'), 200);
-    setTimeout(() => animateTagsIn('behavior-tags'), 400);
-  }, 800);
-}
-
-function animateTagsIn(containerId) {
-  const container = document.getElementById(containerId);
-  const tags = container.querySelectorAll('.tag');
-  tags.forEach((tag, i) => {
-    setTimeout(() => tag.classList.add('visible'), i * 80);
-  });
-}
-
-// 标签删除
-document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('tag-remove')) {
-    const tag = e.target.closest('.tag');
-    tag.style.transform = 'scale(0.8)';
-    tag.style.opacity = '0';
-    setTimeout(() => tag.remove(), 200);
-  }
-});
-
-// 自定义标签
-function addCustomTagStep1() {
-  const input = document.getElementById('custom-tag-input-step1');
-  const container = document.getElementById('custom-tags-step1');
-  const val = input.value.trim();
-  if (!val) return;
-
-  const tag = document.createElement('span');
-  tag.className = 'tag tag--custom visible';
-  tag.innerHTML = `${val} <span class="tag-remove">×</span>`;
-  container.appendChild(tag);
-  input.value = '';
-}
-
-// Step 2a 标签选择
-function toggleTagSelect(el) {
-  el.classList.toggle('selected');
-}
-
-/* ============================================
-   流程步骤切换
-   ============================================ */
-function goToStep2a() {
-  switchFlowPage('page-step1', 'page-step2a', 'forward');
-
-  document.getElementById('dot-1').classList.remove('active');
-  document.getElementById('dot-1').classList.add('completed');
-  document.getElementById('line-1-2').classList.add('completed');
-  document.getElementById('dot-2').classList.add('active');
-
-  currentStep = '2a';
-
-  document.querySelectorAll('#industry-tags-step2 .tag, #relation-tags-step2 .tag').forEach(tag => {
-    tag.classList.add('visible');
-  });
+  document.getElementById('view-step1').className = 'step-view hidden-left';
+  document.getElementById('view-step2').style.display = '';
+  document.getElementById('view-step2').className = 'step-view active';
+  // 更新进度
+  document.getElementById('seg1').className = 'step-segment-fill done';
+  document.getElementById('seg2').className = 'step-segment-fill active';
+  currentView = 'add-step2';
 }
 
 function goBackToStep1() {
-  switchFlowPage('page-step2a', 'page-step1', 'backward');
-
-  document.getElementById('dot-1').classList.add('active');
-  document.getElementById('dot-1').classList.remove('completed');
-  document.getElementById('line-1-2').classList.remove('completed');
-  document.getElementById('dot-2').classList.remove('active');
-  document.getElementById('dot-2').classList.remove('completed');
-
-  currentStep = 1;
+  document.getElementById('view-step2').className = 'step-view hidden-right';
+  document.getElementById('view-step1').className = 'step-view active';
+  document.getElementById('seg1').className = 'step-segment-fill active';
+  document.getElementById('seg2').className = 'step-segment-fill';
+  currentView = 'add-step1';
 }
 
-function goToStep2b() {
-  const name = document.getElementById('contact-name').value.trim();
+function goToStep3() {
+  const name = document.getElementById('add-name').value.trim();
   if (!name) {
     showToast('请输入联系人姓名');
-    document.getElementById('contact-name').focus();
+    document.getElementById('add-name').focus();
     return;
   }
 
-  switchFlowPage('page-step2a', 'page-step2b', 'forward');
-  currentStep = '2b';
-}
-
-function goBackToStep2a() {
-  switchFlowPage('page-step2b', 'page-step2a', 'backward');
-  currentStep = '2a';
-}
-
-/* ============================================
-   核心四问卡片滑动
-   ============================================ */
-function nextQuestion(currentIdx) {
-  const cards = document.querySelectorAll('.question-card');
-  const currentCard = cards[currentIdx];
-  const nextCard = cards[currentIdx + 1];
-
-  if (!nextCard) return;
-
-  currentCard.classList.remove('current');
-  currentCard.classList.add('fly-out');
-
-  nextCard.classList.remove('fly-in', 'hidden-card');
-  nextCard.classList.add('current');
-
-  setTimeout(() => {
-    for (let i = 0; i <= currentIdx; i++) {
-      cards[i].classList.add('hidden-card');
-      cards[i].classList.remove('fly-out');
-    }
-  }, 400);
-
-  currentQuestion = currentIdx + 1;
-}
-
-function finishQuestions() {
-  const cards = document.querySelectorAll('.question-card');
-  const lastCard = cards[totalQuestions - 1];
-
-  lastCard.classList.remove('current');
-  lastCard.classList.add('fly-out');
-
-  setTimeout(() => {
-    for (let i = 0; i < totalQuestions; i++) {
-      cards[i].classList.add('hidden-card');
-      cards[i].classList.remove('fly-out');
-    }
-  }, 400);
-
-  currentQuestion = totalQuestions;
-  showToast('核心四问已完成');
-
-  setTimeout(() => {
-    const aiCard = document.getElementById('ai-icebreaker');
-    aiCard.classList.add('revealed');
-    generateIcebreaker();
-  }, 500);
-}
-
-/* ============================================
-   AI 破冰提示生成 (Step 2b)
-   ============================================ */
-function generateIcebreaker() {
-  const constellation = document.getElementById('contact-constellation').value;
-  const mbti = document.getElementById('contact-mbti').value;
-  const content = document.getElementById('ai-icebreaker-content');
-  const card = document.getElementById('ai-icebreaker');
-
-  if (!constellation && !mbti) {
-    content.innerHTML = '选择星座和 MBTI 后，AI 将基于<span class="highlight">性格特质</span>为你生成个性化的破冰建议';
-    return;
-  }
-
-  card.classList.add('ai-loading');
-  content.textContent = 'AI 正在分析性格特质，生成破冰建议...';
-
-  setTimeout(() => {
-    card.classList.remove('ai-loading');
-
-    const constellationTips = {
-      '白羊座': '白羊座热情直接，开场可以开门见山表达你的来意和欣赏',
-      '金牛座': '金牛座务实稳重，可以从具体的价值交换和实际合作切入',
-      '双子座': '双子座好奇心强，用一个有趣的问题或新鲜观点开场效果更好',
-      '巨蟹座': '巨蟹座重视情感连接，先建立共同话题再谈正事',
-      '狮子座': '狮子座喜欢被认可，真诚赞美TA的成就再提出合作',
-      '处女座': '处女座注重细节和逻辑，用数据和事实说话最有效',
-      '天秤座': '天秤座善社交，轻松的寒暄后自然过渡到正题',
-      '天蝎座': '天蝎座洞察力强，直入主题比绕弯子更受尊重',
-      '射手座': '射手座爱冒险和自由，聊聊旅行或新体验能快速破冰',
-      '摩羯座': '摩羯座目标感强，展示你的专业性和诚意即可',
-      '水瓶座': '水瓶座思维独特，分享一个前沿观点容易引起共鸣',
-      '双鱼座': '双鱼座感性细腻，先找到情感共鸣点再深入交流'
-    };
-
-    const mbtiTips = {
-      'INTJ': 'INTJ 重视深度和逻辑，直接讨论战略问题最能引起兴趣',
-      'INTP': 'INTP 热衷探索，抛出一个有挑战性的问题就是最好的开场',
-      'ENTJ': 'ENTJ 高效务实，清晰展示合作的价值和可能性',
-      'ENTP': 'ENTP 喜欢辩论和新点子，一个反直觉的观点能抓住TA',
-      'INFJ': 'INFJ 重视真诚和愿景，分享你的使命感能打动TA',
-      'INFP': 'INFP 理想主义，聊聊共同的价值观比谈利益更有效',
-      'ENFJ': 'ENFJ 天生善于连接，真诚表达你想建立关系的意愿',
-      'ENFP': 'ENFP 热情好奇，分享一个有趣的故事快速拉近距离',
-      'ISTJ': 'ISTJ 可靠务实，用具体的事实和计划建立信任',
-      'ISFJ': 'ISFJ 温暖体贴，先表达对TA的关心和感谢',
-      'ESTJ': 'ESTJ 直截了当，清晰陈述你的目的和计划',
-      'ESFJ': 'ESFJ 重视和谐，从共同认识的人或事切入',
-      'ISTP': 'ISTP 简洁直接，不要废话，直说你想做什么',
-      'ISFP': 'ISFP 重视真实感受，分享你真实的想法和体验',
-      'ESTP': 'ESTP 行动派，提出一个具体的合作或见面邀约',
-      'ESFP': 'ESFP 活泼开朗，轻松有趣的氛围下交流最自然'
-    };
-
-    let html = '';
-    if (constellation) {
-      html += `<span class="highlight">${constellation}</span>：${constellationTips[constellation] || '展现真诚和尊重，自然地开启对话'}<br><br>`;
-    }
-    if (mbti) {
-      html += `<span class="highlight">${mbti}</span>：${mbtiTips[mbti] || '用专业和真诚打动对方'}<br><br>`;
-    }
-    if (constellation && mbti) {
-      html += `结合${constellation}的特质和${mbti}的思维方式，建议你在破冰时保持<span class="highlight">真诚且有条理</span>，先用一个具体话题打开局面。`;
-    }
-
-    content.innerHTML = html || '选择星座和 MBTI 后，AI 将基于<span class="highlight">性格特质</span>为你生成个性化的破冰建议';
-  }, 1200);
-}
-
-// 监听星座和MBTI变化
-document.getElementById('contact-constellation').addEventListener('change', function() {
-  if (currentQuestion >= totalQuestions) generateIcebreaker();
-});
-document.getElementById('contact-mbti').addEventListener('change', function() {
-  if (currentQuestion >= totalQuestions) generateIcebreaker();
-});
-
-/* ============================================
-   保存联系人 → Step 3
-   ============================================ */
-function saveContact() {
-  const name = document.getElementById('contact-name').value.trim();
-  if (!name) {
-    showToast('请输入联系人姓名');
-    return;
-  }
-
-  const role = document.getElementById('contact-role').value.trim();
-  const company = document.getElementById('contact-company').value.trim();
-  const constellation = document.getElementById('contact-constellation').value;
-  const mbti = document.getElementById('contact-mbti').value;
-
-  const selectedIndustryTags = [];
-  document.querySelectorAll('#industry-tags-step2 .tag.selected').forEach(t => {
-    selectedIndustryTags.push(t.dataset.tag);
-  });
-  const selectedRelationTags = [];
-  document.querySelectorAll('#relation-tags-step2 .tag.selected').forEach(t => {
-    selectedRelationTags.push(t.dataset.tag);
-  });
-
-  // 更新步骤指示器
-  document.getElementById('dot-2').classList.add('completed');
-  document.getElementById('dot-2').classList.remove('active');
-  document.getElementById('line-2-3').classList.add('completed');
-  document.getElementById('dot-3').classList.add('active');
-
-  document.getElementById('saved-contact-name').textContent = name;
-
-  // 将新联系人添加到数据中
+  // 创建新联系人
   const newId = contacts.length > 0 ? Math.max(...contacts.map(c => c.id)) + 1 : 1;
-  const allTags = [...selectedIndustryTags, ...selectedRelationTags].map(t => ({
-    text: t, type: selectedRelationTags.includes(t) ? 'relational' : 'contextual'
-  }));
-
-  // 收集四问回答
-  const answers = [];
-  document.querySelectorAll('.question-textarea').forEach((ta, i) => {
-    answers.push(ta.value.trim());
-  });
+  const colorKeys = ['amber','blue','green','teal','red','gold'];
+  const role = document.getElementById('add-role').value.trim() || '—';
+  const company = document.getElementById('add-company').value.trim() || '—';
+  const mbti = document.getElementById('add-mbti').value || '—';
+  const constellation = document.getElementById('add-constellation').value || '—';
+  const answers = [
+    document.getElementById('q1').value.trim(),
+    document.getElementById('q2').value.trim(),
+    document.getElementById('q3').value.trim(),
+    document.getElementById('q4').value.trim()
+  ];
 
   const newContact = {
-    id: newId,
-    name: name,
-    role: role || '—',
-    company: company || '—',
-    constellation: constellation || '—',
-    mbti: mbti || '—',
-    relationType: selectedRelationTags.length > 0 ? selectedRelationTags[0] : 'default',
-    tags: allTags.length > 0 ? allTags : [{ text: '新联系人', type: 'contextual' }],
+    id: newId, name, role, company, mbti, constellation,
+    colorKey: colorKeys[newId % colorKeys.length],
+    strength: 2,
+    tags: selectedTags.map(t => ({text:t.label, type:t.type})),
+    fourLines: {
+      origin: {hometown:'—',education:'—',experience:'—'},
+      value: {expertise:'—',resources:'—'},
+      connection: {mutualFriend:'—',keyEvent:'—',relationLabel:'—'},
+      action: {nextAction:'—',iceBreakTopic:'—',remindDate:'—'}
+    },
     questions: [
-      { q: '为什么连接？', a: answers[0] || '—' },
-      { q: '想从TA身上学什么？', a: answers[1] || '—' },
-      { q: '你能为TA提供什么？', a: answers[2] || '—' },
-      { q: '破冰开场白？', a: answers[3] || '—' }
+      {q:'为什么连接？',a:answers[0]||'—'},
+      {q:'想从TA身上学什么？',a:answers[1]||'—'},
+      {q:'你能为TA提供什么？',a:answers[2]||'—'},
+      {q:'破冰开场白？',a:answers[3]||'—'}
     ],
     icebreaker: answers[3] || '从共同话题开始对话',
-    topics: ['待AI分析生成', '完善更多信息后获取', '持续互动解锁新话题']
   };
 
   contacts.unshift(newContact);
-  lastSavedContactId = newId;
+  lastSavedId = newId;
 
-  switchFlowPage('page-step2b', 'page-step3', 'forward');
-  currentStep = 3;
+  // 显示成功页
+  document.getElementById('saved-name').textContent = name;
+  document.getElementById('ai-icebreak-preview').textContent =
+    `基于${name}的${mbti !== '—' ? mbti + '性格和' : ''}${constellation !== '—' ? constellation + '特质' : '标签'}，建议从一个具体话题开始对话，保持真诚和有条理...`;
 
-  console.log('保存联系人数据:', newContact);
+  document.getElementById('view-step2').className = 'step-view hidden-left';
+  document.getElementById('view-step3').style.display = '';
+  document.getElementById('view-step3').className = 'step-view active';
+  document.getElementById('seg2b').className = 'step-segment-fill done';
+  document.getElementById('seg3c').className = 'step-segment-fill active';
+
+  currentView = 'add-step3';
 }
 
-/* ============================================
-   Step 3 操作按钮
-   ============================================ */
-function addAnother() {
-  resetFlowForm();
-  resetFlowPages();
-  currentStep = '2a';
-}
-
-function viewContact() {
-  if (lastSavedContactId) {
-    returnToHome();
-    setTimeout(() => openDetail(lastSavedContactId), 300);
-  } else {
-    backToHome();
+function viewSavedContact() {
+  resetAddForm();
+  cancelAddFlow();
+  if (lastSavedId) {
+    setTimeout(() => openDetail(lastSavedId), 300);
   }
 }
 
-function backToHome() {
-  returnToHome();
-  showToast('已添加');
+function addAnother() {
+  resetAddForm();
+  startAddContact();
+}
+
+function backToHomeFromStep() {
+  resetAddForm();
+  cancelAddFlow();
+}
+
+function resetAddForm() {
+  document.getElementById('add-name').value = '';
+  document.getElementById('add-role').value = '';
+  document.getElementById('add-company').value = '';
+  document.getElementById('add-mbti').value = '';
+  document.getElementById('add-constellation').value = '';
+  document.getElementById('q1').value = '';
+  document.getElementById('q2').value = '';
+  document.getElementById('q3').value = '';
+  document.getElementById('q4').value = '';
+  selectedTags = [];
 }
 
 /* ============================================
-   流程重置
+   AI 标签选择
    ============================================ */
-function resetFlowForm() {
-  document.getElementById('contact-name').value = '';
-  document.getElementById('contact-role').value = '';
-  document.getElementById('contact-company').value = '';
-  document.getElementById('contact-constellation').value = '';
-  document.getElementById('contact-mbti').value = '';
-
-  document.querySelectorAll('#industry-tags-step2 .tag.selected, #relation-tags-step2 .tag.selected').forEach(t => {
-    t.classList.remove('selected');
-  });
-
-  currentQuestion = 0;
-  const cards = document.querySelectorAll('.question-card');
-  cards.forEach((card, i) => {
-    card.classList.remove('current', 'fly-out', 'fly-in', 'hidden-card');
-    const textarea = card.querySelector('.question-textarea');
-    if (textarea) textarea.value = '';
-    if (i === 0) card.classList.add('current');
-    else card.classList.add('fly-in');
-  });
-
-  document.getElementById('ai-icebreaker').classList.remove('revealed');
-  document.getElementById('ai-icebreaker-content').innerHTML = '';
+function toggleAiChip(el) {
+  el.classList.toggle('selected');
+  const label = el.textContent.trim();
+  if (el.classList.contains('selected')) {
+    selectedTags.push({label, type: 'relational'});
+  } else {
+    selectedTags = selectedTags.filter(t => t.label !== label);
+  }
+  renderSelectedTags();
 }
 
-function resetFlowPages() {
-  // 所有 flow pages 回到初始状态
-  const flowPages = document.querySelectorAll('.flow-page');
-  flowPages.forEach(p => {
-    p.classList.remove('active', 'slide-left', 'slide-right');
-    p.classList.add('slide-right');
-  });
-  document.getElementById('page-step2a').classList.remove('slide-right');
-  document.getElementById('page-step2a').classList.add('slide-right');
-
-  // Step2a 作为当前页
-  flowPages.forEach(p => p.classList.add('slide-right'));
-  document.getElementById('page-step2a').classList.remove('slide-right');
-  document.getElementById('page-step2a').classList.add('active');
-
-  // 重置步骤指示器
-  document.getElementById('dot-1').classList.remove('active', 'completed');
-  document.getElementById('dot-1').classList.add('completed');
-  document.getElementById('dot-2').classList.remove('active', 'completed');
-  document.getElementById('dot-2').classList.add('active');
-  document.getElementById('line-1-2').classList.add('completed');
-  document.getElementById('line-2-3').classList.remove('completed');
-  document.getElementById('dot-3').classList.remove('active', 'completed');
+function addCustomTag() {
+  const input = document.getElementById('custom-tag-input');
+  const val = input.value.trim();
+  if (!val) return;
+  if (selectedTags.some(t => t.label === val)) {
+    showToast('标签已存在');
+    return;
+  }
+  selectedTags.push({label: val, type: 'contextual'});
+  input.value = '';
+  renderSelectedTags();
 }
 
-function resetFlow() {
-  resetFlowForm();
-
-  // 所有 flow pages 回到 Step1
-  const flowPages = document.querySelectorAll('.flow-page');
-  flowPages.forEach(p => {
-    p.classList.remove('active', 'slide-left', 'slide-right');
-    p.classList.add('slide-right');
+function removeSelectedTag(label) {
+  selectedTags = selectedTags.filter(t => t.label !== label);
+  // 同步AI推荐区
+  document.querySelectorAll('.ai-recommend-chip').forEach(c => {
+    if (c.textContent.trim() === label) c.classList.remove('selected');
   });
-  document.getElementById('page-step1').classList.remove('slide-right');
-  document.getElementById('page-step1').classList.add('active');
+  renderSelectedTags();
+}
 
-  // 重置步骤指示器
-  document.getElementById('dot-1').classList.remove('completed');
-  document.getElementById('dot-1').classList.add('active');
-  document.getElementById('line-1-2').classList.remove('completed');
-  document.getElementById('dot-2').classList.remove('active', 'completed');
-  document.getElementById('line-2-3').classList.remove('completed');
-  document.getElementById('dot-3').classList.remove('active', 'completed');
-
-  currentStep = 1;
-  currentQuestion = 0;
+function renderSelectedTags() {
+  const area = document.getElementById('selected-tags-area');
+  area.innerHTML = selectedTags.map((t, i) =>
+    `<span class="selected-tag-chip ${t.type}" style="animation-delay:${i*40}ms">${t.label}<span class="selected-tag-remove" onclick="removeSelectedTag('${t.label}')">×</span></span>`
+  ).join('');
 }
 
 /* ============================================
@@ -3608,7 +2841,8 @@ function resetFlow() {
 document.addEventListener('DOMContentLoaded', function() {
   updateGreeting();
   renderContactList();
-  setupScrollEffects();
+
+  // 默认展开第一个四线档案（在详情页渲染后由JS处理）
 });
 </script>
 </body>
