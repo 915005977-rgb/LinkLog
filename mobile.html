@@ -1772,6 +1772,212 @@ a { text-decoration: none; color: inherit; }
   transform: translateY(0);
 }
 
+/* ============================================
+   视图6: "我的"页面 — Skill 工具箱
+   ============================================ */
+.profile-content {
+  padding: calc(var(--nav-height) + var(--safe-top) + var(--space-5)) var(--space-screen-x) calc(var(--tab-bar-height-total) + var(--space-8));
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.profile-avatar-lg {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-accent-default), var(--color-line-value));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-h1);
+  font-weight: var(--weight-bold);
+  color: #FFF;
+  margin: 0 auto var(--space-3);
+}
+
+.profile-name-lg {
+  font-size: var(--text-h1);
+  font-weight: var(--weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.profile-bio {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+}
+
+.section-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-3);
+}
+
+/* Skill 卡片 */
+.skill-card {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: var(--shadow-xs);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.skill-card:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.skill-card-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: var(--space-3);
+}
+
+.skill-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-3);
+  flex-shrink: 0;
+}
+
+.skill-icon-wrap svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent-text);
+}
+
+.skill-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.skill-name {
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.skill-desc {
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-semibold);
+  background: var(--color-ai-light);
+  color: var(--color-ai-text);
+  margin-top: var(--space-2);
+}
+
+.skill-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.skill-btn {
+  flex: 1;
+  height: var(--touch-comfort);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-semibold);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.skill-btn:active {
+  transform: scale(0.96);
+}
+
+.skill-btn-primary {
+  background: var(--color-accent-default);
+  color: var(--color-text-on-accent);
+}
+
+.skill-btn-secondary {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+}
+
+/* Skill 详情展开区 */
+.skill-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--duration-normal) var(--ease-out);
+  margin-top: var(--space-3);
+}
+
+.skill-detail.expanded {
+  max-height: 300px;
+}
+
+.skill-detail-inner {
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  overflow-y: auto;
+  max-height: 240px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.skill-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-2) 0 0;
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-tertiary);
+  background: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.skill-toggle-btn svg {
+  margin-left: var(--space-1);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.skill-toggle-btn.expanded svg {
+  transform: rotate(180deg);
+}
+
 /* 减弱动画 */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1930,12 +2136,134 @@ a { text-decoration: none; color: inherit; }
   <!-- ========== 视图2: 联系人详情 ========== -->
   <div class="view hidden-right" id="view-detail">
     <div class="detail-content" id="detail-content"></div>
-    <!-- 底部操作栏 -->
-    <div class="detail-bottom-bar" id="detail-bottom-bar">
-      <button class="btn-edit" onclick="showToast('编辑功能开发中')">编辑</button>
-      <button class="btn-delete" onclick="confirmDelete()">删除</button>
-    </div>
   </div><!-- /view-detail -->
+
+  <!-- ========== 详情页底部操作栏（外层，避免 fixed 被 view 的 transform 破坏） ========== -->
+  <div class="detail-bottom-bar" id="detail-bottom-bar" style="display:none;">
+    <button class="btn-edit" onclick="showToast('编辑功能开发中')">编辑</button>
+    <button class="btn-delete" onclick="confirmDelete()">删除</button>
+  </div>
+
+  <!-- ========== 视图: "我的" — Skill 工具箱 ========== -->
+  <div class="view hidden-right" id="view-me" style="display:none;">
+    <div class="profile-content">
+      <div class="profile-header">
+        <div class="profile-avatar-lg">鱼</div>
+        <div class="profile-name-lg">YSY</div>
+        <div class="profile-bio">连接日志 · 关系复利</div>
+      </div>
+
+      <div class="section-label">Skill 工具箱</div>
+
+      <!-- Skill 卡片1: 人脉地图生成器 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 018 8c0 5.4-7 11.5-7.3 11.8a1 1 0 01-1.4 0C11 21.5 4 15.4 4 10a8 8 0 018-8z"/></svg>
+          </div>
+          <div class="skill-meta">
+            <div class="skill-name">人脉地图生成器</div>
+            <div class="skill-desc">活动前人脉分析、现场作战、会后复盘。输入自我介绍，AI 帮你拆解连接价值、生成话术和跟进动作。</div>
+            <div class="skill-badge">v2.0</div>
+          </div>
+        </div>
+        <button class="skill-toggle-btn" onclick="toggleSkillDetail('skill1')">
+          查看 Skill 内容 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="skill-detail" id="skill1-detail">
+          <div class="skill-detail-inner" id="skill1-text">你是"以用户为中心的人脉地图分析助手"——帮用户在活动前读懂"来的都是谁、和我有什么关系、我应该怎么连接、活动后如何跟进"。
+
+【核心原则】
+1. 以用户为主线，不是以参会者为主线
+2. 先输入→再拆解→再输出→最后做减法
+3. 不武断评价，不贴负面标签
+4. 话术自然真诚，以请教和共创为主
+
+【触发词】人脉地图 / 帮我拆解这些人 / 活动人脉分析 / 我应该聊谁 / 场域洞察
+
+【使用方式】把活动中的自我介绍粘贴进来，AI 自动整理+分析+给话术</div>
+        </div>
+        <div class="skill-actions">
+          <button class="skill-btn skill-btn-primary" onclick="copySkill('skill1-text')">复制 Skill</button>
+          <button class="skill-btn skill-btn-secondary" onclick="showToast('跳转 Skill 页面开发中')">了解更多</button>
+        </div>
+      </div>
+
+      <!-- Skill 卡片2: 面试准备 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon-wrap" style="background:var(--color-ai-light)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-ai-default)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          </div>
+          <div class="skill-meta">
+            <div class="skill-name">面试准备系统</div>
+            <div class="skill-desc">公司深度研究→岗位分析→能力匹配度评估，三步搞定面试准备。</div>
+            <div class="skill-badge">v1.0</div>
+          </div>
+        </div>
+        <button class="skill-toggle-btn" onclick="toggleSkillDetail('skill2')">
+          查看 Skill 内容 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="skill-detail" id="skill2-detail">
+          <div class="skill-detail-inner" id="skill2-text">面试准备三步法：
+
+Step 1 公司深度研究
+- 价值观/使命/愿景
+- 营收/业务线/核心产品
+- 行业趋势/AI应用/出海方向
+
+Step 2 岗位分析
+- 所属部门/汇报线
+- 市场格局/竞品对标
+- 工作重心/KPI预期
+
+Step 3 能力匹配度评估
+- JD 逐条拆解
+- 经验匹配度打分
+- 差距补齐建议
+
+【触发词】面试准备 / 准备面试 / 帮我准备XX面试</div>
+        </div>
+        <div class="skill-actions">
+          <button class="skill-btn skill-btn-primary" onclick="copySkill('skill2-text')">复制 Skill</button>
+          <button class="skill-btn skill-btn-secondary" onclick="showToast('跳转 Skill 页面开发中')">了解更多</button>
+        </div>
+      </div>
+
+      <!-- Skill 卡片3: 命题深度分析 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div class="skill-icon-wrap" style="background:var(--color-success-light)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--color-success-default)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          </div>
+          <div class="skill-meta">
+            <div class="skill-name">命题深度分析</div>
+            <div class="skill-desc">给命题+初版框架，AI 帮你审阅优化、搜索数据、生成深度分析报告。</div>
+            <div class="skill-badge">v1.0</div>
+          </div>
+        </div>
+        <button class="skill-toggle-btn" onclick="toggleSkillDetail('skill3')">
+          查看 Skill 内容 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="skill-detail" id="skill3-detail">
+          <div class="skill-detail-inner" id="skill3-text">命题深度分析工具——给命题+初版分析框架，执行：
+1) 框架审阅优化
+2) 网络数据搜索
+3) 深度分析报告生成
+4) 可复用资产提炼
+
+适用于：战略分析、行业研究、竞品分析、业务论证
+
+【触发词】命题分析 / 拆解命题 / 深度分析 / 人货场分析</div>
+        </div>
+        <div class="skill-actions">
+          <button class="skill-btn skill-btn-primary" onclick="copySkill('skill3-text')">复制 Skill</button>
+          <button class="skill-btn skill-btn-secondary" onclick="showToast('跳转 Skill 页面开发中')">了解更多</button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /view-me -->
 
   <!-- ========== 视图3: 添加联系人 Step 1 ========== -->
   <div class="step-view hidden-right" id="view-step1" style="display:none">
@@ -2403,22 +2731,33 @@ function filterContacts() {
 function showView(viewId) {
   const homeView = document.getElementById('view-home');
   const detailView = document.getElementById('view-detail');
+  const meView = document.getElementById('view-me');
 
   if (viewId === 'home') {
     detailView.className = 'view hidden-right';
+    meView.style.display = 'none';
+    meView.className = 'view hidden-right';
     homeView.style.display = '';
     homeView.className = 'view active';
     document.getElementById('home-nav').style.display = '';
     document.getElementById('detail-nav').style.display = 'none';
     document.getElementById('fab').style.display = '';
     document.getElementById('tab-bar').style.display = '';
+    document.getElementById('detail-bottom-bar').style.display = 'none';
+    // 重置 tab 高亮
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-contacts').classList.add('active');
   } else if (viewId === 'detail') {
     homeView.className = 'view hidden-left';
+    meView.style.display = 'none';
+    meView.className = 'view hidden-right';
     detailView.style.display = '';
     detailView.className = 'view active';
     document.getElementById('home-nav').style.display = 'none';
     document.getElementById('detail-nav').style.display = '';
     document.getElementById('fab').style.display = 'none';
+    document.getElementById('tab-bar').style.display = 'none';
+    document.getElementById('detail-bottom-bar').style.display = '';
   }
 }
 
@@ -2584,6 +2923,53 @@ function onCopied(btn) {
 }
 
 /* ============================================
+   Skill 工具箱
+   ============================================ */
+function copySkill(textId) {
+  const text = document.getElementById(textId).textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Skill 内容已复制到剪贴板 ✓');
+    }).catch(() => {
+      fallbackCopy(text);
+    });
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('Skill 内容已复制到剪贴板 ✓');
+  } catch (e) {
+    showToast('复制失败，请长按选择复制');
+  }
+  document.body.removeChild(ta);
+}
+
+function toggleSkillDetail(id) {
+  const detail = document.getElementById(id + '-detail');
+  const btn = detail.previousElementSibling;
+  const isExpanded = detail.classList.contains('expanded');
+  if (isExpanded) {
+    detail.classList.remove('expanded');
+    btn.classList.remove('expanded');
+    btn.innerHTML = '查看 Skill 内容 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>';
+  } else {
+    detail.classList.add('expanded');
+    btn.classList.add('expanded');
+    btn.innerHTML = '收起 Skill 内容 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 5l3 3 3-3"/></svg>';
+  }
+}
+
+/* ============================================
    详情页更多操作
    ============================================ */
 function openDetailMore() {
@@ -2628,16 +3014,36 @@ document.querySelectorAll('.sheet-overlay').forEach(overlay => {
    ============================================ */
 function switchTab(tab) {
   document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  const homeView = document.getElementById('view-home');
+  const detailView = document.getElementById('view-detail');
+  const meView = document.getElementById('view-me');
+
   if (tab === 'contacts') {
     document.getElementById('tab-contacts').classList.add('active');
-    if (currentView === 'detail') goBackToHome();
+    homeView.style.display = '';
+    homeView.className = 'view active';
+    detailView.className = 'view hidden-right';
+    meView.style.display = 'none';
+    meView.className = 'view hidden-right';
+    document.getElementById('home-nav').style.display = '';
+    document.getElementById('detail-nav').style.display = 'none';
+    document.getElementById('detail-bottom-bar').style.display = 'none';
+    document.getElementById('fab').style.display = '';
     currentView = 'home';
   } else if (tab === 'notes') {
     document.getElementById('tab-notes').classList.add('active');
     showToast('纪要页面开发中');
   } else if (tab === 'me') {
     document.getElementById('tab-me').classList.add('active');
-    showToast('个人中心开发中');
+    homeView.className = 'view hidden-left';
+    detailView.className = 'view hidden-right';
+    meView.style.display = '';
+    meView.className = 'view active';
+    document.getElementById('home-nav').style.display = 'none';
+    document.getElementById('detail-nav').style.display = 'none';
+    document.getElementById('detail-bottom-bar').style.display = 'none';
+    document.getElementById('fab').style.display = 'none';
+    currentView = 'me';
   }
 }
 
