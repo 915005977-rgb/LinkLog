@@ -4,13 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1280">
   <title>人物资料表 · LinkLog V2</title>
-  <!-- 原型类型: PC宽表格 | 设计系统: LinkLog V2 Design Tokens -->
   <style>
-    /* ============================
-       设计令牌 - LinkLog V2
-       ============================ */
     :root {
-      /* 色彩 */
       --color-bg-primary: #F8F6F3;
       --color-bg-secondary: #F1EDE8;
       --color-bg-tertiary: #EAE5DF;
@@ -44,59 +39,10 @@
       --color-tag-relational: #E8915A;
       --color-tag-contextual: #7C6AE8;
       --color-tag-custom: #5B8ED0;
-      --color-tag-bg-base: #F1EDE8;
-
-      /* 档案线色彩 */
       --color-line-origin: #7C9A8E;
-      --color-line-origin-light: #EDF3F0;
       --color-line-value: #D4915A;
-      --color-line-value-light: #FDF0E6;
       --color-line-connection: #5B8ED0;
-      --color-line-connection-light: #E8F0FA;
       --color-line-action: #7C6AE8;
-      --color-line-action-light: #F0EDFC;
-
-      /* PC端容器 */
-      --container-pc: 1320px;
-
-      /* 排版 */
-      --font-sans: "Inter", "SF Pro Display", -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-      --font-mono: "JetBrains Mono", "SF Mono", "Menlo", monospace;
-      --text-display: 28px;
-      --text-h1: 22px;
-      --text-h2: 18px;
-      --text-h3: 16px;
-      --text-body: 15px;
-      --text-body-sm: 13px;
-      --text-caption: 12px;
-      --text-micro: 11px;
-      --weight-regular: 400;
-      --weight-medium: 500;
-      --weight-semibold: 600;
-      --weight-bold: 700;
-
-      /* 间距 */
-      --space-1: 4px; --space-2: 8px; --space-3: 12px;
-      --space-4: 16px; --space-5: 20px; --space-6: 24px;
-      --space-8: 32px; --space-10: 40px; --space-12: 48px;
-
-      /* 圆角 */
-      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
-      --radius-xl: 20px; --radius-full: 9999px;
-
-      /* 阴影 */
-      --shadow-xs: 0 1px 2px rgba(44,40,37,0.04);
-      --shadow-sm: 0 2px 8px rgba(44,40,37,0.06);
-      --shadow-md: 0 4px 16px rgba(44,40,37,0.08);
-      --shadow-lg: 0 8px 32px rgba(44,40,37,0.10);
-      --shadow-focus: 0 0 0 3px rgba(232,145,90,0.3);
-
-      /* 动效 */
-      --duration-fast: 200ms;
-      --duration-normal: 300ms;
-      --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
-
-      /* 补充语义色（审查修正） */
       --color-text-on-accent: #FFFFFF;
       --color-bg-frosted: rgba(248,246,243,0.92);
       --color-bg-glass: rgba(255,255,255,0.6);
@@ -105,756 +51,320 @@
       --color-bg-cell-sticky-hover: rgba(254,247,240,0.98);
       --color-ai-border-subtle: rgba(124,106,232,0.2);
       --color-ai-bg-subtle: rgba(124,106,232,0.10);
+      --container-pc: 1320px;
+      --font-sans: "Inter", "SF Pro Display", -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --text-display: 28px; --text-h1: 22px; --text-h2: 18px;
+      --text-h3: 16px; --text-body: 15px; --text-body-sm: 13px;
+      --text-caption: 12px; --text-micro: 11px;
+      --weight-regular: 400; --weight-medium: 500;
+      --weight-semibold: 600; --weight-bold: 700;
+      --space-1: 4px; --space-2: 8px; --space-3: 12px;
+      --space-4: 16px; --space-5: 20px; --space-6: 24px;
+      --space-8: 32px; --space-10: 40px; --space-12: 48px;
+      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+      --radius-xl: 20px; --radius-full: 9999px;
+      --shadow-xs: 0 1px 2px rgba(44,40,37,0.04);
+      --shadow-sm: 0 2px 8px rgba(44,40,37,0.06);
+      --shadow-md: 0 4px 16px rgba(44,40,37,0.08);
+      --shadow-focus: 0 0 0 3px rgba(232,145,90,0.3);
+      --duration-fast: 200ms; --duration-normal: 300ms;
+      --duration-slow: 400ms;
+      --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* ============================
-       基础重置
-       ============================ */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: var(--font-sans);
-      font-size: var(--text-body);
-      color: var(--color-text-primary);
-      background-color: var(--color-bg-primary);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+      font-family: var(--font-sans); font-size: var(--text-body);
+      color: var(--color-text-primary); background: var(--color-bg-primary);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
     }
-
-    button {
-      font-family: inherit;
-      cursor: pointer;
-      border: none;
-      background: none;
-    }
-
-    button:focus-visible,
-    a:focus-visible,
-    input:focus-visible,
-    details:focus-visible,
-    summary:focus-visible {
-      outline: none;
-      box-shadow: var(--shadow-focus);
-      border-radius: var(--radius-sm);
-    }
-
-    /* ============================
-       减弱动效
-       ============================ */
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: var(--radius-sm); }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
-    /* ============================
-       全局导航
-       ============================ */
+    /* ===================== Nav ===================== */
     .site-nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      gap: var(--space-6);
-      padding: var(--space-3) 0;
-      margin-bottom: var(--space-4);
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: var(--space-6);
+      padding: var(--space-3) var(--space-6);
       background: var(--color-bg-frosted);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--color-border-subtle);
-      border-radius: 0;
     }
-
-    .nav-brand {
-      font-size: var(--text-h2);
-      font-weight: var(--weight-bold);
-      color: var(--color-text-primary);
-      text-decoration: none;
-      flex-shrink: 0;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-brand .accent {
-      color: var(--color-accent-default);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: var(--space-1);
-      flex: 1;
-    }
-
+    .page-container { max-width: var(--container-pc); margin: 0 auto; padding: 0 var(--space-6); }
+    .nav-brand { font-size: var(--text-h2); font-weight: var(--weight-bold); color: var(--color-text-primary); text-decoration: none; letter-spacing: -0.02em; }
+    .nav-brand .accent { color: var(--color-accent-default); }
+    .nav-links { display: flex; gap: var(--space-1); flex: 1; }
     .nav-link {
-      font-size: var(--text-body-sm);
-      font-weight: var(--weight-medium);
-      color: var(--color-text-secondary);
-      text-decoration: none;
-      padding: var(--space-2) var(--space-3);
-      border-radius: var(--radius-md);
-      transition: color var(--duration-fast) var(--ease-out),
-                  background var(--duration-fast) var(--ease-out);
-      white-space: nowrap;
+      font-size: var(--text-body-sm); font-weight: var(--weight-medium);
+      color: var(--color-text-secondary); text-decoration: none;
+      padding: var(--space-2) var(--space-3); border-radius: var(--radius-md);
+      transition: color var(--duration-fast), background var(--duration-fast); white-space: nowrap;
     }
-
-    .nav-link:hover {
-      color: var(--color-text-primary);
-      background: var(--color-bg-tertiary);
-    }
-
-    .nav-link.active {
-      color: var(--color-accent-text);
-      background: var(--color-accent-light);
-    }
-
+    .nav-link:hover { color: var(--color-text-primary); background: var(--color-bg-tertiary); }
+    .nav-link.active { color: var(--color-accent-text); background: var(--color-accent-light); }
     .nav-github {
-      color: var(--color-text-tertiary);
-      transition: color var(--duration-fast) var(--ease-out);
-      flex-shrink: 0;
-      min-width: 44px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-md);
-      text-decoration: none;
+      color: var(--color-text-tertiary); transition: color var(--duration-fast);
+      flex-shrink: 0; min-width: 44px; min-height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-md); text-decoration: none;
     }
+    .nav-github:hover { color: var(--color-text-primary); }
 
-    .nav-github:hover {
-      color: var(--color-text-primary);
-    }
-
-    /* ============================
-       页面布局
-       ============================ */
-    .page-container {
-      max-width: var(--container-pc);
-      margin: 0 auto;
-      padding: var(--space-8) var(--space-6);
-    }
-
-    /* ============================
-       顶部区域
-       ============================ */
-    .page-header {
-      margin-bottom: var(--space-8);
-    }
-
+    /* ===================== Header ===================== */
+    .page-header { padding: var(--space-10) 0 var(--space-8); position: relative; }
     .page-header h1 {
-      font-size: var(--text-display);
-      font-weight: var(--weight-bold);
-      color: var(--color-text-primary);
-      letter-spacing: -0.02em;
+      font-size: var(--text-display); font-weight: var(--weight-bold);
+      color: var(--color-text-primary); letter-spacing: -0.02em;
       margin-bottom: var(--space-2);
+      animation: fadeSlideUp 0.5s var(--ease-out) both;
     }
-
     .page-header .subtitle {
-      font-size: var(--text-body);
-      color: var(--color-text-secondary);
+      font-size: var(--text-body); color: var(--color-text-secondary);
       margin-bottom: var(--space-6);
+      animation: fadeSlideUp 0.5s var(--ease-out) 0.05s both;
     }
-
-    /* 统计概览 */
-    .stats-row {
-      display: flex;
-      gap: var(--space-4);
-      flex-wrap: wrap;
-    }
-
+    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .stats-row { display: flex; gap: var(--space-3); flex-wrap: wrap; animation: fadeSlideUp 0.5s var(--ease-out) 0.1s both; }
     .stat-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
+      display: inline-flex; align-items: center; gap: var(--space-2);
       padding: var(--space-2) var(--space-4);
-      background: var(--color-bg-elevated);
-      border: 1px solid var(--color-border-subtle);
-      border-radius: var(--radius-md);
-      font-size: var(--text-body-sm);
+      background: var(--color-bg-card-glass); border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md); font-size: var(--text-body-sm);
+      transition: transform var(--duration-fast) var(--ease-spring), box-shadow var(--duration-fast);
     }
+    .stat-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .stat-item .stat-number { font-size: var(--text-h2); font-weight: var(--weight-bold); }
+    .stat-item .stat-label { color: var(--color-text-secondary); }
+    .stat-item .stat-number { color: var(--color-text-primary); }
+    .stat-item.stat-accent .stat-number { color: var(--color-accent-text); }
+    .stat-item.stat-ai .stat-number { color: var(--color-ai-text); }
+    .stat-item.stat-success .stat-number { color: var(--color-success-default); }
 
-    .stat-item .stat-number {
-      font-size: var(--text-h2);
-      font-weight: var(--weight-bold);
-      color: var(--color-text-primary);
-    }
-
-    .stat-item .stat-label {
-      color: var(--color-text-secondary);
-    }
-
-    .stat-item.stat-accent .stat-number {
-      color: var(--color-accent-text);
-    }
-
-    .stat-item.stat-ai .stat-number {
-      color: var(--color-ai-text);
-    }
-
-    .stat-item.stat-success .stat-number {
-      color: var(--color-success-default);
-    }
-
-    /* ============================
-       工具栏（sticky）
-       ============================ */
+    /* ===================== Toolbar ===================== */
     .toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      position: sticky; top: 48px; z-index: 20;
       background: var(--color-bg-frosted);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: var(--space-4) 0;
-      margin-bottom: var(--space-4);
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      flex-wrap: wrap;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      padding: var(--space-4) 0; margin-bottom: var(--space-4);
+      display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;
     }
-
-    .search-box {
-      flex: 0 0 260px;
-      position: relative;
-    }
-
+    .search-box { flex: 0 0 260px; position: relative; }
     .search-box input {
-      width: 100%;
-      padding: var(--space-2) var(--space-3) var(--space-2) var(--space-8);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-md);
-      font-size: var(--text-body-sm);
-      font-family: var(--font-sans);
-      color: var(--color-text-primary);
-      background: var(--color-bg-elevated);
-      transition: border-color var(--duration-fast) var(--ease-out);
+      width: 100%; padding: var(--space-2) var(--space-3) var(--space-2) var(--space-8);
+      border: 1.5px solid var(--color-border-default); border-radius: var(--radius-md);
+      font-size: var(--text-body-sm); font-family: var(--font-sans);
+      color: var(--color-text-primary); background: var(--color-bg-elevated);
+      transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
     }
-
-    .search-box input::placeholder {
-      color: var(--color-text-tertiary);
-    }
-
-    .search-box input:focus {
-      border-color: var(--color-accent-default);
-      outline: none;
-      box-shadow: var(--shadow-focus);
-    }
-
-    .search-box .search-icon {
-      position: absolute;
-      left: var(--space-3);
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--color-text-tertiary);
-    }
-
-    .filter-chips {
-      display: flex;
-      gap: var(--space-2);
-      flex-wrap: wrap;
-      flex: 1;
-    }
-
+    .search-box input::placeholder { color: var(--color-text-tertiary); }
+    .search-box input:focus { border-color: var(--color-accent-default); box-shadow: var(--shadow-focus); outline: none; }
+    .search-box .search-icon { position: absolute; left: var(--space-3); top: 50%; transform: translateY(-50%); color: var(--color-text-tertiary); }
+    .filter-chips { display: flex; gap: var(--space-2); flex-wrap: wrap; flex: 1; }
     .chip {
       padding: var(--space-1) var(--space-3);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-full);
-      font-size: var(--text-caption);
-      font-weight: var(--weight-medium);
-      color: var(--color-text-secondary);
-      background: var(--color-bg-elevated);
-      cursor: pointer;
-      transition: all var(--duration-fast) var(--ease-out);
+      border: 1.5px solid var(--color-border-default); border-radius: var(--radius-full);
+      font-size: var(--text-caption); font-weight: var(--weight-medium);
+      color: var(--color-text-secondary); background: var(--color-bg-elevated);
+      cursor: pointer; transition: all var(--duration-fast) var(--ease-spring);
       white-space: nowrap;
     }
-
-    .chip:hover {
-      border-color: var(--color-accent-default);
-      color: var(--color-accent-text);
-    }
-
-    .chip.active {
-      background: var(--color-accent-default);
-      border-color: var(--color-accent-default);
-      color: var(--color-text-on-accent);
-    }
-
-    .priority-filter {
-      display: flex;
-      gap: var(--space-2);
-    }
-
+    .chip:hover { border-color: var(--color-accent-default); color: var(--color-accent-text); background: var(--color-accent-lighter); transform: translateY(-1px); }
+    .chip.active { background: var(--color-accent-light); border-color: var(--color-accent-default); color: var(--color-accent-text); box-shadow: 0 1px 4px rgba(232,145,90,0.12); transform: translateY(-1px); }
+    .priority-filter { display: flex; gap: var(--space-2); }
     .priority-chip {
       padding: var(--space-1) var(--space-3);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-full);
-      font-size: var(--text-caption);
-      font-weight: var(--weight-medium);
-      cursor: pointer;
-      transition: all var(--duration-fast) var(--ease-out);
+      border: 1.5px solid var(--color-border-default); border-radius: var(--radius-full);
+      font-size: var(--text-caption); font-weight: var(--weight-medium);
+      cursor: pointer; transition: all var(--duration-fast) var(--ease-spring);
       white-space: nowrap;
     }
+    .priority-chip.priority-today { color: var(--color-accent-text); background: var(--color-accent-lighter); border-color: rgba(232,145,90,0.35); }
+    .priority-chip.priority-today.active { background: var(--color-accent-light); border-color: var(--color-accent-default); }
+    .priority-chip.priority-deep { color: var(--color-ai-text); background: var(--color-ai-lighter); border-color: rgba(124,106,232,0.3); }
+    .priority-chip.priority-deep.active { background: var(--color-ai-light); border-color: var(--color-ai-default); }
+    .priority-chip.priority-online { color: var(--color-success-default); background: var(--color-success-light); border-color: rgba(76,175,125,0.35); }
+    .priority-chip.priority-online.active { background: rgba(76,175,125,0.12); border-color: var(--color-success-default); }
 
-    .priority-chip.priority-today {
-      color: var(--color-accent-text);
-      background: var(--color-accent-lighter);
-      border-color: var(--color-accent-default);
-    }
-
-    .priority-chip.priority-today.active {
-      background: var(--color-accent-default);
-      color: var(--color-text-on-accent);
-    }
-
-    .priority-chip.priority-deep {
-      color: var(--color-ai-text);
-      background: var(--color-ai-lighter);
-      border-color: var(--color-ai-default);
-    }
-
-    .priority-chip.priority-deep.active {
-      background: var(--color-ai-default);
-      color: var(--color-text-on-accent);
-    }
-
-    .priority-chip.priority-online {
-      color: var(--color-success-default);
-      background: var(--color-success-light);
-      border-color: var(--color-success-default);
-    }
-
-    .priority-chip.priority-online.active {
-      background: var(--color-success-default);
-      color: var(--color-text-on-accent);
-    }
-
-    /* ============================
-       宽表格容器
-       ============================ */
+    /* ===================== Table ===================== */
     .table-wrapper {
-      background: var(--color-bg-glass);
-      border: 1px solid var(--color-border-subtle);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      background: var(--color-bg-glass); border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);
     }
-
-    .table-scroll {
-      overflow-x: auto;
-      overflow-y: visible;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: var(--space-10);
-      color: var(--color-text-tertiary);
-    }
-
-    table {
-      width: max-content;
-      min-width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      table-layout: fixed;
-    }
-
-    /* 列宽定义 */
-    col.col-person   { width: 200px; }
+    .table-scroll { overflow-x: auto; overflow-y: visible; }
+    .empty-state { text-align: center; padding: var(--space-10); color: var(--color-text-tertiary); }
+    table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+    col.col-person { width: 200px; }
     col.col-priority { width: 80px; }
-    col.col-origin   { width: 240px; }
-    col.col-value    { width: 220px; }
-    col.col-advantage{ width: 200px; }
-    col.col-connection{ width: 220px; }
+    col.col-origin { width: 240px; }
+    col.col-value { width: 220px; }
+    col.col-advantage { width: 200px; }
+    col.col-connection { width: 220px; }
     col.col-relation { width: 300px; }
-
-    /* 表头 */
     thead th {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: var(--color-bg-secondary);
-      padding: var(--space-3) var(--space-4);
-      font-size: var(--text-caption);
-      font-weight: var(--weight-semibold);
-      color: var(--color-text-secondary);
-      text-align: left;
-      border-bottom: 2px solid var(--color-border-default);
-      white-space: nowrap;
+      position: sticky; top: 0; z-index: 10;
+      background: var(--color-bg-secondary); padding: var(--space-3) var(--space-4);
+      font-size: var(--text-caption); font-weight: var(--weight-semibold);
+      color: var(--color-text-secondary); text-align: left;
+      border-bottom: 2px solid var(--color-border-default); white-space: nowrap;
     }
-
-    thead th:first-child {
-      z-index: 15;
-      position: sticky;
-      left: 0;
-    }
-
-    /* 首列 sticky */
-    tbody td:first-child {
-      position: sticky;
-      left: 0;
-      z-index: 5;
-      background: var(--color-bg-cell-sticky);
-    }
-
-    /* 表体单元格 */
+    thead th:first-child { z-index: 15; position: sticky; left: 0; }
+    tbody td:first-child { position: sticky; left: 0; z-index: 5; background: var(--color-bg-cell-sticky); }
     tbody td {
-      padding: var(--space-4);
-      border-bottom: 1px solid var(--color-border-subtle);
-      vertical-align: top;
-      font-size: var(--text-body-sm);
-      color: var(--color-text-secondary);
-      line-height: 1.5;
+      padding: var(--space-4); border-bottom: 1px solid var(--color-border-subtle);
+      vertical-align: top; font-size: var(--text-body-sm);
+      color: var(--color-text-secondary); line-height: 1.5;
       transition: background var(--duration-fast) var(--ease-out);
     }
+    tbody tr { transition: background var(--duration-fast); }
+    tbody tr:hover td { background: var(--color-accent-lighter); }
+    tbody tr:hover td:first-child { background: var(--color-bg-cell-sticky-hover); }
+    /* Row slide-in animation */
+    tbody tr.row-enter { animation: rowSlideIn 0.35s var(--ease-out) both; }
+    @keyframes rowSlideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
 
-    tbody tr:hover td {
-      background: var(--color-accent-lighter);
-    }
-
-    tbody tr:hover td:first-child {
-      background: var(--color-bg-cell-sticky-hover);
-    }
-
-    /* ============================
-       首列：人物信息
-       ============================ */
-    .person-cell {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-
-    .person-top {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-    }
-
+    /* ===================== Person Cell ===================== */
+    .person-cell { display: flex; flex-direction: column; gap: var(--space-2); }
+    .person-top { display: flex; align-items: center; gap: var(--space-3); }
     .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--text-h3);
-      font-weight: var(--weight-bold);
-      color: var(--color-text-on-accent);
-      flex-shrink: 0;
+      width: 40px; height: 40px; border-radius: var(--radius-full);
+      display: flex; align-items: center; justify-content: center;
+      font-size: var(--text-h3); font-weight: var(--weight-bold);
+      color: var(--color-text-on-accent); flex-shrink: 0;
+      transition: transform var(--duration-fast) var(--ease-spring);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
+    tbody tr:hover .avatar { transform: scale(1.08); }
+    .person-info { min-width: 0; }
+    .person-name { font-size: var(--text-body); font-weight: var(--weight-semibold); color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .person-role { font-size: var(--text-caption); color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .person-info {
-      min-width: 0;
-    }
-
-    .person-name {
-      font-size: var(--text-body);
-      font-weight: var(--weight-semibold);
-      color: var(--color-text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .person-role {
-      font-size: var(--text-caption);
-      color: var(--color-text-tertiary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .tag-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-1);
-    }
-
+    /* ===================== Tags - Bubble Style ===================== */
+    .tag-group { display: flex; flex-wrap: wrap; gap: var(--space-1); }
     .tag {
-      display: inline-block;
-      padding: 1px var(--space-2);
-      border-radius: var(--radius-full);
-      font-size: var(--text-micro);
-      font-weight: var(--weight-medium);
-      cursor: pointer;
-      transition: all var(--duration-fast) var(--ease-out);
+      display: inline-flex; align-items: center; gap: 2px;
+      padding: 2px var(--space-2); border-radius: var(--radius-full);
+      font-size: var(--text-micro); font-weight: var(--weight-medium);
+      cursor: pointer; border: 1px solid transparent;
+      transition: all var(--duration-fast) var(--ease-spring);
     }
+    .tag:hover { transform: scale(1.1) translateY(-1px); box-shadow: var(--shadow-xs); }
+    .tag-relational { background: rgba(232,145,90,0.12); color: var(--color-tag-relational); border-color: rgba(232,145,90,0.15); }
+    .tag-contextual { background: rgba(124,106,232,0.08); color: var(--color-tag-contextual); border-color: rgba(124,106,232,0.12); }
+    .tag-custom { background: rgba(91,142,208,0.10); color: var(--color-tag-custom); border-color: rgba(91,142,208,0.15); }
 
-    .tag:hover {
-      filter: brightness(0.95);
-    }
-
-    .tag-relational {
-      background: rgba(232,145,90,0.12);
-      color: var(--color-tag-relational);
-    }
-
-    .tag-contextual {
-      background: var(--color-ai-bg-subtle);
-      color: var(--color-tag-contextual);
-    }
-
-    .tag-custom {
-      background: rgba(91,142,208,0.10);
-      color: var(--color-tag-custom);
-    }
-
-    /* ============================
-       优先级标记
-       ============================ */
+    /* ===================== Priority Badge ===================== */
     .priority-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-1);
-      padding: var(--space-1) var(--space-2);
-      border-radius: var(--radius-full);
-      font-size: var(--text-micro);
-      font-weight: var(--weight-semibold);
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: var(--space-1);
+      padding: var(--space-1) var(--space-2); border-radius: var(--radius-full);
+      font-size: var(--text-micro); font-weight: var(--weight-semibold); white-space: nowrap;
     }
-
-    .priority-badge.badge-today {
-      background: var(--color-accent-light);
-      color: var(--color-accent-text);
-    }
-
-    .priority-badge.badge-deep {
-      background: var(--color-ai-light);
-      color: var(--color-ai-text);
-    }
-
-    .priority-badge.badge-online {
-      background: var(--color-success-light);
-      color: var(--color-success-default);
-    }
-
-    .priority-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-    }
-
+    .badge-today { background: var(--color-accent-light); color: var(--color-accent-text); }
+    .badge-deep { background: var(--color-ai-light); color: var(--color-ai-text); }
+    .badge-online { background: var(--color-success-light); color: var(--color-success-default); }
+    .priority-dot { width: 6px; height: 6px; border-radius: 50%; }
     .badge-today .priority-dot { background: var(--color-accent-default); }
     .badge-deep .priority-dot { background: var(--color-ai-default); }
     .badge-online .priority-dot { background: var(--color-success-default); }
 
-    /* ============================
-       Mini-block 排版
-       ============================ */
-    .mini-block {
-      margin-bottom: var(--space-3);
-    }
-
-    .mini-block:last-child {
-      margin-bottom: 0;
-    }
-
+    /* ===================== Mini-block ===================== */
+    .mini-block { margin-bottom: var(--space-3); }
+    .mini-block:last-child { margin-bottom: 0; }
     .mini-block-title {
-      font-size: var(--text-micro);
-      font-weight: var(--weight-semibold);
-      color: var(--color-text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: var(--space-1);
+      font-size: var(--text-micro); font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary); letter-spacing: 0.04em; margin-bottom: var(--space-1);
     }
-
-    .mini-block-content {
-      font-size: var(--text-body-sm);
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-    }
-
-    /* 档案线色彩标记 */
+    .mini-block-content { font-size: var(--text-body-sm); color: var(--color-text-secondary); line-height: 1.5; }
     .line-origin .mini-block-title { color: var(--color-line-origin); }
     .line-value .mini-block-title { color: var(--color-line-value); }
     .line-connection .mini-block-title { color: var(--color-line-connection); }
     .line-action .mini-block-title { color: var(--color-line-action); }
-
     .cell-origin { border-left: 3px solid var(--color-line-origin); padding-left: calc(var(--space-4) - 3px); }
     .cell-value { border-left: 3px solid var(--color-line-value); padding-left: calc(var(--space-4) - 3px); }
     .cell-advantage { border-left: 3px solid var(--color-line-value); padding-left: calc(var(--space-4) - 3px); }
     .cell-connection { border-left: 3px solid var(--color-line-connection); padding-left: calc(var(--space-4) - 3px); }
     .cell-relation { border-left: 3px solid var(--color-line-action); padding-left: calc(var(--space-4) - 3px); }
 
-    /* ============================
-       AI 辅助内容
-       ============================ */
+    /* ===================== AI Block ===================== */
     .ai-block {
-      border: 1px dashed var(--color-ai-default);
-      border-radius: var(--radius-sm);
-      padding: var(--space-2) var(--space-3);
-      background: var(--color-ai-lighter);
-      margin-top: var(--space-2);
+      border: 1px dashed var(--color-ai-default); border-radius: var(--radius-sm);
+      padding: var(--space-2) var(--space-3); background: var(--color-ai-lighter); margin-top: var(--space-2);
     }
+    .ai-block .mini-block-title { color: var(--color-ai-text); }
+    .ai-badge { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-micro); color: var(--color-ai-text); font-weight: var(--weight-medium); }
 
-    .ai-block .mini-block-title {
-      color: var(--color-ai-text);
-    }
-
-    .ai-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-1);
-      font-size: var(--text-micro);
-      color: var(--color-ai-text);
-      font-weight: var(--weight-medium);
-    }
-
-    /* ============================
-       展开完整档案
-       ============================ */
-    .expand-detail {
-      margin-top: var(--space-3);
-    }
-
+    /* ===================== Expand Detail ===================== */
+    .expand-detail { margin-top: var(--space-3); }
     .expand-detail summary {
-      font-size: var(--text-caption);
-      color: var(--color-accent-text);
-      font-weight: var(--weight-medium);
-      cursor: pointer;
-      padding: var(--space-1) 0;
-      transition: color var(--duration-fast) var(--ease-out);
-      list-style: none;
-      display: flex;
-      align-items: center;
-      gap: var(--space-1);
+      font-size: var(--text-caption); color: var(--color-accent-text);
+      font-weight: var(--weight-medium); cursor: pointer;
+      padding: var(--space-1) 0; transition: color var(--duration-fast);
+      list-style: none; display: flex; align-items: center; gap: var(--space-1);
     }
+    .expand-detail summary::-webkit-details-marker { display: none; }
+    .expand-detail summary::before { content: "▸"; font-size: var(--text-caption); transition: transform var(--duration-fast); }
+    .expand-detail[open] summary::before { transform: rotate(90deg); }
+    .expand-detail summary:hover { color: var(--color-accent-hover); }
+    .expand-content { padding: var(--space-3) 0 0; font-size: var(--text-body-sm); color: var(--color-text-secondary); line-height: 1.6; }
+    .expand-content .field-pair { display: flex; gap: var(--space-2); margin-bottom: var(--space-2); }
+    .expand-content .field-label { flex-shrink: 0; font-size: var(--text-micro); font-weight: var(--weight-semibold); color: var(--color-text-tertiary); min-width: 72px; }
+    .expand-content .field-value { color: var(--color-text-secondary); }
 
-    .expand-detail summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .expand-detail summary::before {
-      content: "▸";
-      font-size: var(--text-caption);
-      transition: transform var(--duration-fast) var(--ease-out);
-    }
-
-    .expand-detail[open] summary::before {
-      transform: rotate(90deg);
-    }
-
-    .expand-detail summary:hover {
-      color: var(--color-accent-hover);
-    }
-
-    .expand-content {
-      padding: var(--space-3) 0 0;
-      font-size: var(--text-body-sm);
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-    }
-
-    .expand-content .field-pair {
-      display: flex;
-      gap: var(--space-2);
-      margin-bottom: var(--space-2);
-    }
-
-    .expand-content .field-label {
-      flex-shrink: 0;
-      font-size: var(--text-micro);
-      font-weight: var(--weight-semibold);
-      color: var(--color-text-tertiary);
-      min-width: 72px;
-    }
-
-    .expand-content .field-value {
-      color: var(--color-text-secondary);
-    }
-
-    /* ============================
-       商业化进度条
-       ============================ */
-    .progress-mini {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      margin-top: var(--space-1);
-    }
-
-    .progress-track {
-      flex: 1;
-      height: 4px;
-      background: var(--color-bg-tertiary);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
+    /* ===================== Progress Bar ===================== */
+    .progress-mini { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-1); }
+    .progress-track { flex: 1; height: 4px; background: var(--color-bg-tertiary); border-radius: 2px; overflow: hidden; }
     .progress-fill {
-      height: 100%;
-      border-radius: 2px;
-      background: var(--color-line-value);
-      transition: width var(--duration-normal) var(--ease-out);
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--color-line-value), var(--color-accent-default));
+      transition: width 0.6s var(--ease-out);
+      position: relative;
     }
+    .progress-fill::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shimmer 2.5s infinite;
+    }
+    @keyframes shimmer { 100% { left: 200%; } }
+    .progress-label { font-size: var(--text-micro); color: var(--color-text-tertiary); white-space: nowrap; }
 
-    .progress-label {
-      font-size: var(--text-micro);
-      color: var(--color-text-tertiary);
-      white-space: nowrap;
-    }
-
-    /* ============================
-       底部留白
-       ============================ */
-    .page-footer {
-      height: var(--space-12);
-    }
+    /* ===================== Footer ===================== */
+    .page-footer { height: var(--space-12); }
   </style>
 </head>
 <body>
   <div class="page-container">
-
-    <!-- ====== 全局导航 ====== -->
     <nav class="site-nav" aria-label="LinkLog 导航">
       <a href="../index.html" class="nav-brand">Link<span class="accent">Log</span></a>
       <div class="nav-links">
         <a href="../index.html" class="nav-link">首页</a>
         <a href="../mobile.html" class="nav-link">移动端</a>
-        <a href="people-table.html" class="nav-link active">人物资料表</a>
-        <a href="field-insights-v2.html" class="nav-link">场域洞察</a>
-        <a href="detail-v2.html" class="nav-link">联系人详情</a>
+        <a href="../index.html#skill-section" class="nav-link">
+          <svg viewBox="0 0 16 16" fill="none" width="14" height="14" style="vertical-align:-1px;margin-right:2px"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 7h6m-6 2h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Skill
+        </a>
       </div>
       <a href="https://github.com/915005977-rgb/LinkLog" class="nav-github" target="_blank" rel="noopener" aria-label="GitHub">
         <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
     </nav>
 
-    <!-- ====== 顶部区域 ====== -->
     <header class="page-header">
       <h1>人物资料表</h1>
       <p class="subtitle">人脉链接活动全部联系人一览，按档案线结构展开</p>
       <div class="stats-row">
-        <div class="stat-item">
-          <span class="stat-number">10</span>
-          <span class="stat-label">总人数</span>
-        </div>
-        <div class="stat-item stat-accent">
-          <span class="stat-number">4</span>
-          <span class="stat-label">今日重点</span>
-        </div>
-        <div class="stat-item stat-ai">
-          <span class="stat-number">2</span>
-          <span class="stat-label">深聊对象</span>
-        </div>
-        <div class="stat-item stat-success">
-          <span class="stat-number">4</span>
-          <span class="stat-label">Online</span>
-        </div>
+        <div class="stat-item"><span class="stat-number" data-count="10">0</span><span class="stat-label">总人数</span></div>
+        <div class="stat-item stat-accent"><span class="stat-number" data-count="4">0</span><span class="stat-label">今日重点</span></div>
+        <div class="stat-item stat-ai"><span class="stat-number" data-count="2">0</span><span class="stat-label">深聊对象</span></div>
+        <div class="stat-item stat-success"><span class="stat-number" data-count="4">0</span><span class="stat-label">Online</span></div>
       </div>
     </header>
 
-    <!-- ====== 工具栏 ====== -->
     <nav class="toolbar" aria-label="筛选工具栏">
       <div class="search-box">
-        <svg class="search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
-          <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.5"/>
-          <line x1="10.5" y1="10.5" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.5"/><line x1="10.5" y1="10.5" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <input type="text" placeholder="搜索姓名、角色、标签…" id="searchInput" aria-label="搜索联系人">
       </div>
       <div class="filter-chips" id="tagFilters">
@@ -875,626 +385,95 @@
       </div>
     </nav>
 
-    <!-- ====== 宽表格 ====== -->
     <div class="table-wrapper">
       <div class="table-scroll">
         <table id="peopleTable">
           <colgroup>
-            <col class="col-person">
-            <col class="col-priority">
-            <col class="col-origin">
-            <col class="col-value">
-            <col class="col-advantage">
-            <col class="col-connection">
-            <col class="col-relation">
+            <col class="col-person"><col class="col-priority"><col class="col-origin">
+            <col class="col-value"><col class="col-advantage"><col class="col-connection"><col class="col-relation">
           </colgroup>
-          <thead>
-            <tr>
-              <th>人物</th>
-              <th>优先级</th>
-              <th>身世线</th>
-              <th>价值线</th>
-              <th>优势线</th>
-              <th>连接线</th>
-              <th>关联线</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-            <!-- 动态渲染 -->
-          </tbody>
+          <thead><tr><th>人物</th><th>优先级</th><th>身世线</th><th>价值线</th><th>优势线</th><th>连接线</th><th>关联线</th></tr></thead>
+          <tbody id="tableBody"></tbody>
         </table>
       </div>
     </div>
-
     <div class="page-footer"></div>
   </div>
 
   <script>
-    // ============================
-    // 脱敏样本数据
-    // ============================
     const people = [
-      {
-        name: '赵姐',
-        role: '社区平台创始人 / 场域主理人',
-        avatarColor: '#E8915A',
-        tags: [
-          { text: '一人公司', type: 'relational' },
-          { text: '社区运营', type: 'contextual' },
-          { text: '小红书', type: 'contextual' },
-          { text: 'AI知识库', type: 'custom' },
-          { text: '数字员工', type: 'custom' }
-        ],
-        priority: 'today',
-        origin: {
-          background: '互联网行业多年经验，做过运营、品牌和社区产品；擅长连接人、构建场域、组织高质量线下活动',
-          past: '过去两年创立社区平台，持续组织线下人脉链接活动；出版行业书籍，沉淀社区案例和洞察',
-          now: '运营社区平台，已有 200+ 期活动、5000+ 成员；做主题沙龙、案例拆解系列，正在搭建线上平台'
-        },
-        value: {
-          product: '主题沙龙、案例拆解系列、行业书籍、社区活动、知识库、数字员工',
-          progress: 75,
-          progressLabel: '1-10 增长期'
-        },
-        advantage: {
-          strength: '场域构建、人群洞察、案例筛选、产品生长、自然流获客、社区生态搭建',
-          canProvide: 'AI 工作流、Skill、知识库沉淀、小红书/社区运营视角',
-          canProvideAI: true
-        },
-        connection: {
-          block: '0-1 跑完后怎么规模化；精力分配和团队化',
-          want: '有真实业务路径、可拆解案例、认同一人公司理念的人'
-        },
-        relation: {
-          link: '高价值场域节点，需要让她记住你是能把业务流和 AI 工作流沉淀成系统的人',
-          canLearn: '场域构建方法论、社区运营节奏',
-          topic: '我觉得你们最厉害的是把真实案例变成场域。我现在也在做 AI 工作流和 Skill 沉淀，想请教你：什么样的内容最值得被结构化？',
-          action: '会后发一段你的 AI Builder 定位 + 可共创的案例拆解方向'
-        }
-      },
-      {
-        name: '周学长',
-        role: '外企产品经理 / AI 独立产品出海验证',
-        avatarColor: '#5B8ED0',
-        tags: [
-          { text: '外企生态', type: 'relational' },
-          { text: '东南亚', type: 'contextual' },
-          { text: 'AI出海', type: 'custom' },
-          { text: '企业提效', type: 'contextual' },
-          { text: '轻产品', type: 'custom' }
-        ],
-        priority: 'today',
-        origin: {
-          background: '计算机科学 + 商业分析双背景，8 年外企产品经验',
-          past: '长期做跨区域产品协同、用户增长、数据分析驱动决策',
-          now: '关注海外 Digital Natives 客户和 AI 生态，想看独立产品出海验证样本'
-        },
-        value: {
-          product: '早期测试轻量级 AI 工具：用 AI 根据用户场景自动生成效率方案',
-          progress: 20,
-          progressLabel: '0.5-1 验证期'
-        },
-        advantage: {
-          strength: '外企 AI 生态、大厂产品视角、海外市场观察、跨文化团队协作经验',
-          canProvide: '外企 AI 生态洞察、海外华人市场视角',
-          canProvideAI: false
-        },
-        connection: {
-          block: '还在找真实产品、付费客户和可远程交付的独立产品样本',
-          want: '真实产品、付费验证、有出海意愿、AI 智能体/企业提效小团队'
-        },
-        relation: {
-          link: 'AI Builder 转型和 AI 产品出海验证的高价值入口',
-          canLearn: '外企生态视角、出海验证方法论',
-          topic: '我也在从大厂转向 AI Builder，想把业务流做成 Skill。你判断一个独立产品能不能做出海小样板时，最先看什么？',
-          action: '会后发一个 AI 工作流样本：业务场景、交付方式、远程验证可能性'
-        }
-      },
-      {
-        name: '刘姐',
-        role: '亲子游学品牌 / 海归家长社群',
-        avatarColor: '#4CAF7D',
-        tags: [
-          { text: '教育', type: 'contextual' },
-          { text: '英语', type: 'custom' },
-          { text: '海归家长', type: 'relational' },
-          { text: '小红书', type: 'contextual' },
-          { text: '社群', type: 'contextual' }
-        ],
-        priority: 'online',
-        origin: {
-          background: '前外资银行经理，回国后把海外资源转化成教育赛道',
-          past: '从金融和海外资源切入，逐步搭建亲子游学和海归家长社群',
-          now: '运营 1000+ 海归家长社群，全网阅读量 80 万+，小红书和公众号都有阵地'
-        },
-        value: {
-          product: '已跑通海外亲子插班项目；即将上线原版英语思维课程',
-          progress: 60,
-          progressLabel: '1-10 增长期'
-        },
-        advantage: {
-          strength: '海外资源整合、家长社群运营、教育产品验证、从主业另辟副业蹊径',
-          canProvide: '海外资源对接、社群运营经验',
-          canProvideAI: false
-        },
-        connection: {
-          block: '市场需求旺，一个人产能不足，需要 AI 提效和靠谱合作者',
-          want: 'AI 提效、合作者、超级个体联盟'
-        },
-        relation: {
-          link: '教育、小红书、英语、海外资源、社群运营都与你强相关',
-          canLearn: '从金融跨教育的转型方法、社群运营节奏',
-          topic: '我现在在小红书教育方向，也想把英语和海外资源放进长期规划。你从金融跨到亲子游学，最关键的资源转化动作是什么？',
-          action: '会后约 30 分钟，围绕小红书教育内容 + AI 提效 + 家长社群转化做互相拆解'
-        }
-      },
-      {
-        name: '吴哥',
-        role: '知识付费 / IP 定位陪跑',
-        avatarColor: '#D4915A',
-        tags: [
-          { text: '知识产品化', type: 'contextual' },
-          { text: 'IP定位', type: 'custom' },
-          { text: '内容到成交', type: 'contextual' },
-          { text: '咨询陪跑', type: 'custom' }
-        ],
-        priority: 'today',
-        origin: {
-          background: '内容与知识付费行业 10 年，6 年聚焦知识产品商业化',
-          past: '做过课程开发、内容策划、产品设计、用户运营和商业化增长；累计参与课程 GMV 超千万',
-          now: '聚焦 IP 定位咨询与陪跑，帮助行业专家转成知识创业者'
-        },
-        value: {
-          product: '业务诊断咨询；IP 定位咨询与陪跑，覆盖定位梳理、产品设计、内容规划、成交闭环',
-          progress: 70,
-          progressLabel: '1-10 增长期'
-        },
-        advantage: {
-          strength: '知识产品商业化、IP 定位、内容到成交、课程开发、咨询产品设计',
-          canProvide: '帮你判断经验如何变成别人愿意付费的产品',
-          canProvideAI: false
-        },
-        connection: {
-          block: '如何把咨询型业务进一步产品化和规模化，同时保持 1v1 服务质量',
-          want: '探索一人公司、知识创业、个人 IP 商业化的人'
-        },
-        relation: {
-          link: '他能帮你回答：你的经验如何变成别人愿意付费的产品',
-          canLearn: '知识产品化方法论、IP定位框架',
-          topic: '我现在最大的卡点也是从"我知道"到"别人愿意付费"。如果用一个问题判断我该卖什么，你会先问我什么？',
-          action: '会后整理你的能力清单，请他帮你判断最小可售卖产品切口'
-        }
-      },
-      {
-        name: '小陈',
-        role: '新媒体广告 / 母婴品牌运营',
-        avatarColor: '#E5A84B',
-        tags: [
-          { text: '小红书', type: 'contextual' },
-          { text: '电商', type: 'contextual' },
-          { text: '广告投放', type: 'custom' },
-          { text: '社群电商', type: 'contextual' },
-          { text: '第二曲线', type: 'relational' }
-        ],
-        priority: 'today',
-        origin: {
-          background: '5 年+ 复合型新媒体广告从业经验，一年前离职创业',
-          past: '做过品牌运营、内容营销、电商、广告投放；熟悉小红书、双微平台规则和玩法',
-          now: '帮助母婴品牌做品牌运营、内容营销、电商代运营，同时做经销商和广告投放业务'
-        },
-        value: {
-          product: '母婴品牌运营、内容营销、电商代运营、广告投放',
-          progress: 55,
-          progressLabel: '1-10 增长期'
-        },
-        advantage: {
-          strength: '新媒体矩阵、品牌全年运营方案、数据优化迭代、小红书、电商投放',
-          canProvide: '小红书运营实操、广告投放方法论',
-          canProvideAI: false
-        },
-        connection: {
-          block: '寻找职业第二曲线，希望结合 AI 工具跑出新创业方向',
-          want: '真实创业者、AI 变现实战、一人公司出海验证案例'
-        },
-        relation: {
-          link: '广告、运营、小红书、电商、AI 提效、第二曲线高度同频',
-          canLearn: '广告投放精细化、母婴品牌运营',
-          topic: '我们背景太像了。我正在从教育广告销售转到电商运营，也在用 AI 做工作流，你觉得广告/运营人找第二曲线，最容易踩的坑是什么？',
-          action: '会后互换一个真实业务复盘模板，找一个小红书/电商案例共拆'
-        }
-      },
-      {
-        name: '老方',
-        role: '小红书获客 / IP 陪跑 / 电商运营',
-        avatarColor: '#7C9A8E',
-        tags: [
-          { text: '小红书获客', type: 'contextual' },
-          { text: '电商运营', type: 'contextual' },
-          { text: 'IP陪跑', type: 'custom' },
-          { text: 'AI知识库', type: 'custom' },
-          { text: '低成本引流', type: 'contextual' }
-        ],
-        priority: 'deep',
-        origin: {
-          background: '深耕互联网行业 10 年，实操过多个电商平台，目前聚焦线上获客落地实操',
-          past: '从传统电商运营，到全域获客，再升级到小红书垂直获客陪跑',
-          now: '专注小红书获客运营，精通自然流/付费流玩法，服务 B 端团队和个人 IP'
-        },
-        value: {
-          product: '小红书低成本高效获客陪跑服务；主力服务多个赛道一对一深度陪跑；使用 AI 配合小红书工作',
-          progress: 80,
-          progressLabel: '1-10 增长期'
-        },
-        advantage: {
-          strength: '小红书自然流/付费流、低成本引流、高转化、B 端孵化、多赛道陪跑',
-          canProvide: '小红书获客方法论、电商运营经验',
-          canProvideAI: false
-        },
-        connection: {
-          block: '服务团队和 IP 越来越多导致事务繁杂、精力分散；希望陪跑更轻量、可复制',
-          want: '已经跑通一人公司模式的同行前辈；AI 应用伙伴'
-        },
-        relation: {
-          link: '小红书教育、电商运营转岗、个人 IP 和 AI 知识库非常实用',
-          canLearn: '小红书获客精细化打法、陪跑服务产品化',
-          topic: '我现在刚好在小红书教育和电商运营之间做迁移。你帮客户通过小红书做到千万营收时，最关键的不是流量，而是什么？',
-          action: '会后约一次小红书获客方法论互拆'
-        }
-      },
-      {
-        name: '小叶',
-        role: '数据分析 / 一人公司增长诊断',
-        avatarColor: '#5B8ED0',
-        tags: [
-          { text: '数据分析', type: 'custom' },
-          { text: '增长诊断', type: 'contextual' },
-          { text: '内容获客', type: 'contextual' },
-          { text: '案例共创', type: 'relational' }
-        ],
-        priority: 'today',
-        origin: {
-          background: '数据分析背景，也做过抖音/小红书/TikTok 内容运营',
-          past: '跨过数据和内容运营几条线，正在收拢成增长诊断方向',
-          now: '探索帮助早期一人公司梳理增长路径，用数据视角看获客、转化、交付'
-        },
-        value: {
-          product: '1v1 增长诊断对话；数据驱动内容获客的轻方法',
-          progress: 15,
-          progressLabel: '0-1 搭建期'
-        },
-        advantage: {
-          strength: '数据视角、增长问题识别、内容获客、跨平台运营经验',
-          canProvide: '你可以成为她的案例，她也能帮你把转型卡点数据化',
-          canProvideAI: true
-        },
-        connection: {
-          block: '体系从 0 开始搭建，缺少真实案例验证',
-          want: '0-1 阶段且愿意聊获客/转化卡点的人；探索一人公司的同行'
-        },
-        relation: {
-          link: '你可以成为她的案例，她也能帮你把转型卡点数据化',
-          canLearn: '数据驱动增长诊断方法',
-          topic: '我特别想知道你会怎么用数据视角看一个一人公司的第一个增长问题',
-          action: '会后约一次案例互拆'
-        }
-      },
-      {
-        name: '何博士',
-        role: 'AI 高端教育规划',
-        avatarColor: '#7C6AE8',
-        tags: [
-          { text: '国际教育', type: 'contextual' },
-          { text: 'AI产品', type: 'custom' },
-          { text: '高客单转化', type: 'contextual' },
-          { text: '女性用户', type: 'relational' },
-          { text: '营销', type: 'custom' }
-        ],
-        priority: 'online',
-        origin: {
-          background: '顶尖高校经济学本科，海外名校市场营销与数据分析双硕士',
-          past: '在美妆和娱乐行业头部外企做品牌与产品营销 5 年',
-          now: '成立一人公司，搭建 AI 驱动的高端定制教育规划产品'
-        },
-        value: {
-          product: '面向国际化培养需求的家庭，提供学业路径、专业选择、海外升学规划',
-          progress: 50,
-          progressLabel: '0.5-1 验证期'
-        },
-        advantage: {
-          strength: '海外学历、高校资源、招生端视角、中国家庭需求理解、女性用户营销',
-          canProvide: '高客单服务转化洞察、教育行业视角',
-          canProvideAI: false
-        },
-        connection: {
-          block: '销售转化：从有兴趣了解到愿意为高客单价服务付费',
-          want: '高客单服务获客和转化经验、AI workflow、教育亲子内容社群'
-        },
-        relation: {
-          link: '教育、国际化、AI workflow、高客单转化都有关',
-          canLearn: '高客单转化方法、教育产品定价',
-          topic: '高客单教育服务从"有兴趣"到"愿意付费"，你现在最大的断点在哪里？',
-          action: '会后发教育行业小红书/广告转化观察'
-        }
-      },
-      {
-        name: '马姐',
-        role: '商业访谈 / 儿童阅读实体系统',
-        avatarColor: '#D95555',
-        tags: [
-          { text: '商业访谈', type: 'contextual' },
-          { text: '公众号', type: 'contextual' },
-          { text: '教育实体', type: 'contextual' },
-          { text: '资源场域', type: 'relational' },
-          { text: '大湾区', type: 'custom' }
-        ],
-        priority: 'online',
-        origin: {
-          background: '品牌和新媒体代运营、教培初创品牌背景，也在投资机构做过 CEO 访谈栏目',
-          past: '访谈过多轮 CEO，积累商业访谈和资源连接经验',
-          now: '运营公众号和播客，访谈持续盈利实体生意操盘手'
-        },
-        value: {
-          product: '商业访谈内容与资源场域；儿童精品阅读生态实体门店盈利系统',
-          progress: 65,
-          progressLabel: '1-10 增长期'
-        },
-        advantage: {
-          strength: '公众号个人 IP、访谈型内容、商业模型拆解、教育阅读赛道',
-          canProvide: '内容到场域的组织方法论',
-          canProvideAI: false
-        },
-        connection: {
-          block: '如何从内容走到持续对接资源、值得操盘手停留的场域',
-          want: '持续盈利的实体生意操盘手，真实搞钱思维和访谈嘉宾资源'
-        },
-        relation: {
-          link: '她能帮你理解内容如何从表达变成资源组织能力',
-          canLearn: '访谈型内容变现、资源场域搭建',
-          topic: '我很喜欢你说的"从内容走到场域"。你判断一个访谈对象有没有资源组织价值时，会看哪些信号？',
-          action: '会后发一个 AI 访谈知识库/嘉宾拆解模板'
-        }
-      },
-      {
-        name: '孙律师',
-        role: '跨境合规 / B 端专业服务',
-        avatarColor: '#9E9893',
-        tags: [
-          { text: '出海', type: 'contextual' },
-          { text: '跨境合规', type: 'custom' },
-          { text: 'B端IP', type: 'contextual' },
-          { text: '私域成交', type: 'contextual' },
-          { text: 'AI工作流', type: 'custom' }
-        ],
-        priority: 'online',
-        origin: {
-          background: '8 年企业服务从业者，主营跨境合规',
-          past: '服务国内企业出海、外资企业来华及衍生手续需求',
-          now: '尝试把跨境合规里的标准化内容变成 AI 自动解决的事情'
-        },
-        value: {
-          product: '境外投资备案、海外公司设立、外汇登记、外商投资备案等企业服务',
-          progress: 90,
-          progressLabel: '10+ 规模化'
-        },
-        advantage: {
-          strength: '跨境合规专业服务、B 端内容 IP、私域成交、出海服务资源',
-          canProvide: 'B 端专业服务内容获客方法论',
-          canProvideAI: true
-        },
-        connection: {
-          block: '内容创作、客户跟进、案件交付三线并行；交付产能瓶颈',
-          want: 'B 端内容 IP、AI 工作流、跨境合规/出海服务资源'
-        },
-        relation: {
-          link: '你可以向他学习 B 端专业服务如何内容获客',
-          canLearn: 'B 端专业服务获客、私域成交',
-          topic: '我对 B 端专业服务怎么做内容获客很感兴趣。你现在最希望 AI 先解放哪一段？',
-          action: '会后给他一个客户 CRM 工作流草图'
-        }
-      }
+      { name: '赵姐', role: '社区平台创始人 / 场域主理人', avatarColor: '#E8915A', tags: [{text:'一人公司',type:'relational'},{text:'社区运营',type:'contextual'},{text:'小红书',type:'contextual'},{text:'AI知识库',type:'custom'},{text:'数字员工',type:'custom'}], priority: 'today', origin: { background: '互联网行业多年经验，做过运营、品牌和社区产品；擅长连接人、构建场域、组织高质量线下活动', past: '过去两年创立社区平台，持续组织线下人脉链接活动；出版行业书籍，沉淀社区案例和洞察', now: '运营社区平台，已有 200+ 期活动、5000+ 成员；做主题沙龙、案例拆解系列，正在搭建线上平台' }, value: { product: '主题沙龙、案例拆解系列、行业书籍、社区活动、知识库、数字员工', progress: 75, progressLabel: '1-10 增长期' }, advantage: { strength: '场域构建、人群洞察、案例筛选、产品生长、自然流获客、社区生态搭建', canProvide: 'AI 工作流、Skill、知识库沉淀、小红书/社区运营视角', canProvideAI: true }, connection: { block: '0-1 跑完后怎么规模化；精力分配和团队化', want: '有真实业务路径、可拆解案例、认同一人公司理念的人' }, relation: { link: '高价值场域节点，需要让她记住你是能把业务流和 AI 工作流沉淀成系统的人', canLearn: '场域构建方法论、社区运营节奏', topic: '我觉得你们最厉害的是把真实案例变成场域。我现在也在做 AI 工作流和 Skill 沉淀，想请教你：什么样的内容最值得被结构化？', action: '会后发一段你的 AI Builder 定位 + 可共创的案例拆解方向' } },
+      { name: '周学长', role: '外企产品经理 / AI 独立产品出海验证', avatarColor: '#5B8ED0', tags: [{text:'外企生态',type:'relational'},{text:'东南亚',type:'contextual'},{text:'AI出海',type:'custom'},{text:'企业提效',type:'contextual'},{text:'轻产品',type:'custom'}], priority: 'today', origin: { background: '计算机科学 + 商业分析双背景，8 年外企产品经验', past: '长期做跨区域产品协同、用户增长、数据分析驱动决策', now: '关注海外 Digital Natives 客户和 AI 生态，想看独立产品出海验证样本' }, value: { product: '早期测试轻量级 AI 工具：用 AI 根据用户场景自动生成效率方案', progress: 20, progressLabel: '0.5-1 验证期' }, advantage: { strength: '外企 AI 生态、大厂产品视角、海外市场观察、跨文化团队协作经验', canProvide: '外企 AI 生态洞察、海外华人市场视角', canProvideAI: false }, connection: { block: '还在找真实产品、付费客户和可远程交付的独立产品样本', want: '真实产品、付费验证、有出海意愿、AI 智能体/企业提效小团队' }, relation: { link: 'AI Builder 转型和 AI 产品出海验证的高价值入口', canLearn: '外企生态视角、出海验证方法论', topic: '我也在从大厂转向 AI Builder，想把业务流做成 Skill。你判断一个独立产品能不能做出海小样板时，最先看什么？', action: '会后发一个 AI 工作流样本：业务场景、交付方式、远程验证可能性' } },
+      { name: '刘姐', role: '亲子游学品牌 / 海归家长社群', avatarColor: '#4CAF7D', tags: [{text:'教育',type:'contextual'},{text:'英语',type:'custom'},{text:'海归家长',type:'relational'},{text:'小红书',type:'contextual'},{text:'社群',type:'contextual'}], priority: 'online', origin: { background: '前外资银行经理，回国后把海外资源转化成教育赛道', past: '从金融和海外资源切入，逐步搭建亲子游学和海归家长社群', now: '运营 1000+ 海归家长社群，全网阅读量 80 万+，小红书和公众号都有阵地' }, value: { product: '已跑通海外亲子插班项目；即将上线原版英语思维课程', progress: 60, progressLabel: '1-10 增长期' }, advantage: { strength: '海外资源整合、家长社群运营、教育产品验证、从主业另辟副业蹊径', canProvide: '海外资源对接、社群运营经验', canProvideAI: false }, connection: { block: '市场需求旺，一个人产能不足，需要 AI 提效和靠谱合作者', want: 'AI 提效、合作者、超级个体联盟' }, relation: { link: '教育、小红书、英语、海外资源、社群运营都与你强相关', canLearn: '从金融跨教育的转型方法、社群运营节奏', topic: '我现在在小红书教育方向，也想把英语和海外资源放进长期规划。你从金融跨到亲子游学，最关键的资源转化动作是什么？', action: '会后约 30 分钟，围绕小红书教育内容 + AI 提效 + 家长社群转化做互相拆解' } },
+      { name: '吴哥', role: '知识付费 / IP 定位陪跑', avatarColor: '#D4915A', tags: [{text:'知识产品化',type:'contextual'},{text:'IP定位',type:'custom'},{text:'内容到成交',type:'contextual'},{text:'咨询陪跑',type:'custom'}], priority: 'today', origin: { background: '内容与知识付费行业 10 年，6 年聚焦知识产品商业化', past: '做过课程开发、内容策划、产品设计、用户运营和商业化增长；累计参与课程 GMV 超千万', now: '聚焦 IP 定位咨询与陪跑，帮助行业专家转成知识创业者' }, value: { product: '业务诊断咨询；IP 定位咨询与陪跑，覆盖定位梳理、产品设计、内容规划、成交闭环', progress: 70, progressLabel: '1-10 增长期' }, advantage: { strength: '知识产品商业化、IP 定位、内容到成交、课程开发、咨询产品设计', canProvide: '帮你判断经验如何变成别人愿意付费的产品', canProvideAI: false }, connection: { block: '如何把咨询型业务进一步产品化和规模化，同时保持 1v1 服务质量', want: '探索一人公司、知识创业、个人 IP 商业化的人' }, relation: { link: '他能帮你回答：你的经验如何变成别人愿意付费的产品', canLearn: '知识产品化方法论、IP定位框架', topic: '我现在最大的卡点也是从"我知道"到"别人愿意付费"。如果用一个问题判断我该卖什么，你会先问我什么？', action: '会后整理你的能力清单，请他帮你判断最小可售卖产品切口' } },
+      { name: '小陈', role: '新媒体广告 / 母婴品牌运营', avatarColor: '#E5A84B', tags: [{text:'小红书',type:'contextual'},{text:'电商',type:'contextual'},{text:'广告投放',type:'custom'},{text:'社群电商',type:'contextual'},{text:'第二曲线',type:'relational'}], priority: 'today', origin: { background: '5 年+ 复合型新媒体广告从业经验，一年前离职创业', past: '做过品牌运营、内容营销、电商、广告投放；熟悉小红书、双微平台规则和玩法', now: '帮助母婴品牌做品牌运营、内容营销、电商代运营，同时做经销商和广告投放业务' }, value: { product: '母婴品牌运营、内容营销、电商代运营、广告投放', progress: 55, progressLabel: '1-10 增长期' }, advantage: { strength: '新媒体矩阵、品牌全年运营方案、数据优化迭代、小红书、电商投放', canProvide: '小红书运营实操、广告投放方法论', canProvideAI: false }, connection: { block: '寻找职业第二曲线，希望结合 AI 工具跑出新创业方向', want: '真实创业者、AI 变现实战、一人公司出海验证案例' }, relation: { link: '广告、运营、小红书、电商、AI 提效、第二曲线高度同频', canLearn: '广告投放精细化、母婴品牌运营', topic: '我们背景太像了。我正在从教育广告销售转到电商运营，也在用 AI 做工作流，你觉得广告/运营人找第二曲线，最容易踩的坑是什么？', action: '会后互换一个真实业务复盘模板，找一个小红书/电商案例共拆' } },
+      { name: '老方', role: '小红书获客 / IP 陪跑 / 电商运营', avatarColor: '#7C9A8E', tags: [{text:'小红书获客',type:'contextual'},{text:'电商运营',type:'contextual'},{text:'IP陪跑',type:'custom'},{text:'AI知识库',type:'custom'},{text:'低成本引流',type:'contextual'}], priority: 'deep', origin: { background: '深耕互联网行业 10 年，实操过多个电商平台，目前聚焦线上获客落地实操', past: '从传统电商运营，到全域获客，再升级到小红书垂直获客陪跑', now: '专注小红书获客运营，精通自然流/付费流玩法，服务 B 端团队和个人 IP' }, value: { product: '小红书低成本高效获客陪跑服务；主力服务多个赛道一对一深度陪跑；使用 AI 配合小红书工作', progress: 80, progressLabel: '1-10 增长期' }, advantage: { strength: '小红书自然流/付费流、低成本引流、高转化、B 端孵化、多赛道陪跑', canProvide: '小红书获客方法论、电商运营经验', canProvideAI: false }, connection: { block: '服务团队和 IP 越来越多导致事务繁杂、精力分散；希望陪跑更轻量、可复制', want: '已经跑通一人公司模式的同行前辈；AI 应用伙伴' }, relation: { link: '小红书教育、电商运营转岗、个人 IP 和 AI 知识库非常实用', canLearn: '小红书获客精细化打法、陪跑服务产品化', topic: '我现在刚好在小红书教育和电商运营之间做迁移。你帮客户通过小红书做到千万营收时，最关键的不是流量，而是什么？', action: '会后约一次小红书获客方法论互拆' } },
+      { name: '小叶', role: '数据分析 / 一人公司增长诊断', avatarColor: '#5B8ED0', tags: [{text:'数据分析',type:'custom'},{text:'增长诊断',type:'contextual'},{text:'内容获客',type:'contextual'},{text:'案例共创',type:'relational'}], priority: 'today', origin: { background: '数据分析背景，也做过抖音/小红书/TikTok 内容运营', past: '跨过数据和内容运营几条线，正在收拢成增长诊断方向', now: '探索帮助早期一人公司梳理增长路径，用数据视角看获客、转化、交付' }, value: { product: '1v1 增长诊断对话；数据驱动内容获客的轻方法', progress: 15, progressLabel: '0-1 搭建期' }, advantage: { strength: '数据视角、增长问题识别、内容获客、跨平台运营经验', canProvide: '你可以成为她的案例，她也能帮你把转型卡点数据化', canProvideAI: true }, connection: { block: '体系从 0 开始搭建，缺少真实案例验证', want: '0-1 阶段且愿意聊获客/转化卡点的人；探索一人公司的同行' }, relation: { link: '你可以成为她的案例，她也能帮你把转型卡点数据化', canLearn: '数据驱动增长诊断方法', topic: '我特别想知道你会怎么用数据视角看一个一人公司的第一个增长问题', action: '会后约一次案例互拆' } },
+      { name: '何博士', role: 'AI 高端教育规划', avatarColor: '#7C6AE8', tags: [{text:'国际教育',type:'contextual'},{text:'AI产品',type:'custom'},{text:'高客单转化',type:'contextual'},{text:'女性用户',type:'relational'},{text:'营销',type:'custom'}], priority: 'online', origin: { background: '顶尖高校经济学本科，海外名校市场营销与数据分析双硕士', past: '在美妆和娱乐行业头部外企做品牌与产品营销 5 年', now: '成立一人公司，搭建 AI 驱动的高端定制教育规划产品' }, value: { product: '面向国际化培养需求的家庭，提供学业路径、专业选择、海外升学规划', progress: 50, progressLabel: '0.5-1 验证期' }, advantage: { strength: '海外学历、高校资源、招生端视角、中国家庭需求理解、女性用户营销', canProvide: '高客单服务转化洞察、教育行业视角', canProvideAI: false }, connection: { block: '销售转化：从有兴趣了解到愿意为高客单价服务付费', want: '高客单服务获客和转化经验、AI workflow、教育亲子内容社群' }, relation: { link: '教育、国际化、AI workflow、高客单转化都有关', canLearn: '高客单转化方法、教育产品定价', topic: '高客单教育服务从"有兴趣"到"愿意付费"，你现在最大的断点在哪里？', action: '会后发教育行业小红书/广告转化观察' } },
+      { name: '马姐', role: '商业访谈 / 儿童阅读实体系统', avatarColor: '#D95555', tags: [{text:'商业访谈',type:'contextual'},{text:'公众号',type:'contextual'},{text:'教育实体',type:'contextual'},{text:'资源场域',type:'relational'},{text:'大湾区',type:'custom'}], priority: 'online', origin: { background: '品牌和新媒体代运营、教培初创品牌背景，也在投资机构做过 CEO 访谈栏目', past: '访谈过多轮 CEO，积累商业访谈和资源连接经验', now: '运营公众号和播客，访谈持续盈利实体生意操盘手' }, value: { product: '商业访谈内容与资源场域；儿童精品阅读生态实体门店盈利系统', progress: 65, progressLabel: '1-10 增长期' }, advantage: { strength: '公众号个人 IP、访谈型内容、商业模型拆解、教育阅读赛道', canProvide: '内容到场域的组织方法论', canProvideAI: false }, connection: { block: '如何从内容走到持续对接资源、值得操盘手停留的场域', want: '持续盈利的实体生意操盘手，真实搞钱思维和访谈嘉宾资源' }, relation: { link: '她能帮你理解内容如何从表达变成资源组织能力', canLearn: '访谈型内容变现、资源场域搭建', topic: '我很喜欢你说的"从内容走到场域"。你判断一个访谈对象有没有资源组织价值时，会看哪些信号？', action: '会后发一个 AI 访谈知识库/嘉宾拆解模板' } },
+      { name: '孙律师', role: '跨境合规 / B 端专业服务', avatarColor: '#9E9893', tags: [{text:'出海',type:'contextual'},{text:'跨境合规',type:'custom'},{text:'B端IP',type:'contextual'},{text:'私域成交',type:'contextual'},{text:'AI工作流',type:'custom'}], priority: 'online', origin: { background: '8 年企业服务从业者，主营跨境合规', past: '服务国内企业出海、外资企业来华及衍生手续需求', now: '尝试把跨境合规里的标准化内容变成 AI 自动解决的事情' }, value: { product: '境外投资备案、海外公司设立、外汇登记、外商投资备案等企业服务', progress: 90, progressLabel: '10+ 规模化' }, advantage: { strength: '跨境合规专业服务、B 端内容 IP、私域成交、出海服务资源', canProvide: 'B 端专业服务内容获客方法论', canProvideAI: true }, connection: { block: '内容创作、客户跟进、案件交付三线并行；交付产能瓶颈', want: 'B 端内容 IP、AI 工作流、跨境合规/出海服务资源' }, relation: { link: '你可以向他学习 B 端专业服务如何内容获客', canLearn: 'B 端专业服务获客、私域成交', topic: '我对 B 端专业服务怎么做内容获客很感兴趣。你现在最希望 AI 先解放哪一段？', action: '会后给他一个客户 CRM 工作流草图' } }
     ];
 
-    // ============================
-    // 渲染函数
-    // ============================
     function renderPriorityBadge(priority) {
-      const map = {
-        today: { cls: 'badge-today', label: '今日重点' },
-        deep: { cls: 'badge-deep', label: '深聊对象' },
-        online: { cls: 'badge-online', label: 'Online' }
-      };
+      const map = { today: {cls:'badge-today',label:'今日重点'}, deep: {cls:'badge-deep',label:'深聊对象'}, online: {cls:'badge-online',label:'Online'} };
       const p = map[priority];
       return `<span class="priority-badge ${p.cls}"><span class="priority-dot"></span>${p.label}</span>`;
     }
-
     function renderTags(tags) {
-      return tags.map(t =>
-        `<span class="tag tag-${t.type}" data-tag="${t.text}">${t.text}</span>`
-      ).join('');
+      return tags.map(t => `<span class="tag tag-${t.type}" data-tag="${t.text}">${t.text}</span>`).join('');
     }
-
     function renderPerson(p) {
       const initial = p.name.charAt(0);
       return `
-        <td>
-          <div class="person-cell">
-            <div class="person-top">
-              <div class="avatar" style="background:${p.avatarColor}">${initial}</div>
-              <div class="person-info">
-                <div class="person-name">${p.name}</div>
-                <div class="person-role">${p.role}</div>
-              </div>
-            </div>
-            <div class="tag-group">${renderTags(p.tags)}</div>
-          </div>
-        </td>
+        <td><div class="person-cell"><div class="person-top"><div class="avatar" style="background:${p.avatarColor}">${initial}</div><div class="person-info"><div class="person-name">${p.name}</div><div class="person-role">${p.role}</div></div></div><div class="tag-group">${renderTags(p.tags)}</div></div></td>
         <td>${renderPriorityBadge(p.priority)}</td>
-        <td class="cell-origin">
-          <div class="mini-block line-origin">
-            <div class="mini-block-title">背景</div>
-            <div class="mini-block-content">${p.origin.background}</div>
-          </div>
-          <div class="mini-block line-origin">
-            <div class="mini-block-title">现在</div>
-            <div class="mini-block-content">${p.origin.now}</div>
-          </div>
-        </td>
-        <td class="cell-value">
-          <div class="mini-block line-value">
-            <div class="mini-block-title">产品/服务</div>
-            <div class="mini-block-content">${p.value.product}</div>
-          </div>
-          <div class="mini-block line-value">
-            <div class="mini-block-title">商业化</div>
-            <div class="progress-mini">
-              <div class="progress-track"><div class="progress-fill" style="width:${p.value.progress}%"></div></div>
-              <span class="progress-label">${p.value.progressLabel}</span>
-            </div>
-          </div>
-        </td>
-        <td class="cell-advantage">
-          <div class="mini-block line-value">
-            <div class="mini-block-title">优势</div>
-            <div class="mini-block-content">${p.advantage.strength}</div>
-          </div>
-          ${p.advantage.canProvideAI ? `
-          <div class="ai-block">
-            <div class="mini-block-title"><span class="ai-badge"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 8L7 9.5L10.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> AI 辅助</span></div>
-            <div class="mini-block-content">${p.advantage.canProvide}</div>
-          </div>` : `
-          <div class="mini-block line-value">
-            <div class="mini-block-title">你能提供</div>
-            <div class="mini-block-content">${p.advantage.canProvide}</div>
-          </div>`}
-        </td>
-        <td class="cell-connection">
-          <div class="mini-block line-connection">
-            <div class="mini-block-title">卡点</div>
-            <div class="mini-block-content">${p.connection.block}</div>
-          </div>
-          <div class="mini-block line-connection">
-            <div class="mini-block-title">想链接</div>
-            <div class="mini-block-content">${p.connection.want}</div>
-          </div>
-        </td>
-        <td class="cell-relation">
-          <div class="mini-block line-action">
-            <div class="mini-block-title">与你的关联</div>
-            <div class="mini-block-content">${p.relation.link}</div>
-          </div>
-          <details class="expand-detail">
-            <summary>展开完整档案</summary>
-            <div class="expand-content">
-              <div class="field-pair">
-                <span class="field-label">可学</span>
-                <span class="field-value">${p.relation.canLearn}</span>
-              </div>
-              <div class="field-pair">
-                <span class="field-label">现场话题</span>
-                <span class="field-value">${p.relation.topic}</span>
-              </div>
-              <div class="field-pair">
-                <span class="field-label">会后动作</span>
-                <span class="field-value">${p.relation.action}</span>
-              </div>
-            </div>
-          </details>
-        </td>
-      `;
+        <td class="cell-origin"><div class="mini-block line-origin"><div class="mini-block-title">背景</div><div class="mini-block-content">${p.origin.background}</div></div><div class="mini-block line-origin"><div class="mini-block-title">现在</div><div class="mini-block-content">${p.origin.now}</div></div></td>
+        <td class="cell-value"><div class="mini-block line-value"><div class="mini-block-title">产品/服务</div><div class="mini-block-content">${p.value.product}</div></div><div class="mini-block line-value"><div class="mini-block-title">商业化</div><div class="progress-mini"><div class="progress-track"><div class="progress-fill" style="width:${p.value.progress}%"></div></div><span class="progress-label">${p.value.progressLabel}</span></div></div></td>
+        <td class="cell-advantage"><div class="mini-block line-value"><div class="mini-block-title">优势</div><div class="mini-block-content">${p.advantage.strength}</div></div>${p.advantage.canProvideAI ? `<div class="ai-block"><div class="mini-block-title"><span class="ai-badge"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 8L7 9.5L10.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> AI 辅助</span></div><div class="mini-block-content">${p.advantage.canProvide}</div></div>` : `<div class="mini-block line-value"><div class="mini-block-title">你能提供</div><div class="mini-block-content">${p.advantage.canProvide}</div></div>`}</td>
+        <td class="cell-connection"><div class="mini-block line-connection"><div class="mini-block-title">卡点</div><div class="mini-block-content">${p.connection.block}</div></div><div class="mini-block line-connection"><div class="mini-block-title">想链接</div><div class="mini-block-content">${p.connection.want}</div></div></td>
+        <td class="cell-relation"><div class="mini-block line-action"><div class="mini-block-title">与你的关联</div><div class="mini-block-content">${p.relation.link}</div></div><details class="expand-detail"><summary>展开完整档案</summary><div class="expand-content"><div class="field-pair"><span class="field-label">可学</span><span class="field-value">${p.relation.canLearn}</span></div><div class="field-pair"><span class="field-label">现场话题</span><span class="field-value">${p.relation.topic}</span></div><div class="field-pair"><span class="field-label">会后动作</span><span class="field-value">${p.relation.action}</span></div></div></details></td>`;
     }
 
     function renderTable() {
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
       const filtered = getFilteredPeople();
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="empty-state">没有匹配的联系人</td></tr>`;
-        return;
-      }
-      filtered.forEach(p => {
+      if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="empty-state">没有匹配的联系人</td></tr>`; return; }
+      filtered.forEach((p, i) => {
         const tr = document.createElement('tr');
-        tr.dataset.name = p.name;
-        tr.dataset.tags = p.tags.map(t => t.text).join(',');
-        tr.dataset.priority = p.priority;
+        tr.dataset.name = p.name; tr.dataset.tags = p.tags.map(t => t.text).join(','); tr.dataset.priority = p.priority;
+        tr.classList.add('row-enter');
+        tr.style.animationDelay = `${i * 50}ms`;
         tr.innerHTML = renderPerson(p);
         tbody.appendChild(tr);
       });
     }
 
-    // ============================
-    // 筛选逻辑
-    // ============================
-    let activeTag = 'all';
-    let activePriority = null;
-    let searchQuery = '';
-
+    let activeTag = 'all', activePriority = null, searchQuery = '';
     function getFilteredPeople() {
       return people.filter(p => {
-        // 标签筛选
         if (activeTag !== 'all' && !p.tags.some(t => t.text === activeTag)) return false;
-        // 优先级筛选
         if (activePriority && p.priority !== activePriority) return false;
-        // 搜索
-        if (searchQuery) {
-          const q = searchQuery.toLowerCase();
-          const searchStr = (p.name + p.role + p.tags.map(t => t.text).join(' ')).toLowerCase();
-          if (!searchStr.includes(q)) return false;
-        }
+        if (searchQuery) { const q = searchQuery.toLowerCase(); const s = (p.name + p.role + p.tags.map(t => t.text).join(' ')).toLowerCase(); if (!s.includes(q)) return false; }
         return true;
       });
     }
 
-    // 标签筛选
-    document.getElementById('tagFilters').addEventListener('click', e => {
-      const chip = e.target.closest('.chip');
-      if (!chip) return;
-      document.querySelectorAll('#tagFilters .chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      activeTag = chip.dataset.tag;
-      renderTable();
-    });
+    document.getElementById('tagFilters').addEventListener('click', e => { const chip = e.target.closest('.chip'); if (!chip) return; document.querySelectorAll('#tagFilters .chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); activeTag = chip.dataset.tag; renderTable(); });
+    document.querySelectorAll('.priority-chip').forEach(chip => { chip.addEventListener('click', () => { const p = chip.dataset.priority; if (activePriority === p) { activePriority = null; chip.classList.remove('active'); } else { document.querySelectorAll('.priority-chip').forEach(c => c.classList.remove('active')); activePriority = p; chip.classList.add('active'); } renderTable(); }); });
+    document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value.trim(); renderTable(); });
+    document.getElementById('tableBody').addEventListener('click', e => { const tag = e.target.closest('.tag'); if (!tag) return; const tagText = tag.dataset.tag; activeTag = tagText; document.querySelectorAll('#tagFilters .chip').forEach(c => { c.classList.toggle('active', c.dataset.tag === tagText); }); const hasChip = document.querySelector(`#tagFilters .chip[data-tag="${tagText}"]`); if (!hasChip) { document.querySelectorAll('#tagFilters .chip').forEach(c => c.classList.remove('active')); } renderTable(); });
 
-    // 优先级筛选（toggle）
-    document.querySelectorAll('.priority-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const p = chip.dataset.priority;
-        if (activePriority === p) {
-          activePriority = null;
-          chip.classList.remove('active');
-        } else {
-          document.querySelectorAll('.priority-chip').forEach(c => c.classList.remove('active'));
-          activePriority = p;
-          chip.classList.add('active');
-        }
-        renderTable();
+    // Counter animation
+    function animateCounters() {
+      document.querySelectorAll('[data-count]').forEach(el => {
+        const target = parseInt(el.dataset.count); const duration = 600; const start = performance.now();
+        function step(now) { const progress = Math.min((now - start) / duration, 1); const eased = 1 - Math.pow(1 - progress, 3); el.textContent = Math.round(target * eased); if (progress < 1) requestAnimationFrame(step); }
+        requestAnimationFrame(step);
       });
-    });
+    }
 
-    // 搜索
-    document.getElementById('searchInput').addEventListener('input', e => {
-      searchQuery = e.target.value.trim();
-      renderTable();
-    });
-
-    // 标签点击筛选
-    document.getElementById('tableBody').addEventListener('click', e => {
-      const tag = e.target.closest('.tag');
-      if (!tag) return;
-      const tagText = tag.dataset.tag;
-      // 设置 tag filter
-      activeTag = tagText;
-      document.querySelectorAll('#tagFilters .chip').forEach(c => {
-        c.classList.toggle('active', c.dataset.tag === tagText);
-      });
-      // 如果没有对应的 chip，选中"全部"之外高亮
-      const hasChip = document.querySelector(`#tagFilters .chip[data-tag="${tagText}"]`);
-      if (!hasChip) {
-        document.querySelectorAll('#tagFilters .chip').forEach(c => c.classList.remove('active'));
-      }
-      renderTable();
-    });
-
-    // 初始渲染
+    animateCounters();
     renderTable();
   </script>
 </body>

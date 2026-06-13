@@ -1,0 +1,35 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog — Bridge + Infinity</title>
+  <desc>V-A Flow + 尾弯∞ + 交汇处桥拱弧</desc>
+
+  <!-- L1 (Link) - 尾端轻弯 -->
+  <path d="M18,14
+           C18,40 18,60 18,74
+           Q18,88 30,88
+           L82,88
+           Q94,88 94,74
+           L94,54
+           C94,44 90,40 84,44"
+        fill="none" stroke="#E8915A" stroke-width="5"
+        stroke-linecap="round"/>
+
+  <!-- L2 (Log) - 尾端轻弯 -->
+  <path d="M30,24
+           C30,44 30,58 30,68
+           Q30,78 38,78
+           L72,78
+           Q80,78 80,68
+           L80,50
+           C80,42 76,38 70,42"
+        fill="none" stroke="#7C6AE8" stroke-width="3"
+        stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Bridge: 交汇处桥拱弧线 -->
+  <ellipse cx="54" cy="83" rx="12" ry="6"
+           fill="none" stroke="#E8915A" stroke-width="1.5"
+           opacity="0.3"/>
+
+  <!-- Intersection knot -->
+  <circle cx="54" cy="83" r="5" fill="#FFFFFF" stroke="#E8915A" stroke-width="2"/>
+  <circle cx="54" cy="83" r="2" fill="#5B8ED0"/>
+</svg>

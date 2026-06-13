@@ -1,0 +1,34 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog — Flick</title>
+  <desc>V-A Flow + 尾端轻弹暗示∞，极度克制</desc>
+
+  <!-- L1 (Link) - 原版骨架不改 -->
+  <path d="M18,14
+           C18,40 18,60 18,74
+           Q18,88 30,88
+           L82,88
+           Q94,88 94,74
+           L94,52"
+        fill="none" stroke="#E8915A" stroke-width="5"
+        stroke-linecap="round"/>
+
+  <!-- L2 (Log) - 原版骨架不改 -->
+  <path d="M30,24
+           C30,44 30,58 30,68
+           Q30,78 38,78
+           L72,78
+           Q80,78 80,68
+           L80,48"
+        fill="none" stroke="#7C6AE8" stroke-width="3"
+        stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Intersection knot -->
+  <circle cx="54" cy="83" r="5" fill="#FFFFFF" stroke="#E8915A" stroke-width="2"/>
+  <circle cx="54" cy="83" r="2" fill="#5B8ED0"/>
+
+  <!-- ∞ hint: 尾端轻弹一下 -->
+  <path d="M94,52 L100,46"
+        fill="none" stroke="#E8915A" stroke-width="3"
+        stroke-linecap="round" opacity="0.35"/>
+  <circle cx="102" cy="44" r="2.5" fill="#E8915A" opacity="0.2"/>
+</svg>
