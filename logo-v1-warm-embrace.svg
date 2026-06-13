@@ -1,0 +1,26 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog Logo - Warm Embrace</title>
+  <desc>V1 Warm Embrace: Three layers of warm glow embracing a precision circle with orbiting connection nodes</desc>
+  
+  <!-- Outer warm glow ring (layer 3) -->
+  <ellipse cx="60" cy="62" rx="50" ry="54" fill="#FDF0E6"/>
+  
+  <!-- Middle warm glow ring (layer 2) -->
+  <ellipse cx="60" cy="62" rx="39" ry="43" fill="#FDE7D6"/>
+  
+  <!-- Inner precision circle - "the instrument" -->
+  <circle cx="60" cy="62" r="28" fill="#FFFFFF" stroke="#E8915A" stroke-width="2.5"/>
+  
+  <!-- Center node = you (the user) -->
+  <circle cx="60" cy="62" r="10" fill="#E8915A"/>
+  
+  <!-- Orbiting nodes = your connections -->
+  <circle cx="86" cy="42" r="5" fill="#7C6AE8"/>
+  <circle cx="36" cy="46" r="4" fill="#5B8ED0"/>
+  <circle cx="70" cy="88" r="3" fill="#D47E48"/>
+  
+  <!-- Subtle connecting arcs -->
+  <path d="M68 55 Q76 48 82 44" fill="none" stroke="#7C6AE8" stroke-width="1.2" opacity="0.45"/>
+  <path d="M52 56 Q44 50 40 47" fill="none" stroke="#5B8ED0" stroke-width="1" opacity="0.35"/>
+  <path d="M64 70 Q68 78 69 85" fill="none" stroke="#D47E48" stroke-width="0.9" opacity="0.3"/>
+</svg>

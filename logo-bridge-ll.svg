@@ -1,0 +1,28 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog - Bridge-LL</title>
+  <desc>Dual-L as bridge pier and deck with infinity twist at corner and compound growth nodes</desc>
+  
+  <!-- L1 (Link) = left bridge pier + bridge deck -->
+  <path d="M18 10 L18 90 Q18 102, 30 102 L102 102"
+        fill="none" stroke="#E8915A" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- L2 (Log) = nested pier + deck -->
+  <path d="M34 26 L34 80 Q34 90, 44 90 L88 90"
+        fill="none" stroke="#7C6AE8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"/>
+  
+  <!-- Infinity twist at corner where L1's vertical meets horizontal -->
+  <path d="M74 102 C74 94, 66 90, 60 96 C54 102, 62 108, 68 102 C74 96, 66 90, 60 96"
+        fill="none" stroke="#5B8ED0" stroke-width="2.2" stroke-linecap="round" opacity="0.5"/>
+  
+  <!-- Compound growth dots along vertical (increasing size downward) -->
+  <circle cx="18" cy="30" r="1.8" fill="#E8915A" opacity="0.2"/>
+  <circle cx="18" cy="48" r="2.2" fill="#E8915A" opacity="0.35"/>
+  <circle cx="18" cy="68" r="2.8" fill="#E8915A" opacity="0.5"/>
+  <circle cx="18" cy="88" r="3.5" fill="#E8915A" opacity="0.7"/>
+  
+  <!-- Compound dots along horizontal deck -->
+  <circle cx="38" cy="102" r="1.8" fill="#E8915A" opacity="0.2"/>
+  <circle cx="54" cy="102" r="2.2" fill="#E8915A" opacity="0.3"/>
+  <circle cx="72" cy="102" r="2.5" fill="#7C6AE8" opacity="0.35"/>
+  <circle cx="90" cy="102" r="2" fill="#7C6AE8" opacity="0.25"/>
+</svg>

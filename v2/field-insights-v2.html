@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>场域洞察 · LinkLog V2</title>
+  <!-- 原型类型: PC Dashboard | 设计系统: LinkLog V2 Design Tokens -->
+  <style>
+    /* ============================
+       设计令牌 - LinkLog V2
+       ============================ */
+    :root {
+      --color-bg-primary: #F8F6F3;
+      --color-bg-secondary: #F1EDE8;
+      --color-bg-tertiary: #EAE5DF;
+      --color-bg-elevated: #FFFFFF;
+      --color-border-subtle: #E8E3DD;
+      --color-border-default: #D4CFC8;
+      --color-text-primary: #2C2825;
+      --color-text-secondary: #6B6560;
+      --color-text-tertiary: #9E9893;
+      --color-text-disabled: #C5C0BA;
+      --color-accent-default: #E8915A;
+      --color-accent-hover: #D47E48;
+      --color-accent-active: #C06E3A;
+      --color-accent-light: #FDF0E6;
+      --color-accent-lighter: #FEF7F0;
+      --color-accent-text: #C06E3A;
+      --color-ai-default: #7C6AE8;
+      --color-ai-hover: #6B59D6;
+      --color-ai-light: #F0EDFC;
+      --color-ai-lighter: #F8F6FE;
+      --color-ai-text: #5B4AC5;
+      --color-ai-glow: rgba(124,106,232,0.15);
+      --color-success-default: #4CAF7D;
+      --color-success-light: #E8F5EE;
+      --color-warning-default: #E5A84B;
+      --color-warning-light: #FDF5E6;
+      --color-error-default: #D95555;
+      --color-error-light: #FDEAEA;
+      --color-info-default: #5B8ED0;
+      --color-info-light: #E8F0FA;
+      --color-tag-relational: #E8915A;
+      --color-tag-contextual: #7C6AE8;
+      --color-tag-custom: #5B8ED0;
+      --color-tag-bg-base: #F1EDE8;
+      --color-line-origin: #7C9A8E;
+      --color-line-origin-light: #EDF3F0;
+      --color-line-value: #D4915A;
+      --color-line-value-light: #FDF0E6;
+      --color-line-connection: #5B8ED0;
+      --color-line-connection-light: #E8F0FA;
+      --color-line-action: #7C6AE8;
+      --color-line-action-light: #F0EDFC;
+      --container-pc: 1320px;
+      --container-pc-narrow: 960px;
+      --font-sans: "Inter", "SF Pro Display", -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-mono: "JetBrains Mono", "SF Mono", "Menlo", monospace;
+      --text-display: 28px;
+      --text-h1: 22px;
+      --text-h2: 18px;
+      --text-h3: 16px;
+      --text-body: 15px;
+      --text-body-sm: 13px;
+      --text-caption: 12px;
+      --text-micro: 11px;
+      --weight-regular: 400;
+      --weight-medium: 500;
+      --weight-semibold: 600;
+      --weight-bold: 700;
+      --space-1: 4px; --space-2: 8px; --space-3: 12px;
+      --space-4: 16px; --space-5: 20px; --space-6: 24px;
+      --space-8: 32px; --space-10: 40px; --space-12: 48px;
+      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+      --radius-xl: 20px; --radius-full: 9999px;
+      --shadow-xs: 0 1px 2px rgba(44,40,37,0.04);
+      --shadow-sm: 0 2px 8px rgba(44,40,37,0.06);
+      --shadow-md: 0 4px 16px rgba(44,40,37,0.08);
+      --shadow-lg: 0 8px 32px rgba(44,40,37,0.10);
+      --shadow-focus: 0 0 0 3px rgba(232,145,90,0.3);
+      --shadow-focus-ai: 0 0 0 3px rgba(124,106,232,0.3);
+      --duration-fast: 200ms;
+      --duration-normal: 300ms;
+      --duration-slow: 400ms;
+      --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+      /* 补充语义色（审查修正） */
+      --color-text-on-accent: #FFFFFF;
+      --color-bg-frosted: rgba(248,246,243,0.92);
+      --color-bg-card-glass: rgba(255,255,255,0.7);
+      --color-bg-chart-glass: rgba(255,255,255,0.65);
+      --color-bg-glass: rgba(255,255,255,0.6);
+      --color-bg-cell-sticky: rgba(255,255,255,0.95);
+    }
+
+    /* ============================
+       基础重置
+       ============================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: var(--text-body);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      /* 径向渐变背景 */
+      background:
+    radial-gradient(ellipse at 20% 0%, rgba(232,145,90,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(124,106,232,0.06) 0%, transparent 50%),
+    var(--color-bg-primary);
+      min-height: 100vh;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+      border-radius: var(--radius-sm);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ============================
+       全局导航
+       ============================ */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      padding: var(--space-3) 0;
+      margin-bottom: var(--space-4);
+      background: var(--color-bg-frosted);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .nav-brand {
+      font-size: var(--text-h2);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      text-decoration: none;
+      flex-shrink: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-brand .accent {
+      color: var(--color-accent-default);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-1);
+      flex: 1;
+    }
+
+    .nav-link {
+      font-size: var(--text-body-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      transition: color var(--duration-fast) var(--ease-out),
+                  background var(--duration-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--color-text-primary);
+      background: var(--color-bg-tertiary);
+    }
+
+    .nav-link.active {
+      color: var(--color-accent-text);
+      background: var(--color-accent-light);
+    }
+
+    .nav-github {
+      color: var(--color-text-tertiary);
+      transition: color var(--duration-fast) var(--ease-out);
+      flex-shrink: 0;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+    }
+
+    .nav-github:hover {
+      color: var(--color-text-primary);
+    }
+
+    /* ============================
+       页面容器
+       ============================ */
+    .page-container {
+      max-width: var(--container-pc);
+      margin: 0 auto;
+      padding: var(--space-10) var(--space-6);
+    }
+
+    /* ============================
+       Hero 区
+       ============================ */
+    .hero {
+      margin-bottom: var(--space-10);
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-accent-light);
+      color: var(--color-accent-text);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-semibold);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-3);
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 {
+      font-size: var(--text-display);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-2);
+      line-height: 1.2;
+    }
+
+    .hero .subtitle {
+      font-size: var(--text-body);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-8);
+      max-width: 560px;
+    }
+
+    /* 统计格 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+
+    .stat-card {
+      background: var(--color-bg-card-glass);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-5);
+      text-align: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .stat-card:hover {
+      border-color: var(--color-border-default);
+    }
+
+    .stat-card .stat-number {
+      font-size: 32px;
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-card .stat-label {
+      font-size: var(--text-caption);
+      color: var(--color-text-secondary);
+    }
+
+    .stat-card.accent-card .stat-number { color: var(--color-accent-text); }
+    .stat-card.ai-card .stat-number { color: var(--color-ai-text); }
+    .stat-card.success-card .stat-number { color: var(--color-success-default); }
+
+    /* ============================
+       筛选栏（sticky）
+       ============================ */
+    .filter-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--color-bg-frosted);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: var(--space-4) 0;
+      margin-bottom: var(--space-8);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .search-box {
+      flex: 0 0 240px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: var(--space-2) var(--space-3) var(--space-2) var(--space-8);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      font-size: var(--text-body-sm);
+      font-family: var(--font-sans);
+      color: var(--color-text-primary);
+      background: var(--color-bg-elevated);
+      transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .search-box input::placeholder { color: var(--color-text-tertiary); }
+    .search-box input:focus { border-color: var(--color-accent-default); outline: none; box-shadow: var(--shadow-focus); }
+
+    .search-box .search-icon {
+      position: absolute;
+      left: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-tertiary);
+    }
+
+    .chip-group {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .chip {
+      padding: var(--space-1) var(--space-3);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-full);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      background: var(--color-bg-elevated);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .chip:hover { border-color: var(--color-accent-default); color: var(--color-accent-text); }
+    .chip.active { background: var(--color-accent-default); border-color: var(--color-accent-default); color: var(--color-text-on-accent); }
+
+    /* ============================
+       区块通用
+       ============================ */
+    .section {
+      margin-bottom: var(--space-10);
+    }
+
+    .section-title {
+      font-size: var(--text-h2);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-5);
+    }
+
+    /* ============================
+       标签分布 - 横向条形图
+       ============================ */
+    .bar-chart {
+      background: var(--color-bg-chart-glass);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      backdrop-filter: blur(8px);
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+
+    .bar-row:last-child { margin-bottom: 0; }
+
+    .bar-label {
+      width: 80px;
+      flex-shrink: 0;
+      font-size: var(--text-body-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+      text-align: right;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 28px;
+      background: var(--color-bg-tertiary);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      padding-left: var(--space-3);
+      transition: width 0.6s var(--ease-out);
+      min-width: 40px;
+    }
+
+    .bar-fill-text {
+      font-size: var(--text-micro);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-on-accent);
+      white-space: nowrap;
+    }
+
+    .bar-count {
+      font-size: var(--text-caption);
+      color: var(--color-text-tertiary);
+      width: 28px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* 条形颜色按排名 */
+    .bar-fill.bar-rank-1 { background: var(--color-accent-default); }
+    .bar-fill.bar-rank-2 { background: var(--color-accent-hover); }
+    .bar-fill.bar-rank-3 { background: var(--color-ai-default); }
+    .bar-fill.bar-rank-4 { background: var(--color-ai-hover); }
+    .bar-fill.bar-rank-5 { background: var(--color-info-default); }
+    .bar-fill.bar-rank-default { background: var(--color-border-default); }
+
+    /* ============================
+       商业化阶段分布
+       ============================ */
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+
+    .stage-card {
+      background: var(--color-bg-card-glass);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .stage-card:hover { border-color: var(--color-border-default); }
+
+    .stage-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .stage-card.stage-seed::before { background: var(--color-error-default); }
+    .stage-card.stage-validate::before { background: var(--color-warning-default); }
+    .stage-card.stage-growth::before { background: var(--color-success-default); }
+    .stage-card.stage-scale::before { background: var(--color-accent-default); }
+
+    .stage-label {
+      font-size: var(--text-caption);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-1);
+    }
+
+    .stage-range {
+      font-size: var(--text-h1);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .stage-count {
+      font-size: var(--text-h2);
+      font-weight: var(--weight-bold);
+    }
+
+    .stage-card.stage-seed .stage-count { color: var(--color-error-default); }
+    .stage-card.stage-validate .stage-count { color: var(--color-warning-default); }
+    .stage-card.stage-growth .stage-count { color: var(--color-success-default); }
+    .stage-card.stage-scale .stage-count { color: var(--color-accent-text); }
+
+    .stage-unit {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-regular);
+      color: var(--color-text-tertiary);
+    }
+
+    .stage-people {
+      margin-top: var(--space-3);
+      font-size: var(--text-micro);
+      color: var(--color-text-tertiary);
+    }
+
+    /* ============================
+       关系洞察卡片
+       ============================ */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+    }
+
+    .insight-card {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-5) var(--space-5) var(--space-6);
+      display: flex;
+      gap: var(--space-4);
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+    }
+
+    .insight-card:hover {
+      border-color: var(--color-border-default);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+
+    .insight-card.insight-tags::before { background: var(--color-accent-default); }
+    .insight-card.insight-gap::before { background: var(--color-warning-default); }
+    .insight-card.insight-connect::before { background: var(--color-ai-default); }
+    .insight-card.insight-action::before { background: var(--color-info-default); }
+
+    .insight-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .insight-tags .insight-icon { background: var(--color-accent-light); color: var(--color-accent-text); }
+    .insight-gap .insight-icon { background: var(--color-warning-light); color: var(--color-warning-default); }
+    .insight-connect .insight-icon { background: var(--color-ai-light); color: var(--color-ai-text); }
+    .insight-action .insight-icon { background: var(--color-info-light); color: var(--color-info-default); }
+
+    .insight-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .insight-title {
+      font-size: var(--text-body);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-1);
+    }
+
+    .insight-desc {
+      font-size: var(--text-body-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      margin-bottom: var(--space-3);
+    }
+
+    .insight-detail {
+      font-size: var(--text-caption);
+      color: var(--color-text-tertiary);
+      line-height: 1.6;
+    }
+
+    .insight-highlight {
+      font-weight: var(--weight-semibold);
+    }
+
+    .insight-tags .insight-highlight { color: var(--color-accent-text); }
+    .insight-gap .insight-highlight { color: var(--color-warning-default); }
+    .insight-connect .insight-highlight { color: var(--color-ai-text); }
+    .insight-action .insight-highlight { color: var(--color-info-default); }
+
+    /* ============================
+       页脚
+       ============================ */
+    .page-footer {
+      height: var(--space-12);
+      text-align: center;
+      padding-top: var(--space-8);
+      font-size: var(--text-caption);
+      color: var(--color-text-disabled);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- ====== 全局导航 ====== -->
+    <nav class="site-nav" aria-label="LinkLog 导航">
+      <a href="../pc.html" class="nav-brand">Link<span class="accent">Log</span></a>
+      <div class="nav-links">
+        <a href="../pc.html" class="nav-link">首页</a>
+        <a href="people-table.html" class="nav-link">人物资料表</a>
+        <a href="field-insights-v2.html" class="nav-link active">场域洞察</a>
+        <a href="detail-v2.html" class="nav-link">联系人详情</a>
+      </div>
+      <a href="https://github.com/915005977-rgb/LinkLog" class="nav-github" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </nav>
+
+    <!-- ====== Hero 区 ====== -->
+    <header class="hero">
+      <span class="hero-tag">场域洞察</span>
+      <h1>人脉链接活动洞察</h1>
+      <p class="subtitle">基于你在此场域的全部联系人数据，AI 分析人脉网络的结构、缺口与行动机会</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">10</div>
+          <div class="stat-label">总联系人数</div>
+        </div>
+        <div class="stat-card accent-card">
+          <div class="stat-number">4</div>
+          <div class="stat-label">今日重点</div>
+        </div>
+        <div class="stat-card ai-card">
+          <div class="stat-number">9</div>
+          <div class="stat-label">标签覆盖</div>
+        </div>
+        <div class="stat-card success-card">
+          <div class="stat-number">4</div>
+          <div class="stat-label">商业化验证中</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ====== 筛选栏 ====== -->
+    <nav class="filter-bar" aria-label="筛选栏">
+      <div class="search-box">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="10.5" y1="10.5" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input type="text" placeholder="搜索标签或联系人…" id="searchInput" aria-label="搜索">
+      </div>
+      <div class="chip-group" id="chipGroup">
+        <button class="chip active" data-filter="all">全部</button>
+        <button class="chip" data-filter="AI工作流">AI工作流</button>
+        <button class="chip" data-filter="小红书">小红书</button>
+        <button class="chip" data-filter="一人公司">一人公司</button>
+        <button class="chip" data-filter="教育">教育</button>
+        <button class="chip" data-filter="电商">电商</button>
+        <button class="chip" data-filter="出海">出海</button>
+        <button class="chip" data-filter="社群">社群</button>
+        <button class="chip" data-filter="知识产品化">知识产品化</button>
+        <button class="chip" data-filter="IP定位">IP定位</button>
+      </div>
+    </nav>
+
+    <!-- ====== 标签分布 ====== -->
+    <section class="section">
+      <h2 class="section-title">标签分布</h2>
+      <div class="bar-chart" id="barChart">
+        <!-- 动态渲染 -->
+      </div>
+    </section>
+
+    <!-- ====== 商业化阶段分布 ====== -->
+    <section class="section">
+      <h2 class="section-title">商业化阶段</h2>
+      <div class="stage-grid">
+        <div class="stage-card stage-seed">
+          <div class="stage-label">从零起步</div>
+          <div class="stage-range">0 → 1</div>
+          <div class="stage-count">2<span class="stage-unit"> 人</span></div>
+          <div class="stage-people">小叶、小陈</div>
+        </div>
+        <div class="stage-card stage-validate">
+          <div class="stage-label">验证跑通</div>
+          <div class="stage-range">0.5 → 1</div>
+          <div class="stage-count">3<span class="stage-unit"> 人</span></div>
+          <div class="stage-people">周学长、何博士、老方</div>
+        </div>
+        <div class="stage-card stage-growth">
+          <div class="stage-label">增长复制</div>
+          <div class="stage-range">1 → 10</div>
+          <div class="stage-count">4<span class="stage-unit"> 人</span></div>
+          <div class="stage-people">赵姐、刘姐、吴哥、马姐</div>
+        </div>
+        <div class="stage-card stage-scale">
+          <div class="stage-label">规模化</div>
+          <div class="stage-range">10 +</div>
+          <div class="stage-count">1<span class="stage-unit"> 人</span></div>
+          <div class="stage-people">孙律师</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 关系洞察 ====== -->
+    <section class="section">
+      <h2 class="section-title">关系洞察</h2>
+      <div class="insight-grid">
+
+        <!-- 洞察 1：高频标签 -->
+        <article class="insight-card insight-tags">
+          <div class="insight-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="2" y="4" width="16" height="3" rx="1.5" fill="currentColor" opacity="0.7"/>
+              <rect x="2" y="9" width="12" height="3" rx="1.5" fill="currentColor" opacity="0.5"/>
+              <rect x="2" y="14" width="8" height="3" rx="1.5" fill="currentColor" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="insight-body">
+            <h3 class="insight-title">高频标签</h3>
+            <p class="insight-desc">你人脉网络中最集中的能力标签，代表你所在场域的核心能力圈</p>
+            <div class="insight-detail">
+              <span class="insight-highlight">AI工作流</span> 和 <span class="insight-highlight">小红书</span> 并列最高频（各 5 人），<span class="insight-highlight">一人公司</span> 紧随其后（4 人）。你的场域明显偏向 AI 驱动的个体创业方向。
+            </div>
+          </div>
+        </article>
+
+        <!-- 洞察 2：商业验证缺口 -->
+        <article class="insight-card insight-gap">
+          <div class="insight-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <path d="M10 6V11L13 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="insight-body">
+            <h3 class="insight-title">商业验证缺口</h3>
+            <p class="insight-desc">哪些人还在 0-1 阶段需要支持，你可以主动提供帮助建立信任</p>
+            <div class="insight-detail">
+              <span class="insight-highlight">小叶</span>（增长诊断 0-1）、<span class="insight-highlight">周学长</span>（轻产品验证期）和 <span class="insight-highlight">何博士</span>（高客单转化断点）都在验证初期，是你用 AI 工作流做"案例共创"的最佳入口。
+            </div>
+          </div>
+        </article>
+
+        <!-- 洞察 3：连接机会 -->
+        <article class="insight-card insight-connect">
+          <div class="insight-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <circle cx="6" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <circle cx="14" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <circle cx="10" cy="14" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <line x1="8" y1="7" x2="12" y2="7" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="7" y1="8.5" x2="9" y2="12" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="13" y1="8.5" x2="11" y2="12" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="insight-body">
+            <h3 class="insight-title">连接机会</h3>
+            <p class="insight-desc">哪些人之间有互相需求的匹配，你可以做超级连接者</p>
+            <div class="insight-detail">
+              <span class="insight-highlight">老方</span> 需要轻量化陪跑方案 ↔ <span class="insight-highlight">小叶</span> 需要增长诊断案例：可互相验证。<span class="insight-highlight">周学长</span> 想看出海 ↔ <span class="insight-highlight">孙律师</span> 做跨境合规：天然互补。
+            </div>
+          </div>
+        </article>
+
+        <!-- 洞察 4：行动提醒 -->
+        <article class="insight-card insight-action">
+          <div class="insight-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M10 2L12.5 7.5L18 8.5L14 12.5L15 18L10 15.5L5 18L6 12.5L2 8.5L7.5 7.5L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="insight-body">
+            <h3 class="insight-title">行动提醒</h3>
+            <p class="insight-desc">你有多少未跟进的会后动作，及时跟进是关系复利的基础</p>
+            <div class="insight-detail">
+              你有 <span class="insight-highlight">10 项会后动作</span> 待执行。建议优先处理今日重点 4 人：赵姐（发定位）、周学长（发样本）、吴哥（整理清单）、小叶（约互拆）。
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      LinkLog V2 · 连接日志 · 关系复利
+    </footer>
+  </div>
+
+  <script>
+    // ============================
+    // 标签分布数据
+    // ============================
+    const tagData = [
+      { tag: 'AI工作流', count: 5, total: 10 },
+      { tag: '小红书', count: 5, total: 10 },
+      { tag: '一人公司', count: 4, total: 10 },
+      { tag: '教育', count: 3, total: 10 },
+      { tag: '电商', count: 3, total: 10 },
+      { tag: '社群', count: 3, total: 10 },
+      { tag: '出海', count: 2, total: 10 },
+      { tag: '知识产品化', count: 1, total: 10 },
+      { tag: 'IP定位', count: 1, total: 10 },
+      { tag: '数据分析', count: 1, total: 10 }
+    ];
+
+    function renderBarChart(data) {
+      const chart = document.getElementById('barChart');
+      const maxCount = Math.max(...data.map(d => d.count));
+      chart.innerHTML = data.map((d, i) => {
+        const pct = Math.round((d.count / d.total) * 100);
+        const width = Math.round((d.count / maxCount) * 100);
+        let rankClass = 'bar-rank-default';
+        if (i === 0) rankClass = 'bar-rank-1';
+        else if (i === 1) rankClass = 'bar-rank-2';
+        else if (i === 2) rankClass = 'bar-rank-3';
+        else if (i === 3) rankClass = 'bar-rank-4';
+        else if (i === 4) rankClass = 'bar-rank-5';
+        return `
+          <div class="bar-row">
+            <span class="bar-label">${d.tag}</span>
+            <div class="bar-track">
+              <div class="bar-fill ${rankClass}" style="width:${width}%">
+                <span class="bar-fill-text">${pct}%</span>
+              </div>
+            </div>
+            <span class="bar-count">${d.count}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ============================
+    // 筛选交互
+    // ============================
+    document.getElementById('chipGroup').addEventListener('click', e => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      document.querySelectorAll('#chipGroup .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      if (filter === 'all') {
+        renderBarChart(tagData);
+      } else {
+        const filtered = tagData.filter(d => d.tag === filter || d.count >= 3);
+        renderBarChart(filtered.length > 1 ? filtered : tagData);
+      }
+    });
+
+    // 初始渲染
+    renderBarChart(tagData);
+  </script>
+</body>
+</html>

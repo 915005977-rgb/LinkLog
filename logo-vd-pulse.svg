@@ -1,0 +1,41 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog - V-D Pulse</title>
+  <desc>Thread Line with pulse dots along the path representing log entry rhythm.</desc>
+  
+  <!-- First L (Link) - warm orange -->
+  <path d="M18 14
+           L18 74
+           Q18 88, 30 88
+           L82 88
+           Q94 88, 94 74
+           L94 52"
+        fill="none"
+        stroke="#E8915A"
+        stroke-width="5"
+        stroke-linecap="round"/>
+  
+  <!-- Second L (Log) - AI purple -->
+  <path d="M30 24
+           L30 68
+           Q30 78, 38 78
+           L72 78
+           Q80 78, 80 68
+           L80 48"
+        fill="none"
+        stroke="#7C6AE8"
+        stroke-width="3"
+        stroke-linecap="round"
+        opacity="0.65"/>
+  
+  <!-- Pulse dots on vertical stem (increasing opacity downward = building up) -->
+  <circle cx="18" cy="28" r="2.5" fill="#E8915A" opacity="0.3"/>
+  <circle cx="18" cy="46" r="2.5" fill="#E8915A" opacity="0.45"/>
+  <circle cx="18" cy="64" r="2.5" fill="#E8915A" opacity="0.65"/>
+  
+  <!-- Intersection knot -->
+  <circle cx="54" cy="83" r="5" fill="#FFFFFF" stroke="#E8915A" stroke-width="2"/>
+  
+  <!-- Pulse dots on horizontal bar (fading outward = spreading connections) -->
+  <circle cx="70" cy="83" r="2" fill="#7C6AE8" opacity="0.35"/>
+  <circle cx="85" cy="70" r="2" fill="#7C6AE8" opacity="0.25"/>
+</svg>

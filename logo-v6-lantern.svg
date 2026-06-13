@@ -1,0 +1,45 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog Logo - Lantern</title>
+  <desc>V6 Lantern: A warm lantern container holding a constellation of relationship connections, light radiating from below</desc>
+  
+  <!-- Top string -->
+  <line x1="60" y1="2" x2="60" y2="12" stroke="#C06E3A" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Lantern cap -->
+  <rect x="46" y="10" width="28" height="8" rx="3" fill="#E8915A"/>
+  
+  <!-- Lantern body (warm container) -->
+  <path d="M32 18 
+           L88 18 
+           C96 18 102 26 102 40 
+           L102 80 
+           C102 92 96 100 88 100 
+           L32 100 
+           C24 100 18 92 18 80
+           L18 40
+           C18 26 24 18 32 18Z"
+        fill="#FDF0E6" stroke="#E8915A" stroke-width="2.5"/>
+  
+  <!-- Inside: constellation of relationship nodes -->
+  <circle cx="46" cy="44" r="8" fill="#E8915A" opacity="0.95"/>
+  <circle cx="74" cy="38" r="6" fill="#7C6AE8" opacity="0.85"/>
+  <circle cx="58" cy="70" r="5" fill="#5B8ED0" opacity="0.75"/>
+  <circle cx="82" cy="72" r="4" fill="#D47E48" opacity="0.65"/>
+  <circle cx="36" cy="74" r="4.5" fill="#6B59D6" opacity="0.55"/>
+  <circle cx="64" cy="50" r="3" fill="#5B8ED0" opacity="0.5"/>
+  
+  <!-- Connection lines inside lantern -->
+  <line x1="53" y1="42" x2="69" y2="39" stroke="#D47E48" stroke-width="1.2" opacity="0.35"/>
+  <line x1="53" y1="48" x2="56" y2="66" stroke="#D47E48" stroke-width="1" opacity="0.25"/>
+  <line x1="71" y1="43" x2="61" y2="67" stroke="#6B59D6" stroke-width="1" opacity="0.3"/>
+  <line x1="62" y1="73" x2="78" y2="73" stroke="#5B8ED0" stroke-width="1" opacity="0.25"/>
+  <line x1="41" y1="72" x2="39" y2="72" stroke="#7C6AE8" stroke-width="1" opacity="0.2"/>
+  <line x1="50" y1="49" x2="62" y2="51" stroke="#D47E48" stroke-width="0.8" opacity="0.2"/>
+  
+  <!-- Light rays emanating from bottom of lantern -->
+  <line x1="28" y1="100" x2="18" y2="114" stroke="#E8915A" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <line x1="44" y1="100" x2="40" y2="115" stroke="#E8915A" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+  <line x1="60" y1="100" x2="60" y2="118" stroke="#E8915A" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  <line x1="76" y1="100" x2="80" y2="115" stroke="#E8915A" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+  <line x1="92" y1="100" x2="102" y2="114" stroke="#E8915A" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+</svg>

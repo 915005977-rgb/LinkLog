@@ -1,0 +1,19 @@
+<svg viewBox="0 0 300 130" width="300" height="130" xmlns="http://www.w3.org/2000/svg">
+<title>LinkLog Logo — V7 WarmGlow (被暖光包裹)</title>
+<desc>三层椭圆暖光包裹节点，体现"被暖光包裹的精密仪器"品牌愿景</desc>
+
+<ellipse cx="60" cy="54" rx="56" ry="40" fill="#FDF0E6" stroke="#E8915A" stroke-width="2" opacity=".7"/>
+<ellipse cx="60" cy="54" rx="42" ry="30" fill="#FEF7F0" stroke="#E8915A" stroke-width="1.5" opacity=".5"/>
+<ellipse cx="60" cy="54" rx="28" ry="20" fill="#FDF0E6" stroke="#7C6AE8" stroke-width="1" opacity=".35"/>
+
+<circle cx="48" cy="50" r="8" fill="#E8915A"/>
+<circle cx="74" cy="60" r="6" fill="#7C6AE8" opacity=".7"/>
+<circle cx="60" cy="68" r="5" fill="#5B8ED0" opacity=".6"/>
+
+<line x1="54" y1="54" x2="68" y2="52" stroke="#6B6560" stroke-width=".8" opacity=".3"/>
+<line x1="58" y1="60" x2="56" y2="58" stroke="#6B6560" stroke-width=".6" opacity=".25"/>
+
+<text x="136" y="56" font-family="Inter,-apple-system,'Noto Sans SC','PingFang SC',sans-serif" font-size="28" font-weight="700" fill="#2C2825">Link<tspan fill="#E8915A">Log</tspan></text>
+<text x="136" y="74" font-family="'Noto Sans SC','PingFang SC',Inter,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#9E9893">连接日志 · 关系复利</text>
+<text x="136" y="90" font-family="'Noto Sans SC','PingFang SC',Inter,-apple-system,sans-serif" font-size="10" font-weight="400" fill="#C5C0BA">被暖光包裹的精密仪器</text>
+</svg>

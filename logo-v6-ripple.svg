@@ -1,0 +1,14 @@
+<svg viewBox="0 0 280 120" width="280" height="120" xmlns="http://www.w3.org/2000/svg">
+<title>LinkLog Logo — V6 Ripple (关系复利)</title>
+<desc>同心圆涟漪扩散，象征关系复利增长，暖橘中心向外扩散</desc>
+
+<circle cx="40" cy="56" r="8" fill="#E8915A"/>
+<circle cx="40" cy="56" r="8" fill="none" stroke="#E8915A" stroke-width="2.5"/>
+<circle cx="40" cy="56" r="20" fill="none" stroke="#E8915A" stroke-width="2" opacity=".6"/>
+<circle cx="40" cy="56" r="32" fill="none" stroke="#7C6AE8" stroke-width="1.8" opacity=".45"/>
+<circle cx="40" cy="56" r="44" fill="none" stroke="#5B8ED0" stroke-width="1.5" opacity=".3"/>
+<circle cx="40" cy="56" r="56" fill="none" stroke="#D4CFC8" stroke-width="1" opacity=".18"/>
+
+<text x="116" y="54" font-family="Inter,-apple-system,'Noto Sans SC','PingFang SC',sans-serif" font-size="28" font-weight="700" fill="#2C2825">Link<tspan fill="#E8915A">Log</tspan></text>
+<text x="116" y="74" font-family="'Noto Sans SC','PingFang SC',Inter,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#9E9893">连接日志 · 关系复利</text>
+</svg>

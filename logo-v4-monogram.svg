@@ -1,0 +1,13 @@
+<svg viewBox="0 0 280 120" width="280" height="120" xmlns="http://www.w3.org/2000/svg">
+<title>LinkLog Logo — V4 Monogram</title>
+
+<path d="M12,80 L12,20 C12,14 22,10 30,14 C38,18 42,30 42,44 L42,80" fill="none" stroke="#E8915A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M42,80 L42,36 C42,28 54,22 64,26 C74,30 80,42 80,56 L80,80" fill="none" stroke="#7C6AE8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle cx="27" cy="14" r="6" fill="#E8915A" opacity=".25"/>
+<circle cx="61" cy="26" r="5" fill="#7C6AE8" opacity=".2"/>
+<path d="M17,70 L37,70 M47,60 L77,60" stroke="#5B8ED0" stroke-width="1.5" stroke-dasharray="3 3" stroke-linecap="round" opacity=".5"/>
+
+<text x="100" y="54" font-family="Inter,-apple-system,'Noto Sans SC','PingFang SC',sans-serif" font-size="26" font-weight="700" fill="#2C2825">Link<tspan fill="#E8915A">Log</tspan></text>
+<text x="100" y="74" font-family="'Noto Sans SC','PingFang SC',Inter,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#9E9893">连接日志 · 关系复利</text>
+</svg>

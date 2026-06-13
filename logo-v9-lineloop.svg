@@ -1,0 +1,15 @@
+<svg viewBox="0 0 280 120" width="280" height="120" xmlns="http://www.w3.org/2000/svg">
+<title>LinkLog Logo — V9 LineLoop (favicon极简)</title>
+<desc>单一连续线条勾勒 L+L 形状，极简可做 favicon</desc>
+
+<path d="M12,92 L12,34 C12,28 20,24 28,28 C36,32 40,44 40,56 L40,92" fill="none" stroke="#E8915A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M40,92 L40,62 C40,54 52,48 64,52 C74,56 80,68 80,80 L80,92" fill="none" stroke="#7C6AE8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+<circle cx="24" cy="28" r="5" fill="#E8915A" opacity=".2"/>
+<circle cx="64" cy="52" r="4" fill="#7C6AE8" opacity=".15"/>
+<circle cx="40" cy="56" r="5" fill="#2C2825"/>
+<circle cx="40" cy="56" r="2.5" fill="#F8F6F3"/>
+
+<text x="104" y="56" font-family="Inter,-apple-system,'Noto Sans SC','PingFang SC',sans-serif" font-size="28" font-weight="700" fill="#2C2825">Link<tspan fill="#E8915A">Log</tspan></text>
+<text x="104" y="76" font-family="'Noto Sans SC','PingFang SC',Inter,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#9E9893">连接日志 · 关系复利</text>
+</svg>

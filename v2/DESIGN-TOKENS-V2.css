@@ -1,0 +1,327 @@
+/* ============================================
+   LinkLog V2 — 补充设计令牌
+   场景：深度档案 / 宽表格 / Dashboard
+   由彩格调（design-system-expert）产出
+   ============================================ */
+
+/* -------------------------------------------
+   1. PC 端容器与布局
+   ------------------------------------------- */
+:root {
+  /* 容器宽度 */
+  --ll-container-sm: 640px;
+  --ll-container-md: 768px;
+  --ll-container-lg: 1024px;
+  --ll-container-xl: 1280px;
+  --ll-container-2xl: 1440px;
+  --ll-container-full: 100%;
+
+  /* 内容区安全边距（PC端） */
+  --ll-page-margin-sm: 24px;
+  --ll-page-margin-md: 32px;
+  --ll-page-margin-lg: 48px;
+  --ll-page-margin-xl: 64px;
+
+  /* Dashboard 网格 */
+  --ll-grid-cols-dashboard: 12;
+  --ll-grid-gap: 16px;
+  --ll-grid-gap-lg: 24px;
+
+  /* Dashboard 卡片跨列 */
+  --ll-grid-span-3: span 3;
+  --ll-grid-span-4: span 4;
+  --ll-grid-span-6: span 6;
+  --ll-grid-span-8: span 8;
+  --ll-grid-span-12: span 12;
+
+  /* 侧边栏 */
+  --ll-sidebar-width: 280px;
+  --ll-sidebar-collapsed-width: 64px;
+}
+
+/* -------------------------------------------
+   2. 深度档案 — 四条线强调色
+   ------------------------------------------- */
+:root {
+  /* 身世线 — 暖棕大地色系 */
+  --ll-line-origin: #B8834A;
+  --ll-line-origin-light: #F5EDE3;
+  --ll-line-origin-subtle: rgba(184, 131, 74, 0.12);
+
+  /* 价值线 — 琥珀金系（与主强调色同族，更深沉） */
+  --ll-line-value: #C47A2E;
+  --ll-line-value-light: #FBF0E2;
+  --ll-line-value-subtle: rgba(196, 122, 46, 0.12);
+
+  /* 连接线 — 翠绿系（关系/连接的生命力） */
+  --ll-line-connection: #4A9B7F;
+  --ll-line-connection-light: #E8F5EF;
+  --ll-line-connection-subtle: rgba(74, 155, 127, 0.12);
+
+  /* 行动线 — 深红系（行动的紧迫与热忱） */
+  --ll-line-action: #C45B5B;
+  --ll-line-action-light: #FBEBEB;
+  --ll-line-action-subtle: rgba(196, 91, 91, 0.12);
+
+  /* 四线统一 — 左侧指示条宽度 */
+  --ll-line-indicator-width: 3px;
+  --ll-line-indicator-width-active: 4px;
+}
+
+/* -------------------------------------------
+   3. 渐进式披露（折叠/展开）
+   ------------------------------------------- */
+:root {
+  /* 折叠区域触发器 */
+  --ll-disclosure-trigger-height: 44px;
+  --ll-disclosure-trigger-padding-x: 12px;
+  --ll-disclosure-trigger-radius: 6px;
+  --ll-disclosure-trigger-bg: transparent;
+  --ll-disclosure-trigger-bg-hover: rgba(0, 0, 0, 0.03);
+  --ll-disclosure-trigger-bg-active: rgba(0, 0, 0, 0.05);
+
+  /* 折叠图标 */
+  --ll-disclosure-icon-size: 16px;
+  --ll-disclosure-icon-color: #9B9B9B;
+  --ll-disclosure-icon-rotate-collapsed: 0deg;
+  --ll-disclosure-icon-rotate-expanded: 180deg;
+
+  /* 折叠内容 */
+  --ll-disclosure-content-padding-top: 8px;
+
+  /* 折叠分隔线 */
+  --ll-disclosure-divider-color: #E8E5E1;
+  --ll-disclosure-divider-style: dashed;
+
+  /* 折叠层级（多层嵌套） */
+  --ll-disclosure-nest-1-padding-left: 12px;
+  --ll-disclosure-nest-2-padding-left: 24px;
+  --ll-disclosure-nest-3-padding-left: 36px;
+
+  /* AI 生成内容标记 */
+  --ll-ai-badge-size: 18px;
+  --ll-ai-badge-radius: 6px;
+  --ll-ai-content-bg: rgba(124, 106, 232, 0.06);
+  --ll-ai-content-border: 1px solid rgba(124, 106, 232, 0.15);
+  --ll-ai-content-radius: 10px;
+}
+
+/* -------------------------------------------
+   4. 表格系统（PC端宽表格）
+   ------------------------------------------- */
+:root {
+  /* 表格容器 */
+  --ll-table-container-radius: 14px;
+  --ll-table-container-border: 1px solid #E8E5E1;
+  --ll-table-container-bg: #FFFFFF;
+
+  /* 表头 */
+  --ll-table-header-bg: #F2EFEB;
+  --ll-table-header-height: 44px;
+  --ll-table-header-padding-x: 12px;
+  --ll-table-header-font-size: 12px;
+  --ll-table-header-font-weight: 600;
+  --ll-table-header-text-color: #6B6B6B;
+  --ll-table-header-text-transform: uppercase;
+  --ll-table-header-letter-spacing: 0.04em;
+
+  /* 表格行 */
+  --ll-table-row-height: 52px;
+  --ll-table-row-height-compact: 40px;
+  --ll-table-row-padding-x: 12px;
+  --ll-table-row-border-bottom: 1px solid #F0EDE8;
+  --ll-table-row-bg-hover: rgba(232, 145, 90, 0.04);
+  --ll-table-row-bg-selected: rgba(124, 106, 232, 0.06);
+  --ll-table-row-bg-stripe: rgba(0, 0, 0, 0.015);
+
+  /* 单元格 */
+  --ll-table-cell-padding-x: 12px;
+  --ll-table-cell-font-size: 13px;
+  --ll-table-cell-line-height: 1.5;
+
+  /* 列宽 */
+  --ll-table-col-min: 80px;
+  --ll-table-col-name: 200px;
+  --ll-table-col-tag: 140px;
+  --ll-table-col-score: 72px;
+  --ll-table-col-date: 120px;
+  --ll-table-col-action: 100px;
+
+  /* Sticky 列 */
+  --ll-table-sticky-z-index: 10;
+  --ll-table-sticky-shadow: -4px 0 12px rgba(0, 0, 0, 0.06);
+  --ll-table-sticky-bg: #FFFFFF;
+
+  /* 横向滚动容器 */
+  --ll-table-scroll-height: calc(100vh - 200px);
+  --ll-table-scroll-indicator-color: #E8E5E1;
+  --ll-table-scroll-indicator-width: 6px;
+  --ll-table-scroll-indicator-radius: 3px;
+
+  /* 表格内标签 */
+  --ll-table-tag-height: 22px;
+  --ll-table-tag-padding-x: 8px;
+  --ll-table-tag-font-size: 11px;
+  --ll-table-tag-radius: 9999px;
+
+  /* 表格筛选栏 */
+  --ll-table-filter-bar-height: 48px;
+  --ll-table-filter-bar-bg: #FFFFFF;
+  --ll-table-filter-bar-border: 1px solid #F0EDE8;
+  --ll-table-filter-bar-padding-x: 16px;
+  --ll-table-filter-gap: 8px;
+
+  /* 空状态 */
+  --ll-table-empty-height: 200px;
+  --ll-table-empty-text-color: #9B9B9B;
+  --ll-table-empty-font-size: 14px;
+}
+
+/* -------------------------------------------
+   5. Dashboard 统计卡片
+   ------------------------------------------- */
+:root {
+  /* 统计卡片容器 */
+  --ll-stat-card-padding: 20px;
+  --ll-stat-card-radius: 14px;
+  --ll-stat-card-bg: #FFFFFF;
+  --ll-stat-card-border: 1px solid #F0EDE8;
+  --ll-stat-card-shadow: 0 1px 2px rgba(0,0,0,0.04);
+
+  /* 统计数值 */
+  --ll-stat-value-font-size: 32px;
+  --ll-stat-value-font-weight: 700;
+  --ll-stat-value-line-height: 1.2;
+  --ll-stat-value-color: #1A1A1A;
+  --ll-stat-value-font-family: 'Inter', -apple-system, 'PingFang SC', sans-serif;
+
+  /* 统计标签 */
+  --ll-stat-label-font-size: 12px;
+  --ll-stat-label-font-weight: 500;
+  --ll-stat-label-color: #6B6B6B;
+  --ll-stat-label-margin-bottom: 4px;
+
+  /* 统计变化值 */
+  --ll-stat-delta-font-size: 12px;
+  --ll-stat-delta-font-weight: 600;
+  --ll-stat-delta-positive: #4A9B7F;
+  --ll-stat-delta-negative: #C45B5B;
+  --ll-stat-delta-neutral: #9B9B9B;
+
+  /* 统计图标 */
+  --ll-stat-icon-size: 36px;
+  --ll-stat-icon-radius: 10px;
+  --ll-stat-icon-bg: #F2EFEB;
+
+  /* 统计卡片变体：迷你 */
+  --ll-stat-mini-padding: 12px 16px;
+  --ll-stat-mini-value-font-size: 20px;
+  --ll-stat-mini-label-font-size: 11px;
+}
+
+/* -------------------------------------------
+   6. Dashboard 可视化色彩
+   ------------------------------------------- */
+:root {
+  /* 标签分布色板（与标签类别色互补，用于图表） */
+  --ll-chart-categorical-1: #E8915A;  /* 琥珀橘 — 主品牌色 */
+  --ll-chart-categorical-2: #7C6AE8;  /* 冷蓝紫 — AI 色 */
+  --ll-chart-categorical-3: #4A9B7F;  /* 翠绿 — 连接线 */
+  --ll-chart-categorical-4: #C45B5B;  /* 深红 — 行动线 */
+  --ll-chart-categorical-5: #B8834A;  /* 暖棕 — 身世线 */
+  --ll-chart-categorical-6: #6B8FBF;  /* 钢蓝 — 补充中性 */
+  --ll-chart-categorical-7: #D4A0C0;  /* 玫瑰灰 — 补充柔色 */
+  --ll-chart-categorical-8: #8B9E6B;  /* 苔绿 — 补充自然 */
+
+  /* 关系洞察色 */
+  --ll-insight-strong: #E8915A;
+  --ll-insight-moderate: #C47A2E;
+  --ll-insight-weak: #D4C4A8;
+
+  /* 图表通用 */
+  --ll-chart-grid-color: #F0EDE8;
+  --ll-chart-axis-color: #9B9B9B;
+  --ll-chart-tooltip-bg: #1A1A1A;
+  --ll-chart-tooltip-text: #FFFFFF;
+  --ll-chart-tooltip-radius: 6px;
+  --ll-chart-tooltip-padding: 8px 12px;
+  --ll-chart-tooltip-font-size: 12px;
+  --ll-chart-tooltip-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* -------------------------------------------
+   7. 关系洞察卡片组
+   ------------------------------------------- */
+:root {
+  --ll-insight-card-padding: 16px;
+  --ll-insight-card-radius: 14px;
+  --ll-insight-card-bg: #FFFFFF;
+  --ll-insight-card-border: 1px solid #F0EDE8;
+  --ll-insight-card-gap: 12px;
+
+  /* 洞察标签 */
+  --ll-insight-tag-height: 24px;
+  --ll-insight-tag-padding-x: 10px;
+  --ll-insight-tag-font-size: 12px;
+  --ll-insight-tag-radius: 9999px;
+
+  /* 关系强度条 */
+  --ll-insight-strength-height: 4px;
+  --ll-insight-strength-radius: 2px;
+  --ll-insight-strength-bg: #F2EFEB;
+}
+
+/* -------------------------------------------
+   8. 补充动效
+   ------------------------------------------- */
+:root {
+  /* 折叠/展开 */
+  --ll-motion-disclosure-duration: 250ms;
+  --ll-motion-disclosure-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ll-motion-disclosure-delay: 0ms;
+
+  /* 表格行悬浮 */
+  --ll-motion-row-hover-duration: 120ms;
+  --ll-motion-row-hover-easing: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Dashboard 卡片进入 */
+  --ll-motion-card-enter-duration: 300ms;
+  --ll-motion-card-enter-easing: cubic-bezier(0, 0, 0.2, 1);
+  --ll-motion-card-enter-stagger: 60ms;
+
+  /* 统计数值变化 */
+  --ll-motion-stat-change-duration: 400ms;
+  --ll-motion-stat-change-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* 横向滚动指示器 */
+  --ll-motion-scroll-indicator-duration: 200ms;
+  --ll-motion-scroll-indicator-easing: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* -------------------------------------------
+   9. 补充响应式断点
+   ------------------------------------------- */
+:root {
+  --ll-breakpoint-sm: 640px;
+  --ll-breakpoint-md: 768px;
+  --ll-breakpoint-lg: 1024px;
+  --ll-breakpoint-xl: 1280px;
+  --ll-breakpoint-2xl: 1440px;
+}
+
+/* -------------------------------------------
+   10. PC 端滚动与虚拟列表
+   ------------------------------------------- */
+:root {
+  /* 虚拟列表行高（与表格行高一致） */
+  --ll-virtual-row-height: 52px;
+  --ll-virtual-row-height-compact: 40px;
+  --ll-virtual-overscan: 5;
+
+  /* 滚动条自定义（PC端） */
+  --ll-scrollbar-width: 6px;
+  --ll-scrollbar-track-bg: transparent;
+  --ll-scrollbar-thumb-bg: rgba(0, 0, 0, 0.12);
+  --ll-scrollbar-thumb-bg-hover: rgba(0, 0, 0, 0.2);
+  --ll-scrollbar-thumb-radius: 3px;
+}

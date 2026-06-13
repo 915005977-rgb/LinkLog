@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=393, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>联系人详情 · LinkLog V2</title>
+  <!-- 原型类型: Mobile Detail Page | 设计系统: LinkLog V2 Design Tokens -->
+  <style>
+    /* ============================
+       设计令牌 - LinkLog V2
+       ============================ */
+    :root {
+      --color-bg-primary: #F8F6F3;
+      --color-bg-secondary: #F1EDE8;
+      --color-bg-tertiary: #EAE5DF;
+      --color-bg-elevated: #FFFFFF;
+      --color-border-subtle: #E8E3DD;
+      --color-border-default: #D4CFC8;
+      --color-text-primary: #2C2825;
+      --color-text-secondary: #6B6560;
+      --color-text-tertiary: #9E9893;
+      --color-text-disabled: #C5C0BA;
+      --color-accent-default: #E8915A;
+      --color-accent-hover: #D47E48;
+      --color-accent-active: #C06E3A;
+      --color-accent-light: #FDF0E6;
+      --color-accent-lighter: #FEF7F0;
+      --color-accent-text: #C06E3A;
+      --color-ai-default: #7C6AE8;
+      --color-ai-hover: #6B59D6;
+      --color-ai-light: #F0EDFC;
+      --color-ai-lighter: #F8F6FE;
+      --color-ai-text: #5B4AC5;
+      --color-ai-glow: rgba(124,106,232,0.15);
+      --color-success-default: #4CAF7D;
+      --color-success-light: #E8F5EE;
+      --color-warning-default: #E5A84B;
+      --color-warning-light: #FDF5E6;
+      --color-error-default: #D95555;
+      --color-error-light: #FDEAEA;
+      --color-info-default: #5B8ED0;
+      --color-info-light: #E8F0FA;
+      --color-tag-relational: #E8915A;
+      --color-tag-contextual: #7C6AE8;
+      --color-tag-custom: #5B8ED0;
+      --color-tag-bg-base: #F1EDE8;
+      --color-line-origin: #7C9A8E;
+      --color-line-origin-light: #EDF3F0;
+      --color-line-value: #D4915A;
+      --color-line-value-light: #FDF0E6;
+      --color-line-connection: #5B8ED0;
+      --color-line-connection-light: #E8F0FA;
+      --color-line-action: #7C6AE8;
+      --color-line-action-light: #F0EDFC;
+      --container-pc: 1320px;
+      --font-sans: "Inter", "SF Pro Display", -apple-system, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-mono: "JetBrains Mono", "SF Mono", "Menlo", monospace;
+      --text-display: 28px;
+      --text-h1: 22px;
+      --text-h2: 18px;
+      --text-h3: 16px;
+      --text-body: 15px;
+      --text-body-sm: 13px;
+      --text-caption: 12px;
+      --text-micro: 11px;
+      --weight-regular: 400;
+      --weight-medium: 500;
+      --weight-semibold: 600;
+      --weight-bold: 700;
+      --space-1: 4px; --space-2: 8px; --space-3: 12px;
+      --space-4: 16px; --space-5: 20px; --space-6: 24px;
+      --space-8: 32px; --space-10: 40px; --space-12: 48px;
+      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 14px;
+      --radius-xl: 20px; --radius-full: 9999px;
+      --shadow-xs: 0 1px 2px rgba(44,40,37,0.04);
+      --shadow-sm: 0 2px 8px rgba(44,40,37,0.06);
+      --shadow-md: 0 4px 16px rgba(44,40,37,0.08);
+      --shadow-lg: 0 8px 32px rgba(44,40,37,0.10);
+      --shadow-focus: 0 0 0 3px rgba(232,145,90,0.3);
+      --shadow-focus-ai: 0 0 0 3px rgba(124,106,232,0.3);
+      --duration-instant: 100ms;
+      --duration-fast: 200ms;
+      --duration-normal: 300ms;
+      --duration-slow: 400ms;
+      --duration-spring: 500ms;
+      --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+
+      /* 补充语义色（审查修正） */
+      --color-text-on-accent: #FFFFFF;
+      --color-bg-frosted: rgba(248,246,243,0.92);
+      --color-bg-glass: rgba(255,255,255,0.6);
+      --color-bg-card-glass: rgba(255,255,255,0.7);
+      --color-bg-cell-sticky: rgba(255,255,255,0.95);
+      --color-ai-border-subtle: rgba(124,106,232,0.2);
+      --color-ai-bg-item: rgba(255,255,255,0.8);
+      --color-ai-bg-item-border: rgba(124,106,232,0.15);
+      --color-ai-bg-subtle: rgba(124,106,232,0.10);
+      --color-ai-bg-faint: rgba(124,106,232,0.08);
+    }
+
+    /* ============================
+       基础重置
+       ============================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: var(--text-body);
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      padding-bottom: 80px; /* 底部操作栏空间 */
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+      border-radius: var(--radius-sm);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ============================
+       全局导航（PC 预览时显示）
+       ============================ */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-frosted);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .nav-brand {
+      font-size: var(--text-h2);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      text-decoration: none;
+      flex-shrink: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-brand .accent {
+      color: var(--color-accent-default);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-1);
+      flex: 1;
+    }
+
+    .nav-link {
+      font-size: var(--text-body-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      transition: color var(--duration-fast) var(--ease-out),
+                  background var(--duration-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--color-text-primary);
+      background: var(--color-bg-tertiary);
+    }
+
+    .nav-link.active {
+      color: var(--color-accent-text);
+      background: var(--color-accent-light);
+    }
+
+    .nav-github {
+      color: var(--color-text-tertiary);
+      transition: color var(--duration-fast) var(--ease-out);
+      flex-shrink: 0;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+    }
+
+    .nav-github:hover {
+      color: var(--color-text-primary);
+    }
+
+    /* ============================
+       顶部导航栏
+       ============================ */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-bg-frosted);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .nav-btn {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      color: var(--color-text-secondary);
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+
+    .nav-btn:active {
+      background: var(--color-bg-tertiary);
+    }
+
+    .nav-title {
+      font-size: var(--text-h3);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    /* ============================
+       页面主体
+       ============================ */
+    .page-body {
+      padding: var(--space-4);
+    }
+
+    /* ============================
+       人物身份卡
+       ============================ */
+    .identity-card {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-4);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .identity-top {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-h1);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-on-accent);
+      flex-shrink: 0;
+      background: var(--color-accent-default);
+    }
+
+    .identity-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .identity-name {
+      font-size: var(--text-h1);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-primary);
+      line-height: 1.3;
+      margin-bottom: var(--space-1);
+    }
+
+    .identity-role {
+      font-size: var(--text-body-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    /* 标签组 */
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-medium);
+    }
+
+    .tag-relational {
+      background: rgba(232,145,90,0.12);
+      color: var(--color-tag-relational);
+    }
+
+    .tag-contextual {
+      background: var(--color-ai-bg-subtle);
+      color: var(--color-tag-contextual);
+    }
+
+    .tag-custom {
+      background: rgba(91,142,208,0.10);
+      color: var(--color-tag-custom);
+    }
+
+    /* 关系强度指示条 */
+    .strength-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .strength-label {
+      font-size: var(--text-caption);
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+    }
+
+    .strength-track {
+      flex: 1;
+      display: flex;
+      gap: var(--space-1);
+      height: 6px;
+    }
+
+    .strength-segment {
+      flex: 1;
+      border-radius: 3px;
+      background: var(--color-bg-tertiary);
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+
+    .strength-segment.filled {
+      background: var(--color-accent-default);
+    }
+
+    .strength-value {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-semibold);
+      color: var(--color-accent-text);
+      flex-shrink: 0;
+    }
+
+    /* ============================
+       档案线区块（通用）
+       ============================ */
+    .line-section {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+      overflow: hidden;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .line-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 52px;
+    }
+
+    .line-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .line-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .line-dot.origin { background: var(--color-line-origin); }
+    .line-dot.value { background: var(--color-line-value); }
+    .line-dot.connection { background: var(--color-line-connection); }
+
+    .line-title {
+      font-size: var(--text-h3);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+    }
+
+    .line-chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--color-text-tertiary);
+      transition: transform var(--duration-normal) var(--ease-out);
+      flex-shrink: 0;
+    }
+
+    .line-section.open .line-chevron {
+      transform: rotate(180deg);
+    }
+
+    .line-body {
+      padding: 0 var(--space-5) var(--space-5);
+      display: none;
+    }
+
+    .line-section.open .line-body {
+      display: block;
+    }
+
+    /* 档案线区块色条 */
+    .line-section.section-origin { border-left: 4px solid var(--color-line-origin); }
+    .line-section.section-value { border-left: 4px solid var(--color-line-value); }
+    .line-section.section-connection { border-left: 4px solid var(--color-line-connection); }
+
+    /* 区块内字段 */
+    .field-item {
+      margin-bottom: var(--space-4);
+    }
+
+    .field-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-1);
+    }
+
+    .section-origin .field-label { color: var(--color-line-origin); }
+    .section-value .field-label { color: var(--color-line-value); }
+    .section-connection .field-label { color: var(--color-line-connection); }
+
+    .field-content {
+      font-size: var(--text-body-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* AI辅助内容 */
+    .ai-field {
+      border: 1px dashed var(--color-ai-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-ai-lighter);
+      margin-bottom: var(--space-4);
+    }
+
+    .ai-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .ai-field .field-label {
+      color: var(--color-ai-text);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .ai-field .field-label::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: var(--color-ai-default);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/10px no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/10px no-repeat;
+    }
+
+    /* 商业化进度条 */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-1);
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 6px;
+      background: var(--color-bg-tertiary);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--color-line-value);
+      transition: width var(--duration-slow) var(--ease-decelerate);
+    }
+
+    .progress-label {
+      font-size: var(--text-caption);
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+    }
+
+    /* ============================
+       核心四问卡片
+       ============================ */
+    .questions-section {
+      margin-bottom: var(--space-3);
+    }
+
+    .questions-title {
+      font-size: var(--text-h3);
+      font-weight: var(--weight-semibold);
+      color: var(--color-text-primary);
+      padding: var(--space-3) 0;
+      margin-bottom: var(--space-2);
+    }
+
+    .q-card {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+      overflow: hidden;
+    }
+
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      min-height: 48px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .q-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .q-number {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-micro);
+      font-weight: var(--weight-bold);
+      color: var(--color-text-on-accent);
+      flex-shrink: 0;
+    }
+
+    .q-card:nth-child(1) .q-number { background: var(--color-accent-default); }
+    .q-card:nth-child(2) .q-number { background: var(--color-line-origin); }
+    .q-card:nth-child(3) .q-number { background: var(--color-line-value); }
+    .q-card:nth-child(4) .q-number { background: var(--color-line-connection); }
+
+    .q-label {
+      font-size: var(--text-body-sm);
+      font-weight: var(--weight-medium);
+      color: var(--color-text-primary);
+    }
+
+    .q-chevron {
+      width: 16px;
+      height: 16px;
+      color: var(--color-text-tertiary);
+      transition: transform var(--duration-normal) var(--ease-out);
+      flex-shrink: 0;
+    }
+
+    .q-card.open .q-chevron {
+      transform: rotate(180deg);
+    }
+
+    .q-body {
+      display: none;
+      padding: 0 var(--space-4) var(--space-4);
+    }
+
+    .q-card.open .q-body {
+      display: block;
+    }
+
+    .q-answer {
+      font-size: var(--text-body-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    /* ============================
+       AI 行动区
+       ============================ */
+    .ai-action-zone {
+      background: linear-gradient(135deg, var(--color-ai-lighter) 0%, var(--color-ai-light) 100%);
+      border: 1px solid var(--color-ai-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin-bottom: var(--space-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-action-zone::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      background: var(--color-ai-glow);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .ai-zone-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--text-h3);
+      font-weight: var(--weight-semibold);
+      color: var(--color-ai-text);
+      margin-bottom: var(--space-4);
+      position: relative;
+    }
+
+    .ai-zone-title svg {
+      flex-shrink: 0;
+    }
+
+    .ai-action-item {
+      background: var(--color-ai-bg-item);
+      border: 1px solid var(--color-ai-bg-item-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+      position: relative;
+    }
+
+    .ai-action-item:last-of-type {
+      margin-bottom: var(--space-4);
+    }
+
+    .ai-action-label {
+      font-size: var(--text-caption);
+      font-weight: var(--weight-semibold);
+      color: var(--color-ai-text);
+      margin-bottom: var(--space-2);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    .ai-action-text {
+      font-size: var(--text-body-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      padding-right: var(--space-8);
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      color: var(--color-ai-text);
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+
+    .copy-btn:active {
+      background: var(--color-ai-bg-subtle);
+      color: var(--color-success-default);
+    }
+
+    .regenerate-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: var(--space-3);
+      border: 1px dashed var(--color-ai-default);
+      border-radius: var(--radius-md);
+      color: var(--color-ai-text);
+      font-size: var(--text-body-sm);
+      font-weight: var(--weight-medium);
+      background: transparent;
+      transition: background var(--duration-fast) var(--ease-out);
+      position: relative;
+    }
+
+    .regenerate-btn:active {
+      background: var(--color-ai-bg-faint);
+    }
+
+    .regenerate-btn.regenerating {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* ============================
+       底部操作栏
+       ============================ */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: flex;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      padding-bottom: max(var(--space-3), env(safe-area-inset-bottom));
+      background: var(--color-bg-frosted);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .bottom-btn {
+      flex: 1;
+      min-height: 48px;
+      border-radius: var(--radius-md);
+      font-size: var(--text-body);
+      font-weight: var(--weight-semibold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--duration-fast) var(--ease-out);
+    }
+
+    .bottom-btn.btn-edit {
+      background: var(--color-accent-default);
+      color: var(--color-text-on-accent);
+    }
+
+    .bottom-btn.btn-edit:active {
+      background: var(--color-accent-active);
+    }
+
+    .bottom-btn.btn-delete {
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-border-default);
+      color: var(--color-error-default);
+    }
+
+    .bottom-btn.btn-delete:active {
+      background: var(--color-error-light);
+    }
+
+    /* ============================
+       Toast 提示
+       ============================ */
+    .toast {
+      position: fixed;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--color-text-primary);
+      color: var(--color-text-on-accent);
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      font-size: var(--text-body-sm);
+      font-weight: var(--weight-medium);
+      opacity: 0;
+      pointer-events: none;
+      transition: all var(--duration-normal) var(--ease-out);
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== 全局导航（PC 预览时显示） ====== -->
+  <nav class="site-nav" aria-label="LinkLog 导航">
+    <a href="../pc.html" class="nav-brand">Link<span class="accent">Log</span></a>
+    <div class="nav-links">
+      <a href="../pc.html" class="nav-link">首页</a>
+      <a href="people-table.html" class="nav-link">人物资料表</a>
+      <a href="field-insights-v2.html" class="nav-link">场域洞察</a>
+      <a href="detail-v2.html" class="nav-link active">联系人详情</a>
+    </div>
+    <a href="https://github.com/915005977-rgb/LinkLog" class="nav-github" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+    </a>
+  </nav>
+
+  <!-- ====== 顶部导航栏 ====== -->
+  <nav class="top-nav">
+    <button class="nav-btn" aria-label="返回">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <span class="nav-title">联系人详情</span>
+    <button class="nav-btn" aria-label="编辑">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M13.5 3.5L16.5 6.5L6.5 16.5H3.5V13.5L13.5 3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- ====== 页面主体 ====== -->
+  <main class="page-body">
+
+    <!-- ====== 人物身份卡 ====== -->
+    <section class="identity-card">
+      <div class="identity-top">
+        <div class="avatar" style="background:#E8915A">赵</div>
+        <div class="identity-info">
+          <h1 class="identity-name">赵姐</h1>
+          <p class="identity-role">社区平台创始人 / 场域主理人</p>
+        </div>
+      </div>
+      <div class="tag-group">
+        <span class="tag tag-relational">一人公司</span>
+        <span class="tag tag-contextual">社区运营</span>
+        <span class="tag tag-contextual">小红书</span>
+        <span class="tag tag-custom">AI知识库</span>
+        <span class="tag tag-custom">数字员工</span>
+      </div>
+      <div class="strength-bar">
+        <span class="strength-label">关系强度</span>
+        <div class="strength-track">
+          <div class="strength-segment filled"></div>
+          <div class="strength-segment filled"></div>
+          <div class="strength-segment filled"></div>
+          <div class="strength-segment"></div>
+          <div class="strength-segment"></div>
+        </div>
+        <span class="strength-value">熟悉</span>
+      </div>
+    </section>
+
+    <!-- ====== 身世线区块（默认展开） ====== -->
+    <section class="line-section section-origin open" data-section="origin">
+      <div class="line-header" role="button" aria-expanded="true" tabindex="0">
+        <div class="line-header-left">
+          <span class="line-dot origin"></span>
+          <h2 class="line-title">身世线</h2>
+        </div>
+        <svg class="line-chevron" viewBox="0 0 20 20" fill="none">
+          <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="line-body">
+        <div class="field-item">
+          <div class="field-label">背景</div>
+          <div class="field-content">互联网行业多年经验，做过运营、品牌和社区产品；擅长连接人、构建场域、组织高质量线下活动</div>
+        </div>
+        <div class="field-item">
+          <div class="field-label">过去做过什么</div>
+          <div class="field-content">过去两年创立社区平台，持续组织线下人脉链接活动；出版行业书籍，沉淀社区案例和洞察</div>
+        </div>
+        <div class="field-item">
+          <div class="field-label">现在在做什么</div>
+          <div class="field-content">运营社区平台，已有 200+ 期活动、5000+ 成员；做主题沙龙、案例拆解系列，正在搭建线上平台</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 价值线区块（默认展开） ====== -->
+    <section class="line-section section-value" data-section="value">
+      <div class="line-header" role="button" aria-expanded="true" tabindex="0">
+        <div class="line-header-left">
+          <span class="line-dot value"></span>
+          <h2 class="line-title">价值线</h2>
+        </div>
+        <svg class="line-chevron" viewBox="0 0 20 20" fill="none">
+          <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="line-body">
+        <div class="field-item">
+          <div class="field-label">产品/服务</div>
+          <div class="field-content">主题沙龙、案例拆解系列、行业书籍、社区活动、知识库、数字员工</div>
+        </div>
+        <div class="field-item">
+          <div class="field-label">商业化进度</div>
+          <div class="field-content">已跑通活动、内容、社群、书籍、小红书自然流获客、复购和转介绍，商业化验证较强</div>
+          <div class="progress-bar">
+            <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div>
+            <span class="progress-label">1-10</span>
+          </div>
+        </div>
+        <div class="field-item">
+          <div class="field-label">优势/可分享</div>
+          <div class="field-content">场域构建、人群洞察、案例筛选、产品生长、自然流获客、社区生态搭建</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 连接线区块（默认折叠） ====== -->
+    <section class="line-section section-connection" data-section="connection">
+      <div class="line-header" role="button" aria-expanded="false" tabindex="0">
+        <div class="line-header-left">
+          <span class="line-dot connection"></span>
+          <h2 class="line-title">连接线</h2>
+        </div>
+        <svg class="line-chevron" viewBox="0 0 20 20" fill="none">
+          <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="line-body">
+        <div class="field-item">
+          <div class="field-label">当前卡点</div>
+          <div class="field-content">0-1 跑完后怎么规模化；精力分配和团队化</div>
+        </div>
+        <div class="field-item">
+          <div class="field-label">想链接资源</div>
+          <div class="field-content">有真实业务路径、可拆解案例、认同一人公司理念的人</div>
+        </div>
+        <div class="field-item">
+          <div class="field-label">与你的关联</div>
+          <div class="field-content">高价值场域节点，你需要让她记住你是能把业务流和 AI 工作流沉淀成系统的人</div>
+        </div>
+        <!-- AI 辅助生成 -->
+        <div class="ai-field">
+          <div class="field-label">你能提供什么</div>
+          <div class="field-content">AI 工作流、Skill、知识库沉淀、小红书/教育业务视角</div>
+        </div>
+        <div class="ai-field">
+          <div class="field-label">你能学什么</div>
+          <div class="field-content">场域构建方法论、社区运营节奏、样本筛选逻辑</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 核心四问 ====== -->
+    <section class="questions-section">
+      <h2 class="questions-title">核心四问</h2>
+
+      <!-- Q1 默认展开 -->
+      <div class="q-card open">
+        <div class="q-header" role="button" aria-expanded="true" tabindex="0">
+          <div class="q-header-left">
+            <span class="q-number">Q1</span>
+            <span class="q-label">最欣赏的特质？</span>
+          </div>
+          <svg class="q-chevron" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="q-body">
+          <div class="q-answer">把真实案例变成场域的能力——不只是组织活动，而是让每个参与者都觉得"这里的人值得深聊"</div>
+        </div>
+      </div>
+
+      <!-- Q2 默认展开 -->
+      <div class="q-card open">
+        <div class="q-header" role="button" aria-expanded="true" tabindex="0">
+          <div class="q-header-left">
+            <span class="q-number">Q2</span>
+            <span class="q-label">最近在忙什么？</span>
+          </div>
+          <svg class="q-chevron" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="q-body">
+          <div class="q-answer">运营社区平台，已有 200+ 期活动、5000+ 成员；做主题沙龙、案例拆解系列，正在搭建线上平台</div>
+        </div>
+      </div>
+
+      <!-- Q3 默认折叠 -->
+      <div class="q-card">
+        <div class="q-header" role="button" aria-expanded="false" tabindex="0">
+          <div class="q-header-left">
+            <span class="q-number">Q3</span>
+            <span class="q-label">你能帮TA什么？</span>
+          </div>
+          <svg class="q-chevron" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="q-body">
+          <div class="q-answer">AI 工作流沉淀、Skill 设计、知识库结构化——帮她把 200+ 期活动的案例沉淀变成可复用的系统</div>
+        </div>
+      </div>
+
+      <!-- Q4 默认折叠 -->
+      <div class="q-card">
+        <div class="q-header" role="button" aria-expanded="false" tabindex="0">
+          <div class="q-header-left">
+            <span class="q-number">Q4</span>
+            <span class="q-label">TA能帮你什么？</span>
+          </div>
+          <svg class="q-chevron" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="q-body">
+          <div class="q-answer">场域构建方法论——她是人脉链接活动的核心节点，可以帮你理解什么样的场域能让 AI Builder 和超级个体产生真实连接</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== AI 行动区 ====== -->
+    <section class="ai-action-zone">
+      <div class="ai-zone-title">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M9 1v3M9 14v3M1 9h3M14 9h3M3.4 3.4l2.1 2.1M12.5 12.5l2.1 2.1M3.4 14.6l2.1-2.1M12.5 5.5l2.1-2.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        AI 行动建议
+      </div>
+
+      <div class="ai-action-item">
+        <div class="ai-action-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M7 1L8.8 4.6L13 5.2L10 8.1L10.6 12.3L7 10.4L3.4 12.3L4 8.1L1 5.2L5.2 4.6L7 1Z" fill="currentColor" opacity="0.6"/>
+          </svg>
+          现场话题（破冰话术）
+        </div>
+        <div class="ai-action-text">赵姐，我觉得你们最厉害的是把真实案例变成场域。我现在也在做 AI 工作流和 Skill 沉淀，想请教你：什么样的内容最值得被结构化？</div>
+        <button class="copy-btn" data-copy="赵姐，我觉得你们最厉害的是把真实案例变成场域。我现在也在做 AI 工作流和 Skill 沉淀，想请教你：什么样的内容最值得被结构化？" aria-label="复制话题">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="ai-action-item">
+        <div class="ai-action-label">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h4l1.5-4 2 8 1.5-4h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          会后动作（跟进步骤）
+        </div>
+        <div class="ai-action-text">会后发一段你的 AI Builder 定位 + 可共创的案例拆解方向</div>
+        <button class="copy-btn" data-copy="会后发一段你的 AI Builder 定位 + 可共创的案例拆解方向" aria-label="复制动作">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="regenerate-btn" id="regenerateBtn">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1.5 7a5.5 5.5 0 019.3-3.9M12.5 7a5.5 5.5 0 01-9.3 3.9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M10.8 1.2v2.3h-2.3M3.2 12.8v-2.3h2.3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        重新生成
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ====== 底部操作栏 ====== -->
+  <footer class="bottom-bar">
+    <button class="bottom-btn btn-edit">编辑资料</button>
+    <button class="bottom-btn btn-delete">删除联系人</button>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">已复制到剪贴板</div>
+
+  <script>
+    // ============================
+    // 折叠/展开交互
+    // ============================
+    document.querySelectorAll('.line-header, .q-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const section = header.closest('.line-section, .q-card');
+        const isOpen = section.classList.contains('open');
+        section.classList.toggle('open');
+        header.setAttribute('aria-expanded', !isOpen);
+      });
+
+      header.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          header.click();
+        }
+      });
+    });
+
+    // ============================
+    // 复制功能
+    // ============================
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.textContent = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const text = btn.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.classList.add('copied');
+          showToast('已复制到剪贴板');
+          setTimeout(() => btn.classList.remove('copied'), 1500);
+        } catch (e) {
+          showToast('复制失败，请手动复制');
+        }
+      });
+    });
+
+    // ============================
+    // 重新生成（模拟）
+    // ============================
+    document.getElementById('regenerateBtn').addEventListener('click', function() {
+      this.classList.add('regenerating');
+      showToast('正在重新生成…');
+      setTimeout(() => {
+        this.classList.remove('regenerating');
+        showToast('已生成新建议');
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

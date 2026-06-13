@@ -1,0 +1,17 @@
+<svg viewBox="0 0 300 120" width="300" height="120" xmlns="http://www.w3.org/2000/svg">
+<title>LinkLog Logo — V4-A Monogram (清晰版)</title>
+<desc>双L字母图形化，暖橘Link + 紫色Log，L形状清晰可辨</desc>
+
+<rect x="8" y="48" width="20" height="56" rx="6" fill="#E8915A"/>
+<rect x="8" y="94" width="60" height="20" rx="6" fill="#E8915A"/>
+<rect x="56" y="64" width="20" height="50" rx="6" fill="#7C6AE8"/>
+<rect x="56" y="94" width="60" height="20" rx="6" fill="#7C6AE8"/>
+
+<rect x="14" y="54" width="8" height="44" rx="2" fill="#FEF7F0" opacity=".8"/>
+<rect x="62" y="70" width="8" height="38" rx="2" fill="#F8F6FE" opacity=".8"/>
+<rect x="22" y="98" width="32" height="8" rx="2" fill="#FEF7F0" opacity=".5"/>
+<rect x="74" y="98" width="32" height="8" rx="2" fill="#F8F6FE" opacity=".5"/>
+
+<text x="140" y="68" font-family="Inter,-apple-system,'Noto Sans SC','PingFang SC',sans-serif" font-size="32" font-weight="700" fill="#2C2825">Link<tspan fill="#E8915A">Log</tspan></text>
+<text x="140" y="90" font-family="'Noto Sans SC','PingFang SC',Inter,-apple-system,sans-serif" font-size="12" font-weight="400" fill="#9E9893">连接日志 · 关系复利</text>
+</svg>

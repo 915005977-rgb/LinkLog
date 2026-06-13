@@ -1,0 +1,48 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog Logo - Thread Line</title>
+  <desc>V5 Thread Line: A single continuous line forming dual-L monogram, with tick marks representing log entries and an intersection knot for the link moment</desc>
+  
+  <!-- First L shape (Link - warm orange, bold) -->
+  <path d="M20 18
+           L20 82
+           Q20 94 32 94
+           L82 94
+           Q94 94 94 82
+           L94 58"
+        fill="none"
+        stroke="#E8915A"
+        stroke-width="5"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+  
+  <!-- Second L shape (Log - AI purple, thinner, overlapping) -->
+  <path d="M34 28
+           L34 74
+           Q34 82 42 82
+           L74 82
+           Q82 82 82 74
+           L82 50"
+        fill="none"
+        stroke="#7C6AE8"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        opacity="0.75"/>
+  
+  <!-- Knot/tie point where both lines intersect = the key "link" moment -->
+  <circle cx="58" cy="82" r="6" fill="#FFFFFF" stroke="#E8915A" stroke-width="2"/>
+  <circle cx="58" cy="82" r="2.5" fill="#5B8ED0"/>
+  
+  <!-- Tick marks on vertical stem = log entries (first L) -->
+  <line x1="20" y1="32" x2="30" y2="32" stroke="#E8915A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <line x1="20" y1="48" x2="30" y2="48" stroke="#E8915A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <line x1="20" y1="64" x2="30" y2="64" stroke="#E8915A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Tick marks on horizontal bar = log entries (second L) -->
+  <line x1="52" y1="94" x2="52" y2="86" stroke="#7C6AE8" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <line x1="66" y1="94" x2="66" y2="86" stroke="#7C6AE8" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  
+  <!-- End dot with trail suggesting continuity -->
+  <circle cx="94" cy="58" r="4" fill="#5B8ED0"/>
+  <path d="M98 54 L108 48" fill="none" stroke="#5B8ED0" stroke-width="1.5" opacity="0.2" stroke-linecap="round"/>
+</svg>

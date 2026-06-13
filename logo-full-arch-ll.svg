@@ -1,0 +1,32 @@
+<svg viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog Full Logo - Arch-LL</title>
+  <desc>Complete logo with Arch-LL bridge icon and dual-color wordmark</desc>
+  
+  <!-- Icon: Arch-LL -->
+  <g transform="translate(8, 6)">
+    <path d="M10 82 L10 38 Q10 6, 46 6"
+          fill="none" stroke="#E8915A" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M82 82 L82 38 Q82 6, 46 6"
+          fill="none" stroke="#7C6AE8" stroke-width="4.5" stroke-linecap="round" opacity="0.75"/>
+    <path d="M46 6 C40 10, 40 18, 46 16 C52 14, 52 9, 46 6"
+          fill="none" stroke="#5B8ED0" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    <circle cx="10" cy="28" r="1.5" fill="#E8915A" opacity="0.25"/>
+    <circle cx="10" cy="42" r="1.8" fill="#E8915A" opacity="0.4"/>
+    <circle cx="10" cy="58" r="2.2" fill="#E8915A" opacity="0.55"/>
+    <circle cx="10" cy="74" r="2.8" fill="#E8915A" opacity="0.7"/>
+    <circle cx="82" cy="28" r="1.5" fill="#7C6AE8" opacity="0.25"/>
+    <circle cx="82" cy="42" r="1.8" fill="#7C6AE8" opacity="0.4"/>
+    <circle cx="82" cy="58" r="2.2" fill="#7C6AE8" opacity="0.55"/>
+    <circle cx="82" cy="74" r="2.8" fill="#7C6AE8" opacity="0.7"/>
+  </g>
+  
+  <!-- Wordmark -->
+  <text x="105" y="48" font-family="'Inter', 'SF Pro Display', -apple-system, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.3">
+    <tspan fill="#E8915A">Link</tspan><tspan fill="#7C6AE8">Log</tspan>
+  </text>
+  
+  <!-- Tagline -->
+  <text x="106" y="66" font-family="'Inter', 'SF Pro Display', -apple-system, sans-serif" font-size="11" fill="#9E9893" letter-spacing="0.6">
+    连接日志 · 关系复利
+  </text>
+</svg>

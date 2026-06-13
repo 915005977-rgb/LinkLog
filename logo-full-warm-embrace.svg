@@ -1,0 +1,38 @@
+<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog Full Logo - Warm Embrace</title>
+  <desc>LinkLog complete logo with Warm Embrace mark + wordmark in brand colors</desc>
+  
+  <!-- Logo Mark (left side) -->
+  <g transform="translate(8, 10)">
+    <!-- Outer warm glow ring -->
+    <ellipse cx="50" cy="50" rx="42" ry="46" fill="#FDF0E6"/>
+    
+    <!-- Middle warm glow ring -->
+    <ellipse cx="50" cy="50" rx="32" ry="36" fill="#FDE7D6"/>
+    
+    <!-- Inner precision circle -->
+    <circle cx="50" cy="50" r="23" fill="#FFFFFF" stroke="#E8915A" stroke-width="2.2"/>
+    
+    <!-- Center node -->
+    <circle cx="50" cy="50" r="8" fill="#E8915A"/>
+    
+    <!-- Orbiting connection nodes -->
+    <circle cx="72" cy="34" r="4" fill="#7C6AE8"/>
+    <circle cx="30" cy="37" r="3" fill="#5B8ED0"/>
+    <circle cx="58" cy="72" r="2.5" fill="#D47E48"/>
+    
+    <!-- Connecting arcs -->
+    <path d="M57 44 Q64 39 69 36" fill="none" stroke="#7C6AE8" stroke-width="1" opacity="0.4"/>
+    <path d="M44 44 Q38 39 34 37" fill="none" stroke="#5B8ED0" stroke-width="0.9" opacity="0.3"/>
+  </g>
+  
+  <!-- Wordmark (right side) -->
+  <text x="112" y="58" font-family="'Inter', 'SF Pro Display', -apple-system, sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5">
+    <tspan fill="#E8915A">Link</tspan><tspan fill="#7C6AE8">Log</tspan>
+  </text>
+  
+  <!-- Tagline -->
+  <text x="113" y="78" font-family="'Inter', 'SF Pro Display', -apple-system, sans-serif" font-size="11" font-weight="400" fill="#9E9893" letter-spacing="0.5">
+    连接日志 · 关系复利
+  </text>
+</svg>

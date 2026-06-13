@@ -1,0 +1,29 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog - Moebius-Bridge</title>
+  <desc>Dual bridge arches meeting at apex with infinity twist, compound growth nodes along deck</desc>
+  
+  <!-- Left arch rising to center (warm orange = Link) -->
+  <path d="M10 110 Q10 20, 60 20"
+        fill="none" stroke="#E8915A" stroke-width="5.5" stroke-linecap="round"/>
+  
+  <!-- Right arch rising to center (AI purple = Log) -->
+  <path d="M110 110 Q110 20, 60 20"
+        fill="none" stroke="#7C6AE8" stroke-width="5.5" stroke-linecap="round" opacity="0.75"/>
+  
+  <!-- Infinity twist at apex where arches meet -->
+  <path d="M60 20 C48 28, 48 42, 60 38 C72 34, 72 24, 60 20"
+        fill="none" stroke="#5B8ED0" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  
+  <!-- Compound growth nodes along base (exponentially increasing toward center) -->
+  <circle cx="20" cy="110" r="1.8" fill="#E8915A" opacity="0.18"/>
+  <circle cx="34" cy="110" r="2.3" fill="#E8915A" opacity="0.3"/>
+  <circle cx="48" cy="110" r="3.2" fill="#E8915A" opacity="0.48"/>
+  
+  <!-- Center anchor node (largest = peak compound) -->
+  <circle cx="60" cy="110" r="5" fill="#FFFFFF" stroke="#E8915A" stroke-width="2"/>
+  <circle cx="60" cy="110" r="2.2" fill="#5B8ED0"/>
+  
+  <circle cx="72" cy="110" r="3.2" fill="#7C6AE8" opacity="0.48"/>
+  <circle cx="86" cy="110" r="2.3" fill="#7C6AE8" opacity="0.3"/>
+  <circle cx="100" cy="110" r="1.8" fill="#7C6AE8" opacity="0.18"/>
+</svg>

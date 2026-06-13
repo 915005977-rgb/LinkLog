@@ -1,0 +1,39 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog - V-E Loop</title>
+  <desc>Thread Line with upward-curving tails hinting at closed loop / compound interest cycle.</desc>
+  
+  <!-- First L (Link) - warm orange, tail curves upward to suggest loop-back -->
+  <path d="M18 14
+           L18 74
+           Q18 88, 30 88
+           L82 88
+           Q94 88, 94 74
+           L94 52
+           Q94 44, 89 40"
+        fill="none"
+        stroke="#E8915A"
+        stroke-width="5"
+        stroke-linecap="round"/>
+  
+  <!-- Second L (Log) - AI purple, tail also curves upward -->
+  <path d="M30 24
+           L30 68
+           Q30 78, 38 78
+           L72 78
+           Q80 78, 80 68
+           L80 48
+           Q80 42, 76 38"
+        fill="none"
+        stroke="#7C6AE8"
+        stroke-width="3"
+        stroke-linecap="round"
+        opacity="0.65"/>
+  
+  <!-- Intersection knot -->
+  <circle cx="54" cy="83" r="4.5" fill="#FFFFFF" stroke="#E8915A" stroke-width="1.8"/>
+  <circle cx="54" cy="83" r="2" fill="#5B8ED0"/>
+  
+  <!-- Faint dots at tail ends suggesting the loop continues -->
+  <circle cx="89" cy="39" r="2.5" fill="#E8915A" opacity="0.22"/>
+  <circle cx="76" cy="37" r="2" fill="#7C6AE8" opacity="0.18"/>
+</svg>

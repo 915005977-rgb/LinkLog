@@ -1,0 +1,37 @@
+<svg viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>LinkLog Full Logo - Moebius Bridge</title>
+  <desc>Complete logo with Moebius Bridge icon and dual-color wordmark</desc>
+  
+  <!-- Icon Mark (left) -->
+  <g transform="translate(6, 6)">
+    <!-- Left arch -->
+    <path d="M8 80 Q8 10, 48 10"
+          fill="none" stroke="#E8915A" stroke-width="4.5" stroke-linecap="round"/>
+    <!-- Right arch -->
+    <path d="M88 80 Q88 10, 48 10"
+          fill="none" stroke="#7C6AE8" stroke-width="4.5" stroke-linecap="round" opacity="0.75"/>
+    <!-- Infinity twist at apex -->
+    <path d="M48 10 C39 16, 39 28, 48 25 C57 22, 57 14, 48 10"
+          fill="none" stroke="#5B8ED0" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+    <!-- Compound nodes along base -->
+    <circle cx="18" cy="80" r="1.5" fill="#E8915A" opacity="0.2"/>
+    <circle cx="30" cy="80" r="2" fill="#E8915A" opacity="0.35"/>
+    <circle cx="42" cy="80" r="2.8" fill="#E8915A" opacity="0.5"/>
+    <!-- Center node -->
+    <circle cx="48" cy="80" r="4.2" fill="#FFFFFF" stroke="#E8915A" stroke-width="1.8"/>
+    <circle cx="48" cy="80" r="1.8" fill="#5B8ED0"/>
+    <circle cx="54" cy="80" r="2.8" fill="#7C6AE8" opacity="0.5"/>
+    <circle cx="66" cy="80" r="2" fill="#7C6AE8" opacity="0.35"/>
+    <circle cx="78" cy="80" r="1.5" fill="#7C6AE8" opacity="0.2"/>
+  </g>
+  
+  <!-- Wordmark (right) -->
+  <text x="110" y="50" font-family="'Inter', 'SF Pro Display', -apple-system, sans-serif" font-size="28" font-weight="700" letter-spacing="-0.3">
+    <tspan fill="#E8915A">Link</tspan><tspan fill="#7C6AE8">Log</tspan>
+  </text>
+  
+  <!-- Tagline -->
+  <text x="111" y="68" font-family="'Inter', 'SF Pro Display', -apple-system, sans-serif" font-size="11" fill="#9E9893" letter-spacing="0.6">
+    连接日志 · 关系复利
+  </text>
+</svg>
